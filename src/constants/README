@@ -1,0 +1,45 @@
+fonts name, colors name, screens name, images name
+thống nhất sử dụng trong toàn ứng dụng, mỗi cái 1 file
+
+**example
+
+//colors name; colors.js
+const CUSTOM_COLOR = {
+  SunsetOrange: '#FF4B3A',
+  White: '#FFF',
+  Vermilion: '#FF460A',
+};
+export default CUSTOM_COLOR;
+
+
+//images name; images.js
+export {default as IMG_Logo} from 'img link';
+export {default as IMG_Background} from 'img link';
+
+//fonts name; fonts.js
+const Prefix = 'SF-Pro-Rounded-';
+
+const FONT_FAMILY = {
+  Black: Prefix + 'Black',
+  Bold: Prefix + 'Bold',
+  Heavy: Prefix + 'Heavy',
+  Light: Prefix + 'Light',
+  Medium: Prefix + 'Medium',
+  Regular: Prefix + 'Regular',
+  Thin: Prefix + 'Thin',
+  Ultralight: Prefix + 'Ultralight',
+};
+
+export default FONT_FAMILY;
+
+//screens name; screens.js
+const SCREENS = {
+    AUTH: 'AUTH_SCREEN',
+    FORGOT_PASSWORD: 'FORGOT_PASSWORD_SCREEN',
+    HOME: 'HOME_SCREEN',
+    PROFILE: 'PROFILE_SCREEN'
+};
+
+export default SCREENS;
+
+**end example
