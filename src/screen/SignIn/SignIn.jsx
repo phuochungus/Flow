@@ -6,7 +6,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import {BlurView} from '@react-native-community/blur';
 import DropShadow from 'react-native-drop-shadow';
 import scale from '../../constants/responsive';
-import {StyleSheet} from 'react-native';
 
 const SignIn = () => {
   return (
@@ -198,28 +197,5 @@ const StyledButtonShadow = styled(LinearGradient).attrs({
   height: ${scale(55)}px;
   border-radius: 26px;
 `;
-
-const style = StyleSheet.create({
-  absoluteContainer: {
-    position: 'absolute',
-  },
-  bigLogo: {
-    width: scale(232),
-    height: scale(81),
-  },
-  largeMarginTop: {
-    marginTop: 161,
-  },
-  justifyCenter: {
-    justifyContent: 'center',
-  },
-  rowFlex: {
-    flexDirection: 'row',
-  },
-  small: {
-    height: scale(32),
-    width: scale(32),
-  },
-});
 
 export default SignIn;
