@@ -13,67 +13,67 @@ const SignIn = () => {
     <ScrollView showsVerticalScrollIndicator={false}>
       <BlackBackground>
         <Container m={`${scale(161)}px 0px 0px 0px`}>
-          <BigLogo source={IMG_LOGO} />
+          <Img source={IMG_LOGO} height={scale(81)} width={scale(232)} />
         </Container>
         <Container m={`${scale(60)}px 0px ${scale(60)}px 0px`}>
           <SloganText>SLOGAN HAY CÁI GÌ ĐÓ SLOGAN HAY CÁI GÌ ĐÓ </SloganText>
         </Container>
         <ShadowContainer>
           <GradientShadow />
-          <View style={style.absoluteContainer}>
+          <Container position={'absolute'}>
             <GradientButton>
               <ButtonText>ĐĂNG KÝ TÀI KHOẢN NGAY</ButtonText>
             </GradientButton>
-          </View>
+          </Container>
         </ShadowContainer>
         <Container m={`${scale(32)}px 0px 0px 0px`}>
           <StyledOutlineButton>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <View style={{justifyContent: 'center', marginRight: 10}}>
-                <Image source={IMG_GOOGLE} style={style.small} />
-              </View>
+            <SizedContainer
+              flexDirection={'row'}
+              h={scale(32.05)}
+              w={scale(300)}>
+              <Container m={`0px 10px 0px 0px`}>
+                <Img source={IMG_GOOGLE} height={scale(32)} width={scale(32)} />
+              </Container>
               <ButtonText>TIẾP TỤC BẰNG TÀI KHOẢN GOOGLE</ButtonText>
-            </View>
+            </SizedContainer>
           </StyledOutlineButton>
         </Container>
         <Container m={`${scale(32)}px 0px 0px 0px`}>
           <StyledOutlineButton>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <View style={{justifyContent: 'center', marginRight: 10}}>
-                <Image source={IMG_FACEBOOK} style={style.small} />
-              </View>
-              <View>
-                <ButtonText>TIẾP TỤC BẰNG TÀI KHOẢN FACEBOOK</ButtonText>
-              </View>
-            </View>
+            <SizedContainer
+              flexDirection={'row'}
+              h={scale(32.05)}
+              w={scale(300)}>
+              <Container m={`0px 10px 0px 0px`}>
+                <Img
+                  source={IMG_FACEBOOK}
+                  height={scale(32)}
+                  width={scale(32)}
+                />
+              </Container>
+              <ButtonText>TIẾP TỤC BẰNG TÀI KHOẢN FACEBOOK</ButtonText>
+            </SizedContainer>
           </StyledOutlineButton>
         </Container>
         <ShadowContainer m={`${scale(32)}px 0px ${scale(32)}px 0px`}>
           <GradientShadow />
-          <View style={style.absoluteContainer}>
+          <Container position={'absolute'}>
             <StyledOutlineButtonCenter>
               <ButtonText>ĐĂNG NHẬP</ButtonText>
             </StyledOutlineButtonCenter>
-          </View>
+          </Container>
         </ShadowContainer>
       </BlackBackground>
     </ScrollView>
   );
 };
 
-const BigLogo = styled(Image).attrs(({source}) => ({
+const Img = styled(Image).attrs(({source}) => ({
   source: source,
 }))`
-  width: ${scale(232)}px;
-  height: ${scale(81)}px;
+  width: ${props => props.width}px;
+  height: ${props => props.height}px;
 `;
 
 const BlackBackground = styled(View)`
@@ -104,7 +104,15 @@ const GradientShadow = () => {
 const Container = styled.View`
   align-items: center;
   justify-content: center;
-  margin: ${props => props.m || '0'};
+  margin: ${props => props.m || '0px'};
+  position: ${props => props.position || 'relative'};
+  flex-direction: ${props => props.flexDirection || 'column'};
+  padding: ${props => props.p || '0px'};
+`;
+
+const SizedContainer = styled(Container)`
+  height: ${props => props.h}px;
+  width: ${props => props.w}px;
 `;
 
 const ShadowContainer = styled(Container)`
