@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, View, TouchableOpacity, ScrollView} from 'react-native';
-import {IMG_FACEBOOK, IMG_GOOGLE, IMG_LOGO} from '../../../assets/images';
+import {IMG_FACEBOOK, IMG_GOOGLE, IMG_LOGO} from '../../assets/images'
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 import {BlurView} from '@react-native-community/blur';
