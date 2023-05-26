@@ -1,8 +1,8 @@
 //import liraries
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import scale from '../constants/responsive';
 import FONTS from '../constants/fonts';
+import scale from '../constants/responsive';
 
 // create a component
 const BackHeader = (props) => {
@@ -15,7 +15,7 @@ const BackHeader = (props) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.back}>
-                <Text style={{color: 'black', fontFamily: FONTS.NotoSans.Black}}>Back</Text>
+                <Text style={{ color: 'black', fontFamily: FONTS.NotoSans.Black }}>Back</Text>
             </TouchableOpacity>
         </View>
     );
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'green',
         width: '100%',
-        height: scale.scaleHeight(60),
+        height: scale(60),
     },
     back: {
         width: 50,

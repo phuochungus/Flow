@@ -1,8 +1,6 @@
 //import liraries
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import BackHeader from './src/components/backHeader';
-import scale from './src/constants/responsive';
 import FONTS from './src/constants/fonts';
 
 // create a component
@@ -10,7 +8,7 @@ const App = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={{width: 'auto', height: 50, fontSize: 16, color: 'black', fontFamily: FONTS.NotoSans.Bold}}>Flow App Demo</Text>
+      <Text style={{ width: 'auto', height: 50, fontSize: 16, color: 'black', fontFamily: FONTS.NotoSans.Bold }}>Flow App Demo</Text>
     </View>
   )
 };
