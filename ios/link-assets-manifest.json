@@ -72,6 +72,126 @@
     {
       "path": "src/assets/fonts/NotoSans-ThinItalic.ttf",
       "sha1": "299fcd7af422d6c1b869fdf5ffa1bc0f78ba4a00"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada-Bold.ttf",
+      "sha1": "5618027d3e677db8d34bf034a873d1dd8c425b49"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada-BoldItalic.ttf",
+      "sha1": "a24fb87b2ca7da16d978f32215eddba007d98913"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada-Italic.ttf",
+      "sha1": "a713133551e61c992041e463abd98301cc91b714"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada-Light.ttf",
+      "sha1": "ac7c079f3b14adb6d43f8885632c03bded1487b8"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada-LightItalic.ttf",
+      "sha1": "c0a5bfba3165b11a510dc7bd1ad6c21e0f5d79ed"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada-Medium.ttf",
+      "sha1": "e4524c50a13c290937ddfa334a3ffa4b0a1bf56f"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada-MediumItalic.ttf",
+      "sha1": "ac40248f8bb629686cdaa1928117f816d308b445"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada-Regular.ttf",
+      "sha1": "55184069c868e319b670461dc67752b42e3401e4"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada-SemiBold.ttf",
+      "sha1": "a94f12bc8f24f45e2c0052f2769a609284789916"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada-SemiBoldItalic.ttf",
+      "sha1": "1d5a4ad72b6194960f5e14e6a02213bfa376f7d2"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada_Condensed-Bold.ttf",
+      "sha1": "a57888843a824319610a98f321acd24e0cfdef9b"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada_Condensed-BoldItalic.ttf",
+      "sha1": "16c3804df91fbda04f14b4c8fa7a538bc92ccfde"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada_Condensed-Italic.ttf",
+      "sha1": "e28a9b73795a29dfa1dde146ed4e2e4b86def586"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada_Condensed-Light.ttf",
+      "sha1": "e1f27584af001c4335edd0330fc0200eca47ad2b"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada_Condensed-LightItalic.ttf",
+      "sha1": "4454cf99cd0f7e964bc16b4e9ce798a88bb12fcd"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada_Condensed-Medium.ttf",
+      "sha1": "55217b467c2ce1085d61557097011083a950ae62"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada_Condensed-MediumItalic.ttf",
+      "sha1": "9b4bcfb8a5697bdf40a08e243a7714c02cfa8da8"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada_Condensed-Regular.ttf",
+      "sha1": "492ff54fc8094862b5d9826598a971bead26034f"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada_Condensed-SemiBold.ttf",
+      "sha1": "8cbb2070eb8a472699dc51e592ae79000178994e"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada_Condensed-SemiBoldItalic.ttf",
+      "sha1": "657fa38a6be111e92eda5939015864477f81ee28"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada_SemiCondensed-Bold.ttf",
+      "sha1": "5595bfb1f6496a3dc03e3574ac1440bb567d6464"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada_SemiCondensed-BoldItalic.ttf",
+      "sha1": "30999c8bd39c1f41d56509e6eeea0d94840c6f02"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada_SemiCondensed-Italic.ttf",
+      "sha1": "9eba62b8ddd28f68ed0a6aae0acd1fa3dcd461d5"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada_SemiCondensed-Light.ttf",
+      "sha1": "b8ccbb038771c279df7273410f3000e9c1960fa0"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada_SemiCondensed-LightItalic.ttf",
+      "sha1": "4310fd686f1d754b22cddf6b70f78108455aa42a"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada_SemiCondensed-Medium.ttf",
+      "sha1": "1e8b4a87ab70bf3e008e8d272e9f12708c5f3a8f"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada_SemiCondensed-MediumItalic.ttf",
+      "sha1": "e3cb494c0098c1a31546e6e7d5e61717ef732e41"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada_SemiCondensed-Regular.ttf",
+      "sha1": "d876f572d7b7315ba0e768e1b63558d48d00b653"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada_SemiCondensed-SemiBold.ttf",
+      "sha1": "42a20ff70973292c94743269e1a110b4486470b5"
+    },
+    {
+      "path": "src/assets/fonts/RadioCanada_SemiCondensed-SemiBoldItalic.ttf",
+      "sha1": "0f32f3ec213827005ba1d1914e8e9942fbf2c5c0"
     }
   ]
 }
