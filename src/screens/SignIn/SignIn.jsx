@@ -1,49 +1,99 @@
-import React from 'react';
-import {Image, View, TouchableOpacity, ScrollView} from 'react-native';
-import {IMG_FACEBOOK, IMG_GOOGLE, IMG_LOGO} from '../../assets/images'
+import React, {useEffect} from 'react';
+import {TouchableOpacity, ScrollView, View} from 'react-native';
+import {IMG_FACEBOOK, IMG_GOOGLE, IMG_LOGO} from '../../assets/images';
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 import {BlurView} from '@react-native-community/blur';
 import DropShadow from 'react-native-drop-shadow';
 import scale from '../../constants/responsive';
+import {authorize} from 'react-native-app-auth';
+import {Linking} from 'react-native';
+import {
+  Background,
+  ButtonText,
+  Container,
+  Img,
+  OutlineButton,
+  ShadowContainer,
+  SizedContainer,
+} from '../../shared';
+import {GradientButton, GradientButtonOutline} from '../../components';
 
-const SignIn = () => {
+export const SignIn = () => {
+  const GOOGLE_CLIENT_ID =
+    '940998776447-oee711om5d818g4a0ats6osvhlrf079i.apps.googleusercontent.com';
+  const config = {
+    usePKCE: false,
+    clientId: GOOGLE_CLIENT_ID,
+    redirectUrl: 'https://flow-backend.herokuapp.com/auth/google-redirect',
+    scopes: ['email', 'profile'],
+    issuer: 'https://accounts.google.com',
+    connectionTimeoutSeconds: 5,
+    warmAndPrefetchChrome: true,
+  };
+
+  const handleDeepLink = ({url}) => {
+    // const token = parseTokenFromURL(url);
+    console.log(url);
+  };
+
+  useEffect(() => {
+    const listener = Linking.addEventListener('url', handleDeepLink);
+
+    return () => {
+      listener.remove();
+    };
+  }, []);
+
+  const handleLogin = async () => {
+    try {
+      await authorize(config);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <BlackBackground>
+      <Background>
         <Container m={`${scale(161)}px 0px 0px 0px`}>
           <Img source={IMG_LOGO} height={scale(81)} width={scale(232)} />
         </Container>
         <Container m={`${scale(60)}px 0px ${scale(60)}px 0px`}>
           <SloganText>SLOGAN HAY CÁI GÌ ĐÓ SLOGAN HAY CÁI GÌ ĐÓ </SloganText>
         </Container>
-        <ShadowContainer>
-          <GradientShadow />
-          <Container position={'absolute'}>
-            <GradientButton>
-              <ButtonText>ĐĂNG KÝ TÀI KHOẢN NGAY</ButtonText>
-            </GradientButton>
-          </Container>
-        </ShadowContainer>
+        <Container>
+          <GradientButton
+            width={scale(364)}
+            height={scale(52)}
+            sWidth={scale(370)}
+            sHeight={scale(55)}>
+            <ButtonText>ĐĂNG KÝ TÀI KHOẢN NGAY</ButtonText>
+          </GradientButton>
+        </Container>
         <Container m={`${scale(32)}px 0px 0px 0px`}>
-          <StyledOutlineButton>
+          <OutlineButton onPress={handleLogin}>
             <SizedContainer
               flexDirection={'row'}
-              h={scale(32.05)}
-              w={scale(300)}>
+              justifyContent={'flex-start'}
+              alighItems={'center'}
+              height={scale(32.05)}
+              width={scale(300)}>
               <Container m={`0px 10px 0px 0px`}>
                 <Img source={IMG_GOOGLE} height={scale(32)} width={scale(32)} />
               </Container>
               <ButtonText>TIẾP TỤC BẰNG TÀI KHOẢN GOOGLE</ButtonText>
             </SizedContainer>
-          </StyledOutlineButton>
+          </OutlineButton>
         </Container>
         <Container m={`${scale(32)}px 0px 0px 0px`}>
-          <StyledOutlineButton>
+          <OutlineButton>
             <SizedContainer
+              alighItems={'center'}
+              justifyContent={'flex-start'}
               flexDirection={'row'}
-              h={scale(32.05)}
-              w={scale(300)}>
+              height={scale(32.05)}
+              width={scale(300)}>
               <Container m={`0px 10px 0px 0px`}>
                 <Img
                   source={IMG_FACEBOOK}
@@ -53,73 +103,47 @@ const SignIn = () => {
               </Container>
               <ButtonText>TIẾP TỤC BẰNG TÀI KHOẢN FACEBOOK</ButtonText>
             </SizedContainer>
-          </StyledOutlineButton>
+          </OutlineButton>
         </Container>
-        <ShadowContainer m={`${scale(32)}px 0px ${scale(32)}px 0px`}>
-          <GradientShadow />
+        <Container m={`${scale(32)}px 0px ${scale(32)}px 0px`}>
+          {/* <GradientShadow sWidth={scale(370)} sHeight={scale(55)} />
           <Container position={'absolute'}>
-            <StyledOutlineButtonCenter>
+            <OutlineButton justifyContent={'center'} alighItems={'center'}>
               <ButtonText>ĐĂNG NHẬP</ButtonText>
-            </StyledOutlineButtonCenter>
-          </Container>
-        </ShadowContainer>
-      </BlackBackground>
+            </OutlineButton>
+          </Container> */}
+          <GradientButtonOutline
+            width={scale(364)}
+            height={scale(52)}
+            sWidth={scale(370)}
+            sHeight={scale(55)}>
+            <ButtonText>ĐĂNG NHẬP</ButtonText>
+          </GradientButtonOutline>
+        </Container>
+      </Background>
     </ScrollView>
   );
 };
 
-const Img = styled(Image).attrs(({source}) => ({
-  source: source,
-}))`
-  width: ${props => props.width}px;
-  height: ${props => props.height}px;
-`;
-
-const BlackBackground = styled(View)`
-  background-color: black;
-  flex: 1;
-  padding: ${scale(23)}px;
-`;
-
-const GradientButton = ({children}) => {
-  return (
-    <TouchableOpacity>
-      <StyledDropShadow>
-        <StyledButton>{children}</StyledButton>
-      </StyledDropShadow>
-    </TouchableOpacity>
-  );
-};
-
-const GradientShadow = () => {
+export const GradientBlurShadow = ({...rest}) => {
   return (
     <>
-      <StyledButtonShadow />
-      <StyledBlurView />
+      <ButtonShadow {...rest} />
+      <ShadowBlur />
     </>
   );
 };
 
-const Container = styled.View`
-  align-items: center;
-  justify-content: center;
-  margin: ${props => props.m || '0px'};
-  position: ${props => props.position || 'relative'};
-  flex-direction: ${props => props.flexDirection || 'column'};
-  padding: ${props => props.p || '0px'};
-`;
+export const DropShadowButton = ({children, ...rest}) => {
+  return (
+    <TouchableOpacity onPress={rest.onPress}>
+      <StyledDropShadow>{children}</StyledDropShadow>
+    </TouchableOpacity>
+  );
+};
 
-const SizedContainer = styled(Container)`
-  height: ${props => props.h}px;
-  width: ${props => props.w}px;
-`;
-
-const ShadowContainer = styled(Container)`
-  height: 90px;
-`;
-
-const StyledBlurView = styled(BlurView).attrs({
-  blurRadius: 10,
+const ShadowBlur = styled(BlurView).attrs({
+  blurRadius: 7,
   blurType: 'light',
   overlayColor: '',
 })`
@@ -137,22 +161,7 @@ const StyledDropShadow = styled(DropShadow)`
   shadow-opacity: 0.75;
 `;
 
-const StyledOutlineButton = styled.TouchableOpacity`
-  elevation: 5;
-  width: ${scale(364)}px;
-  height: ${scale(52)}px;
-  padding: ${scale(10)}px ${scale(32)}px;
-  background: #1e1e1e;
-  border: 1px solid #b1b5bb;
-  border-radius: 26px;
-`;
-
-const StyledOutlineButtonCenter = styled(StyledOutlineButton)`
-  justify-content: center;
-  align-items: center;
-`;
-
-const StyledButton = styled(LinearGradient).attrs({
+export const StyledGradientView = styled(LinearGradient).attrs({
   colors: ['#0085FFFF', '#E70DFBFF'],
   angleCenter: {x: 0.5, y: 0.5},
   locations: [0.1188, 0.8163],
@@ -162,18 +171,10 @@ const StyledButton = styled(LinearGradient).attrs({
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: ${scale(10)}px ${scale(12)}px;
   border-radius: 26px;
-  width: ${scale(364)}px;
-  height: ${scale(52)}px;
-`;
-
-const ButtonText = styled.Text`
-  color: white;
-  font-family: 'Noto Sans';
-  font-style: normal;
-  font-weight: 700;
-  font-size: ${scale(15)}px;
+  padding: ${props => props.pad || '0px'};
+  width: ${props => props.width || 0}px;
+  height: ${props => props.height || 0}px;
 `;
 
 const SloganText = styled(ButtonText)`
@@ -186,16 +187,14 @@ const SloganText = styled(ButtonText)`
   margin-top: ${scale(60)}px;
 `;
 
-const StyledButtonShadow = styled(LinearGradient).attrs({
+const ButtonShadow = styled(LinearGradient).attrs({
   colors: ['#0085FF', '#E70DFB'],
   angleCenter: {x: 0.5, y: 0.5},
   locations: [0.1178, 0.8059],
   useAngle: true,
   angle: 55.82,
 })`
-  width: ${scale(370)}px;
-  height: ${scale(55)}px;
   border-radius: 26px;
+  width: ${props => props.sWidth || 0}px;
+  height: ${props => props.sHeight || 0}px;
 `;
-
-export default SignIn;
