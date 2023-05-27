@@ -4,10 +4,7 @@ import { Container } from "../shared";
 
 export const GradientButton = ({ children, ...rest }) => {
     return (
-        <Container
-            justifyContent={'center'}
-            height={rest.sHeight * 1.6}
-            width={rest.sWidth * 1.1}>
+        <Container justifyContent={'center'}>
             <GradientBlurShadow {...rest} />
             <Container position={'absolute'}>
                 <DropShadowButton {...rest}>

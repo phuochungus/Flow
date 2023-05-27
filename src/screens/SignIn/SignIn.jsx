@@ -55,7 +55,7 @@ export const SignIn = () => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <Background>
+      <Background p={scale(23)}>
         <Container m={`${scale(161)}px 0px 0px 0px`}>
           <Img source={IMG_LOGO} height={scale(81)} width={scale(232)} />
         </Container>
@@ -66,8 +66,11 @@ export const SignIn = () => {
           <GradientButton
             width={scale(364)}
             height={scale(52)}
-            sWidth={scale(370)}
-            sHeight={scale(55)}>
+            sWidth={scale(364)}
+            sHeight={scale(52)}
+            blurWidth={scale(390)}
+            blurHeight={scale(100)}
+            blurRadius={8}>
             <ButtonText>ĐĂNG KÝ TÀI KHOẢN NGAY</ButtonText>
           </GradientButton>
         </Container>
@@ -106,17 +109,13 @@ export const SignIn = () => {
           </OutlineButton>
         </Container>
         <Container m={`${scale(32)}px 0px ${scale(32)}px 0px`}>
-          {/* <GradientShadow sWidth={scale(370)} sHeight={scale(55)} />
-          <Container position={'absolute'}>
-            <OutlineButton justifyContent={'center'} alighItems={'center'}>
-              <ButtonText>ĐĂNG NHẬP</ButtonText>
-            </OutlineButton>
-          </Container> */}
           <GradientButtonOutline
             width={scale(364)}
             height={scale(52)}
             sWidth={scale(370)}
-            sHeight={scale(55)}>
+            sHeight={scale(55)}
+            blurWidth={scale(390)}
+            blurHeight={scale(100)}>
             <ButtonText>ĐĂNG NHẬP</ButtonText>
           </GradientButtonOutline>
         </Container>
@@ -129,7 +128,7 @@ export const GradientBlurShadow = ({...rest}) => {
   return (
     <>
       <ButtonShadow {...rest} />
-      <ShadowBlur />
+      <ShadowBlur {...rest} />
     </>
   );
 };
@@ -142,16 +141,14 @@ export const DropShadowButton = ({children, ...rest}) => {
   );
 };
 
-const ShadowBlur = styled(BlurView).attrs({
-  blurRadius: 7,
+const ShadowBlur = styled(BlurView).attrs(props => ({
+  blurRadius: props.blurRadius || 1,
   blurType: 'light',
   overlayColor: '',
-})`
+}))`
   position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  height: ${props => props.blurHeight || 0}px;
+  width: ${props => props.blurWidth || 0}px;
 `;
 
 const StyledDropShadow = styled(DropShadow)`
