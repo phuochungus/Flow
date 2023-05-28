@@ -32,6 +32,36 @@
 		0F46A40CD4594096A32A1E67 /* NotoSans-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8980333329B141F282C596A9 /* NotoSans-SemiBoldItalic.ttf */; };
 		5C6000A4647147FEACA2C5F2 /* NotoSans-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C620ED699404724B2E62162 /* NotoSans-Thin.ttf */; };
 		4ADE31F2FECA4C868C935BDC /* NotoSans-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D47186BC0C4B4925A73053EF /* NotoSans-ThinItalic.ttf */; };
+		5B44E96366F944A98C04CC3F /* RadioCanada-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD5433D5A81C4F56B2B774FC /* RadioCanada-Bold.ttf */; };
+		7D826BFE1622466E8F5B12D3 /* RadioCanada-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5130036B276480CBA2B9F30 /* RadioCanada-BoldItalic.ttf */; };
+		E4934075D94A40988698BF4F /* RadioCanada-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67567348977E4035AC5B85FD /* RadioCanada-Italic.ttf */; };
+		2504D1E847D946A680926F2D /* RadioCanada-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80B84482EE364BF697D4C53F /* RadioCanada-Light.ttf */; };
+		0CF767A9FE744F8F987EB247 /* RadioCanada-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6990E81BA63846948A2C4DDF /* RadioCanada-LightItalic.ttf */; };
+		FC21A25262FA40EC917AE009 /* RadioCanada-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A52A5C148CB94F498AFE1795 /* RadioCanada-Medium.ttf */; };
+		9C5FDB50B977437DA2578909 /* RadioCanada-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D0CEA22117C4B8CB3A4F1A6 /* RadioCanada-MediumItalic.ttf */; };
+		AC58DC261E7B41D583DF62AE /* RadioCanada-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78E3F50EE5D2422B8AF33B73 /* RadioCanada-Regular.ttf */; };
+		B8579A8222EA478D8DC93998 /* RadioCanada-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25575F43C51944269F3419F0 /* RadioCanada-SemiBold.ttf */; };
+		B6E23FF1B1F44CA4B3B9E999 /* RadioCanada-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 27B18F35AC214FCB8B46CF73 /* RadioCanada-SemiBoldItalic.ttf */; };
+		B50A7948C98443018145DA42 /* RadioCanada_Condensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AFD623BBE3434CCA884FEE05 /* RadioCanada_Condensed-Bold.ttf */; };
+		BE121D0B7D7F488D8BBBAAAB /* RadioCanada_Condensed-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47A8F222C39B491E8F8E43EB /* RadioCanada_Condensed-BoldItalic.ttf */; };
+		E6EF8ED22CD44243BCCAAEEB /* RadioCanada_Condensed-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD9979B678224A5FBDC3C7FD /* RadioCanada_Condensed-Italic.ttf */; };
+		F2DA9AB78A824454A6D8BE0B /* RadioCanada_Condensed-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A03BC20DE144FB38BEF2052 /* RadioCanada_Condensed-Light.ttf */; };
+		5D92A67440984A25B006A63E /* RadioCanada_Condensed-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19C24714F8D64547BCBC7BD6 /* RadioCanada_Condensed-LightItalic.ttf */; };
+		9A744A99556247E7B9C1FD9B /* RadioCanada_Condensed-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14E158EAF6374A0DA4EE0FD0 /* RadioCanada_Condensed-Medium.ttf */; };
+		46D3B058C864480FB9F8DECB /* RadioCanada_Condensed-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2659D35C6C6E4E8E946A9E04 /* RadioCanada_Condensed-MediumItalic.ttf */; };
+		EF646DE8CB914E4AAE37E1B2 /* RadioCanada_Condensed-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 842DE0544FFA4D49878F2FA1 /* RadioCanada_Condensed-Regular.ttf */; };
+		28BBD71A9436451FB4B914F3 /* RadioCanada_Condensed-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64256C14194244B6ADC444B4 /* RadioCanada_Condensed-SemiBold.ttf */; };
+		70D03FD066F94EC7B888BBF4 /* RadioCanada_Condensed-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5FFEC222CB5845638F467454 /* RadioCanada_Condensed-SemiBoldItalic.ttf */; };
+		9369FBF6FF3B4BD2AC2C134D /* RadioCanada_SemiCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E91D1028D73A49CA8A8FF6CA /* RadioCanada_SemiCondensed-Bold.ttf */; };
+		BE380521258649FFB2ABE2F2 /* RadioCanada_SemiCondensed-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B390F6F666F74DE1BF4AA53C /* RadioCanada_SemiCondensed-BoldItalic.ttf */; };
+		378CB48962D04D4BB3EE8B55 /* RadioCanada_SemiCondensed-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0C26C5A4428459681798F3A /* RadioCanada_SemiCondensed-Italic.ttf */; };
+		2D19CB9615C24241996F3403 /* RadioCanada_SemiCondensed-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 37CAA5239AE44CE798851CFF /* RadioCanada_SemiCondensed-Light.ttf */; };
+		04A05B96CC47411EA1DD2ADE /* RadioCanada_SemiCondensed-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B57C45B9ACC4234AAC54A84 /* RadioCanada_SemiCondensed-LightItalic.ttf */; };
+		9DFAA739505D4ED985CD33BE /* RadioCanada_SemiCondensed-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8273660397264585979D84E2 /* RadioCanada_SemiCondensed-Medium.ttf */; };
+		F26B7B845C8E4005AEF44661 /* RadioCanada_SemiCondensed-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AC2703B5F9C54FA3819DA378 /* RadioCanada_SemiCondensed-MediumItalic.ttf */; };
+		6934E89FFBED456F98DCBF58 /* RadioCanada_SemiCondensed-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 06CA1B6DAEB041AA96FACA0E /* RadioCanada_SemiCondensed-Regular.ttf */; };
+		C972467FCF334D3A88DA146A /* RadioCanada_SemiCondensed-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9A67D128E81747A98BC14265 /* RadioCanada_SemiCondensed-SemiBold.ttf */; };
+		BBFA143BF4F743F2999376AC /* RadioCanada_SemiCondensed-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D24EF751C2F043279CCE984C /* RadioCanada_SemiCondensed-SemiBoldItalic.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +110,36 @@
 		8980333329B141F282C596A9 /* NotoSans-SemiBoldItalic.ttf */ = {isa = PBXFileReference; name = "NotoSans-SemiBoldItalic.ttf"; path = "../src/assets/fonts/NotoSans-SemiBoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		1C620ED699404724B2E62162 /* NotoSans-Thin.ttf */ = {isa = PBXFileReference; name = "NotoSans-Thin.ttf"; path = "../src/assets/fonts/NotoSans-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		D47186BC0C4B4925A73053EF /* NotoSans-ThinItalic.ttf */ = {isa = PBXFileReference; name = "NotoSans-ThinItalic.ttf"; path = "../src/assets/fonts/NotoSans-ThinItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FD5433D5A81C4F56B2B774FC /* RadioCanada-Bold.ttf */ = {isa = PBXFileReference; name = "RadioCanada-Bold.ttf"; path = "../src/assets/fonts/RadioCanada-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B5130036B276480CBA2B9F30 /* RadioCanada-BoldItalic.ttf */ = {isa = PBXFileReference; name = "RadioCanada-BoldItalic.ttf"; path = "../src/assets/fonts/RadioCanada-BoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		67567348977E4035AC5B85FD /* RadioCanada-Italic.ttf */ = {isa = PBXFileReference; name = "RadioCanada-Italic.ttf"; path = "../src/assets/fonts/RadioCanada-Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		80B84482EE364BF697D4C53F /* RadioCanada-Light.ttf */ = {isa = PBXFileReference; name = "RadioCanada-Light.ttf"; path = "../src/assets/fonts/RadioCanada-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6990E81BA63846948A2C4DDF /* RadioCanada-LightItalic.ttf */ = {isa = PBXFileReference; name = "RadioCanada-LightItalic.ttf"; path = "../src/assets/fonts/RadioCanada-LightItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A52A5C148CB94F498AFE1795 /* RadioCanada-Medium.ttf */ = {isa = PBXFileReference; name = "RadioCanada-Medium.ttf"; path = "../src/assets/fonts/RadioCanada-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4D0CEA22117C4B8CB3A4F1A6 /* RadioCanada-MediumItalic.ttf */ = {isa = PBXFileReference; name = "RadioCanada-MediumItalic.ttf"; path = "../src/assets/fonts/RadioCanada-MediumItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		78E3F50EE5D2422B8AF33B73 /* RadioCanada-Regular.ttf */ = {isa = PBXFileReference; name = "RadioCanada-Regular.ttf"; path = "../src/assets/fonts/RadioCanada-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		25575F43C51944269F3419F0 /* RadioCanada-SemiBold.ttf */ = {isa = PBXFileReference; name = "RadioCanada-SemiBold.ttf"; path = "../src/assets/fonts/RadioCanada-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		27B18F35AC214FCB8B46CF73 /* RadioCanada-SemiBoldItalic.ttf */ = {isa = PBXFileReference; name = "RadioCanada-SemiBoldItalic.ttf"; path = "../src/assets/fonts/RadioCanada-SemiBoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AFD623BBE3434CCA884FEE05 /* RadioCanada_Condensed-Bold.ttf */ = {isa = PBXFileReference; name = "RadioCanada_Condensed-Bold.ttf"; path = "../src/assets/fonts/RadioCanada_Condensed-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		47A8F222C39B491E8F8E43EB /* RadioCanada_Condensed-BoldItalic.ttf */ = {isa = PBXFileReference; name = "RadioCanada_Condensed-BoldItalic.ttf"; path = "../src/assets/fonts/RadioCanada_Condensed-BoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DD9979B678224A5FBDC3C7FD /* RadioCanada_Condensed-Italic.ttf */ = {isa = PBXFileReference; name = "RadioCanada_Condensed-Italic.ttf"; path = "../src/assets/fonts/RadioCanada_Condensed-Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2A03BC20DE144FB38BEF2052 /* RadioCanada_Condensed-Light.ttf */ = {isa = PBXFileReference; name = "RadioCanada_Condensed-Light.ttf"; path = "../src/assets/fonts/RadioCanada_Condensed-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		19C24714F8D64547BCBC7BD6 /* RadioCanada_Condensed-LightItalic.ttf */ = {isa = PBXFileReference; name = "RadioCanada_Condensed-LightItalic.ttf"; path = "../src/assets/fonts/RadioCanada_Condensed-LightItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		14E158EAF6374A0DA4EE0FD0 /* RadioCanada_Condensed-Medium.ttf */ = {isa = PBXFileReference; name = "RadioCanada_Condensed-Medium.ttf"; path = "../src/assets/fonts/RadioCanada_Condensed-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2659D35C6C6E4E8E946A9E04 /* RadioCanada_Condensed-MediumItalic.ttf */ = {isa = PBXFileReference; name = "RadioCanada_Condensed-MediumItalic.ttf"; path = "../src/assets/fonts/RadioCanada_Condensed-MediumItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		842DE0544FFA4D49878F2FA1 /* RadioCanada_Condensed-Regular.ttf */ = {isa = PBXFileReference; name = "RadioCanada_Condensed-Regular.ttf"; path = "../src/assets/fonts/RadioCanada_Condensed-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		64256C14194244B6ADC444B4 /* RadioCanada_Condensed-SemiBold.ttf */ = {isa = PBXFileReference; name = "RadioCanada_Condensed-SemiBold.ttf"; path = "../src/assets/fonts/RadioCanada_Condensed-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5FFEC222CB5845638F467454 /* RadioCanada_Condensed-SemiBoldItalic.ttf */ = {isa = PBXFileReference; name = "RadioCanada_Condensed-SemiBoldItalic.ttf"; path = "../src/assets/fonts/RadioCanada_Condensed-SemiBoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E91D1028D73A49CA8A8FF6CA /* RadioCanada_SemiCondensed-Bold.ttf */ = {isa = PBXFileReference; name = "RadioCanada_SemiCondensed-Bold.ttf"; path = "../src/assets/fonts/RadioCanada_SemiCondensed-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B390F6F666F74DE1BF4AA53C /* RadioCanada_SemiCondensed-BoldItalic.ttf */ = {isa = PBXFileReference; name = "RadioCanada_SemiCondensed-BoldItalic.ttf"; path = "../src/assets/fonts/RadioCanada_SemiCondensed-BoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E0C26C5A4428459681798F3A /* RadioCanada_SemiCondensed-Italic.ttf */ = {isa = PBXFileReference; name = "RadioCanada_SemiCondensed-Italic.ttf"; path = "../src/assets/fonts/RadioCanada_SemiCondensed-Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		37CAA5239AE44CE798851CFF /* RadioCanada_SemiCondensed-Light.ttf */ = {isa = PBXFileReference; name = "RadioCanada_SemiCondensed-Light.ttf"; path = "../src/assets/fonts/RadioCanada_SemiCondensed-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3B57C45B9ACC4234AAC54A84 /* RadioCanada_SemiCondensed-LightItalic.ttf */ = {isa = PBXFileReference; name = "RadioCanada_SemiCondensed-LightItalic.ttf"; path = "../src/assets/fonts/RadioCanada_SemiCondensed-LightItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8273660397264585979D84E2 /* RadioCanada_SemiCondensed-Medium.ttf */ = {isa = PBXFileReference; name = "RadioCanada_SemiCondensed-Medium.ttf"; path = "../src/assets/fonts/RadioCanada_SemiCondensed-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AC2703B5F9C54FA3819DA378 /* RadioCanada_SemiCondensed-MediumItalic.ttf */ = {isa = PBXFileReference; name = "RadioCanada_SemiCondensed-MediumItalic.ttf"; path = "../src/assets/fonts/RadioCanada_SemiCondensed-MediumItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		06CA1B6DAEB041AA96FACA0E /* RadioCanada_SemiCondensed-Regular.ttf */ = {isa = PBXFileReference; name = "RadioCanada_SemiCondensed-Regular.ttf"; path = "../src/assets/fonts/RadioCanada_SemiCondensed-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9A67D128E81747A98BC14265 /* RadioCanada_SemiCondensed-SemiBold.ttf */ = {isa = PBXFileReference; name = "RadioCanada_SemiCondensed-SemiBold.ttf"; path = "../src/assets/fonts/RadioCanada_SemiCondensed-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D24EF751C2F043279CCE984C /* RadioCanada_SemiCondensed-SemiBoldItalic.ttf */ = {isa = PBXFileReference; name = "RadioCanada_SemiCondensed-SemiBoldItalic.ttf"; path = "../src/assets/fonts/RadioCanada_SemiCondensed-SemiBoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +266,36 @@
 				8980333329B141F282C596A9 /* NotoSans-SemiBoldItalic.ttf */,
 				1C620ED699404724B2E62162 /* NotoSans-Thin.ttf */,
 				D47186BC0C4B4925A73053EF /* NotoSans-ThinItalic.ttf */,
+				FD5433D5A81C4F56B2B774FC /* RadioCanada-Bold.ttf */,
+				B5130036B276480CBA2B9F30 /* RadioCanada-BoldItalic.ttf */,
+				67567348977E4035AC5B85FD /* RadioCanada-Italic.ttf */,
+				80B84482EE364BF697D4C53F /* RadioCanada-Light.ttf */,
+				6990E81BA63846948A2C4DDF /* RadioCanada-LightItalic.ttf */,
+				A52A5C148CB94F498AFE1795 /* RadioCanada-Medium.ttf */,
+				4D0CEA22117C4B8CB3A4F1A6 /* RadioCanada-MediumItalic.ttf */,
+				78E3F50EE5D2422B8AF33B73 /* RadioCanada-Regular.ttf */,
+				25575F43C51944269F3419F0 /* RadioCanada-SemiBold.ttf */,
+				27B18F35AC214FCB8B46CF73 /* RadioCanada-SemiBoldItalic.ttf */,
+				AFD623BBE3434CCA884FEE05 /* RadioCanada_Condensed-Bold.ttf */,
+				47A8F222C39B491E8F8E43EB /* RadioCanada_Condensed-BoldItalic.ttf */,
+				DD9979B678224A5FBDC3C7FD /* RadioCanada_Condensed-Italic.ttf */,
+				2A03BC20DE144FB38BEF2052 /* RadioCanada_Condensed-Light.ttf */,
+				19C24714F8D64547BCBC7BD6 /* RadioCanada_Condensed-LightItalic.ttf */,
+				14E158EAF6374A0DA4EE0FD0 /* RadioCanada_Condensed-Medium.ttf */,
+				2659D35C6C6E4E8E946A9E04 /* RadioCanada_Condensed-MediumItalic.ttf */,
+				842DE0544FFA4D49878F2FA1 /* RadioCanada_Condensed-Regular.ttf */,
+				64256C14194244B6ADC444B4 /* RadioCanada_Condensed-SemiBold.ttf */,
+				5FFEC222CB5845638F467454 /* RadioCanada_Condensed-SemiBoldItalic.ttf */,
+				E91D1028D73A49CA8A8FF6CA /* RadioCanada_SemiCondensed-Bold.ttf */,
+				B390F6F666F74DE1BF4AA53C /* RadioCanada_SemiCondensed-BoldItalic.ttf */,
+				E0C26C5A4428459681798F3A /* RadioCanada_SemiCondensed-Italic.ttf */,
+				37CAA5239AE44CE798851CFF /* RadioCanada_SemiCondensed-Light.ttf */,
+				3B57C45B9ACC4234AAC54A84 /* RadioCanada_SemiCondensed-LightItalic.ttf */,
+				8273660397264585979D84E2 /* RadioCanada_SemiCondensed-Medium.ttf */,
+				AC2703B5F9C54FA3819DA378 /* RadioCanada_SemiCondensed-MediumItalic.ttf */,
+				06CA1B6DAEB041AA96FACA0E /* RadioCanada_SemiCondensed-Regular.ttf */,
+				9A67D128E81747A98BC14265 /* RadioCanada_SemiCondensed-SemiBold.ttf */,
+				D24EF751C2F043279CCE984C /* RadioCanada_SemiCondensed-SemiBoldItalic.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -325,6 +415,36 @@
 				0F46A40CD4594096A32A1E67 /* NotoSans-SemiBoldItalic.ttf in Resources */,
 				5C6000A4647147FEACA2C5F2 /* NotoSans-Thin.ttf in Resources */,
 				4ADE31F2FECA4C868C935BDC /* NotoSans-ThinItalic.ttf in Resources */,
+				5B44E96366F944A98C04CC3F /* RadioCanada-Bold.ttf in Resources */,
+				7D826BFE1622466E8F5B12D3 /* RadioCanada-BoldItalic.ttf in Resources */,
+				E4934075D94A40988698BF4F /* RadioCanada-Italic.ttf in Resources */,
+				2504D1E847D946A680926F2D /* RadioCanada-Light.ttf in Resources */,
+				0CF767A9FE744F8F987EB247 /* RadioCanada-LightItalic.ttf in Resources */,
+				FC21A25262FA40EC917AE009 /* RadioCanada-Medium.ttf in Resources */,
+				9C5FDB50B977437DA2578909 /* RadioCanada-MediumItalic.ttf in Resources */,
+				AC58DC261E7B41D583DF62AE /* RadioCanada-Regular.ttf in Resources */,
+				B8579A8222EA478D8DC93998 /* RadioCanada-SemiBold.ttf in Resources */,
+				B6E23FF1B1F44CA4B3B9E999 /* RadioCanada-SemiBoldItalic.ttf in Resources */,
+				B50A7948C98443018145DA42 /* RadioCanada_Condensed-Bold.ttf in Resources */,
+				BE121D0B7D7F488D8BBBAAAB /* RadioCanada_Condensed-BoldItalic.ttf in Resources */,
+				E6EF8ED22CD44243BCCAAEEB /* RadioCanada_Condensed-Italic.ttf in Resources */,
+				F2DA9AB78A824454A6D8BE0B /* RadioCanada_Condensed-Light.ttf in Resources */,
+				5D92A67440984A25B006A63E /* RadioCanada_Condensed-LightItalic.ttf in Resources */,
+				9A744A99556247E7B9C1FD9B /* RadioCanada_Condensed-Medium.ttf in Resources */,
+				46D3B058C864480FB9F8DECB /* RadioCanada_Condensed-MediumItalic.ttf in Resources */,
+				EF646DE8CB914E4AAE37E1B2 /* RadioCanada_Condensed-Regular.ttf in Resources */,
+				28BBD71A9436451FB4B914F3 /* RadioCanada_Condensed-SemiBold.ttf in Resources */,
+				70D03FD066F94EC7B888BBF4 /* RadioCanada_Condensed-SemiBoldItalic.ttf in Resources */,
+				9369FBF6FF3B4BD2AC2C134D /* RadioCanada_SemiCondensed-Bold.ttf in Resources */,
+				BE380521258649FFB2ABE2F2 /* RadioCanada_SemiCondensed-BoldItalic.ttf in Resources */,
+				378CB48962D04D4BB3EE8B55 /* RadioCanada_SemiCondensed-Italic.ttf in Resources */,
+				2D19CB9615C24241996F3403 /* RadioCanada_SemiCondensed-Light.ttf in Resources */,
+				04A05B96CC47411EA1DD2ADE /* RadioCanada_SemiCondensed-LightItalic.ttf in Resources */,
+				9DFAA739505D4ED985CD33BE /* RadioCanada_SemiCondensed-Medium.ttf in Resources */,
+				F26B7B845C8E4005AEF44661 /* RadioCanada_SemiCondensed-MediumItalic.ttf in Resources */,
+				6934E89FFBED456F98DCBF58 /* RadioCanada_SemiCondensed-Regular.ttf in Resources */,
+				C972467FCF334D3A88DA146A /* RadioCanada_SemiCondensed-SemiBold.ttf in Resources */,
+				BBFA143BF4F743F2999376AC /* RadioCanada_SemiCondensed-SemiBoldItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

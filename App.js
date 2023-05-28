@@ -1,16 +1,15 @@
 //import liraries
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import FONTS from './src/constants/fonts';
-import {Artist, SignIn} from './src/screen';
 
+import {StyleSheet} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {RootNavigation} from './src/routes';
 // create a component
+
 const App = () => {
   return (
-    // <View style={styles.container}>
-    //   <Text style={{ width: 'auto', height: 50, fontSize: 16, color: 'black', fontFamily: FONTS.NotoSans.Bold }}>Flow App Demo</Text>
-    // </View>
-    <Artist />
+    <NavigationContainer>
+      <RootNavigation />
+    </NavigationContainer>
   );
 };
 
