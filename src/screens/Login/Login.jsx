@@ -1,16 +1,14 @@
 import React, {useState} from 'react';
 import {Background, ButtonText, Container, HeaderText} from '../../shared';
-import {GradientButton} from '../../components';
 import scale from '../../constants/responsive';
 import {TextInput} from 'react-native-gesture-handler';
+import { GradientButton } from '../../components';
 
 export const Login = () => {
   const [email, setEmail] = useState('');
 
   return (
     <Background p={15}>
-      {/* <HeaderText>Mật khẩu</HeaderText>
-      <TextInput placeholder="Nhập mật khẩu"></TextInput> */}
       <InputField
         onChangeText={setEmail}
         alighItems={'flex-start'}

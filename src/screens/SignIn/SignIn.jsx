@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react';
-import {TouchableOpacity, ScrollView, View} from 'react-native';
+import {TouchableOpacity, ScrollView} from 'react-native';
 import {IMG_FACEBOOK, IMG_GOOGLE, IMG_LOGO} from '../../assets/images';
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
-import {BlurView} from '@react-native-community/blur';
 import DropShadow from 'react-native-drop-shadow';
 import scale from '../../constants/responsive';
 import {authorize} from 'react-native-app-auth';
@@ -14,12 +13,11 @@ import {
   Container,
   Img,
   OutlineButton,
-  ShadowContainer,
   SizedContainer,
 } from '../../shared';
 import {GradientButton, GradientButtonOutline} from '../../components';
 
-export const SignIn = () => {
+export const SignIn = ({navigation}) => {
   const GOOGLE_CLIENT_ID =
     '940998776447-oee711om5d818g4a0ats6osvhlrf079i.apps.googleusercontent.com';
   const config = {
@@ -54,82 +52,70 @@ export const SignIn = () => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <Background p={scale(23)}>
-        <Container m={`${scale(161)}px 0px 0px 0px`}>
-          <Img source={IMG_LOGO} height={scale(81)} width={scale(232)} />
-        </Container>
-        <Container m={`${scale(60)}px 0px ${scale(60)}px 0px`}>
-          <SloganText>SLOGAN HAY CÁI GÌ ĐÓ SLOGAN HAY CÁI GÌ ĐÓ </SloganText>
-        </Container>
-        <Container>
-          <GradientButton
-            width={scale(364)}
-            height={scale(52)}
-            sWidth={scale(364)}
-            sHeight={scale(52)}
-            blurWidth={scale(390)}
-            blurHeight={scale(100)}
-            blurRadius={8}>
-            <ButtonText>ĐĂNG KÝ TÀI KHOẢN NGAY</ButtonText>
-          </GradientButton>
-        </Container>
-        <Container m={`${scale(32)}px 0px 0px 0px`}>
-          <OutlineButton onPress={handleLogin}>
-            <SizedContainer
-              flexDirection={'row'}
-              justifyContent={'flex-start'}
-              alighItems={'center'}
-              height={scale(32.05)}
-              width={scale(300)}>
-              <Container m={`0px 10px 0px 0px`}>
-                <Img source={IMG_GOOGLE} height={scale(32)} width={scale(32)} />
-              </Container>
-              <ButtonText>TIẾP TỤC BẰNG TÀI KHOẢN GOOGLE</ButtonText>
-            </SizedContainer>
-          </OutlineButton>
-        </Container>
-        <Container m={`${scale(32)}px 0px 0px 0px`}>
-          <OutlineButton>
-            <SizedContainer
-              alighItems={'center'}
-              justifyContent={'flex-start'}
-              flexDirection={'row'}
-              height={scale(32.05)}
-              width={scale(300)}>
-              <Container m={`0px 10px 0px 0px`}>
-                <Img
-                  source={IMG_FACEBOOK}
-                  height={scale(32)}
-                  width={scale(32)}
-                />
-              </Container>
-              <ButtonText>TIẾP TỤC BẰNG TÀI KHOẢN FACEBOOK</ButtonText>
-            </SizedContainer>
-          </OutlineButton>
-        </Container>
-        <Container m={`${scale(32)}px 0px ${scale(32)}px 0px`}>
-          <GradientButtonOutline
-            width={scale(364)}
-            height={scale(52)}
-            sWidth={scale(370)}
-            sHeight={scale(55)}
-            blurWidth={scale(390)}
-            blurHeight={scale(100)}>
-            <ButtonText>ĐĂNG NHẬP</ButtonText>
-          </GradientButtonOutline>
-        </Container>
-      </Background>
-    </ScrollView>
-  );
-};
-
-export const GradientBlurShadow = ({...rest}) => {
-  return (
-    <>
-      <ButtonShadow {...rest} />
-      <ShadowBlur {...rest} />
-    </>
+    <Background p={23}>
+      <Container m={`117px 0px 0px 0px`}>
+        <Img source={IMG_LOGO} height={scale(81)} width={scale(232)} />
+      </Container>
+      <Container m={`60px 0px 0px 0px`}>
+        <SloganText>SLOGAN HAY CÁI GÌ ĐÓ SLOGAN HAY CÁI GÌ ĐÓ </SloganText>
+      </Container>
+      <Container m={`60px 0px 0px 0px`}>
+        <GradientButton
+          width={scale(364)}
+          height={scale(52)}
+          sWidth={scale(364)}
+          sHeight={scale(52)}
+          blurWidth={scale(390)}
+          blurHeight={scale(100)}
+          blurRadius={8}>
+          <ButtonText>ĐĂNG KÝ TÀI KHOẢN NGAY</ButtonText>
+        </GradientButton>
+      </Container>
+      <Container m={`32px 0px 0px 0px`}>
+        <OutlineButton onPress={handleLogin}>
+          <SizedContainer
+            flexDirection={'row'}
+            justifyContent={'flex-start'}
+            alighItems={'center'}
+            height={scale(32.05)}
+            width={scale(300)}>
+            <Container m={`0px 10px 0px 0px`}>
+              <Img source={IMG_GOOGLE} height={scale(32)} width={scale(32)} />
+            </Container>
+            <ButtonText>TIẾP TỤC BẰNG TÀI KHOẢN GOOGLE</ButtonText>
+          </SizedContainer>
+        </OutlineButton>
+      </Container>
+      <Container m={`32px 0px 0px 0px`}>
+        <OutlineButton>
+          <SizedContainer
+            alighItems={'center'}
+            justifyContent={'flex-start'}
+            flexDirection={'row'}
+            height={scale(32.05)}
+            width={scale(300)}>
+            <Container m={`0px 10px 0px 0px`}>
+              <Img source={IMG_FACEBOOK} height={scale(32)} width={scale(32)} />
+            </Container>
+            <ButtonText>TIẾP TỤC BẰNG TÀI KHOẢN FACEBOOK</ButtonText>
+          </SizedContainer>
+        </OutlineButton>
+      </Container>
+      <Container m={`32px 0px 0px 0px`}>
+        <GradientButtonOutline
+          width={scale(364)}
+          height={scale(52)}
+          sWidth={scale(370)}
+          sHeight={scale(55)}
+          blurWidth={scale(390)}
+          blurHeight={scale(100)}
+          onPress={() => {
+            navigation.navigate('Login');
+          }}>
+          <ButtonText>ĐĂNG NHẬP</ButtonText>
+        </GradientButtonOutline>
+      </Container>
+    </Background>
   );
 };
 
@@ -140,16 +126,6 @@ export const DropShadowButton = ({children, ...rest}) => {
     </TouchableOpacity>
   );
 };
-
-const ShadowBlur = styled(BlurView).attrs(props => ({
-  blurRadius: props.blurRadius || 1,
-  blurType: 'light',
-  overlayColor: '',
-}))`
-  position: absolute;
-  height: ${props => props.blurHeight || 0}px;
-  width: ${props => props.blurWidth || 0}px;
-`;
 
 const StyledDropShadow = styled(DropShadow)`
   shadow-color: black;
@@ -181,7 +157,6 @@ const SloganText = styled(ButtonText)`
   font-size: 24px;
   line-height: 33px;
   text-align: center;
-  margin-top: ${scale(60)}px;
 `;
 
 const ButtonShadow = styled(LinearGradient).attrs({
