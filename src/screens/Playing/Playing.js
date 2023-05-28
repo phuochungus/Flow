@@ -8,7 +8,7 @@ import scale from '../../constants/responsive';
 import FONTS from '../../constants/fonts';
 
 // create a component
-const Playing = () => {
+export const Playing = () => {
     return (
         <ScrollView style={styles.container}>
             <BackHeader onLeftButtonPressed={()=>Alert.alert("left button pressed")} img={IMG_BackDown}/>
@@ -207,5 +207,3 @@ const styles = StyleSheet.create({
     }
 });
 
-//make this component available to the app
-export default Playing;
