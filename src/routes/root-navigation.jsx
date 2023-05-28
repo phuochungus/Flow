@@ -1,5 +1,5 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import {Login, SignIn} from '../screens';
+import {Artist, Login, SignIn} from '../screens';
 import FONTS from '../constants/fonts';
 
 const Stack = createStackNavigator();
@@ -30,6 +30,14 @@ export function RootNavigation() {
           },
           headerTintColor: 'white',
           headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="Artist"
+        component={Artist}
+        options={{
+          presentation: 'transparentModal',
+          headerShown: false,
         }}
       />
     </Stack.Navigator>

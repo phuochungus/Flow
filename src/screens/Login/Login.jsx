@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import {Background, ButtonText, Container, HeaderText} from '../../shared';
 import scale from '../../constants/responsive';
 import {TextInput} from 'react-native-gesture-handler';
-import { GradientButton } from '../../components';
+import {GradientButton} from '../../components';
 
-export const Login = () => {
+export const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
 
   return (
@@ -31,7 +31,10 @@ export const Login = () => {
           sHeight={scale(48)}
           blurWidth={scale(180)}
           blurHeight={scale(70)}
-          blurRadius={8}>
+          blurRadius={8}
+          onPress={() => {
+            navigation.navigate('Artist');
+          }}>
           <ButtonText>Đăng nhập</ButtonText>
         </GradientButton>
       </Container>
