@@ -20,6 +20,7 @@ import {GradientButton, GradientButtonOutline} from '../../components';
 export const SignIn = ({navigation, route}) => {
   useEffect(() => {
     if (route.params?.token) {
+      console.log('token receive: ' + route.params.token);
       AsyncStorage.setItem('access_token', route.params.token)
         .then(() => {
           //navigate to home page after store access token
