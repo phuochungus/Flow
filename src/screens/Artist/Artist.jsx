@@ -9,7 +9,7 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import PopularAlbum from '../../components/PopularAlbum';
 import OtherArtist from '../../components/OtherArtist';
 
-const Artist = () => {
+export const Artist = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Container>
