@@ -1,12 +1,23 @@
 //import liraries
 
-import {StyleSheet} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {RootNavigation} from './src/routes';
+import { StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { RootNavigation } from './src/routes';
+// create a component
+const config = {
+  screens: {
+    SignIn: 'callback',
+  },
+};
+
+const linking = {
+  prefixes: ['flow://'],
+  config,
+};
 
 const App = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <RootNavigation />
     </NavigationContainer>
   );

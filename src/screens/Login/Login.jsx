@@ -4,8 +4,10 @@ import scale from '../../constants/responsive';
 import {TextInput} from 'react-native-gesture-handler';
 import {GradientButton} from '../../components';
 
-export const Login = ({navigation}) => {
+export const Login = ({navigation, route}) => {
   const [email, setEmail] = useState('');
+
+  console.log(route);
 
   return (
     <Background p={15}>
