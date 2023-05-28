@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
-import {TouchableOpacity, ScrollView} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import {IMG_FACEBOOK, IMG_GOOGLE, IMG_LOGO} from '../../assets/images';
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 import DropShadow from 'react-native-drop-shadow';
 import scale from '../../constants/responsive';
-import {authorize} from 'react-native-app-auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Linking} from 'react-native';
 import {
   Background,
@@ -17,35 +17,31 @@ import {
 } from '../../shared';
 import {GradientButton, GradientButtonOutline} from '../../components';
 
-export const SignIn = ({navigation}) => {
-  const GOOGLE_CLIENT_ID =
-    '940998776447-oee711om5d818g4a0ats6osvhlrf079i.apps.googleusercontent.com';
-  const config = {
-    usePKCE: false,
-    clientId: GOOGLE_CLIENT_ID,
-    redirectUrl: 'https://flow-backend.herokuapp.com/auth/google-redirect',
-    scopes: ['email', 'profile'],
-    issuer: 'https://accounts.google.com',
-    connectionTimeoutSeconds: 5,
-    warmAndPrefetchChrome: true,
-  };
-
-  const handleDeepLink = ({url}) => {
-    // const token = parseTokenFromURL(url);
-    console.log(url);
-  };
-
+export const SignIn = ({navigation, route}) => {
   useEffect(() => {
-    const listener = Linking.addEventListener('url', handleDeepLink);
+    if (route.params?.token) {
+      AsyncStorage.setItem('access_token', route.params.token)
+        .then(() => {
+          //navigate to home page after store access token
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+    return () => {};
+  }, [route.params]);
 
-    return () => {
-      listener.remove();
-    };
-  }, []);
-
-  const handleLogin = async () => {
+  const handleGoogleLogin = async () => {
     try {
-      await authorize(config);
+      Linking.openURL('https://flow-backend.herokuapp.com/auth/google');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleFacebookLogin = async () => {
+    try {
+      Linking.openURL('https://flow-backend.herokuapp.com/auth/facebook');
     } catch (error) {
       console.log(error);
     }
@@ -72,7 +68,7 @@ export const SignIn = ({navigation}) => {
         </GradientButton>
       </Container>
       <Container m={`32px 0px 0px 0px`}>
-        <OutlineButton onPress={handleLogin}>
+        <OutlineButton onPress={handleGoogleLogin}>
           <SizedContainer
             flexDirection={'row'}
             justifyContent={'flex-start'}
@@ -87,7 +83,7 @@ export const SignIn = ({navigation}) => {
         </OutlineButton>
       </Container>
       <Container m={`32px 0px 0px 0px`}>
-        <OutlineButton>
+        <OutlineButton onPress={handleFacebookLogin}>
           <SizedContainer
             alighItems={'center'}
             justifyContent={'flex-start'}
