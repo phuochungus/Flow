@@ -1,7 +1,8 @@
 //import liraries
-import { StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { RootNavigation } from './src/routes'
+
+import {StyleSheet} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {RootNavigation} from './src/routes';
 // create a component
 
 const App = () => {
@@ -9,7 +10,7 @@ const App = () => {
     <NavigationContainer>
       <RootNavigation />
     </NavigationContainer>
-  )
+  );
 };
 
 // define your styles
