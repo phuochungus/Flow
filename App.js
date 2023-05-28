@@ -1,16 +1,17 @@
 //import liraries
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import FONTS from './src/constants/fonts';
+import {Artist, SignIn} from './src/screen';
 
 // create a component
 const App = () => {
-
   return (
-    <View style={styles.container}>
-      <Text style={{ width: 'auto', height: 50, fontSize: 16, color: 'black', fontFamily: FONTS.NotoSans.Bold }}>Flow App Demo</Text>
-    </View>
-  )
+    // <View style={styles.container}>
+    //   <Text style={{ width: 'auto', height: 50, fontSize: 16, color: 'black', fontFamily: FONTS.NotoSans.Bold }}>Flow App Demo</Text>
+    // </View>
+    <Artist />
+  );
 };
 
 // define your styles
