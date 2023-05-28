@@ -5,5 +5,5 @@ import scale from '../constants/responsive';
 export const Background = styled(View)`
   background-color: black;
   flex: 1;
-  padding: ${scale(23)}px;
+  padding: ${props => props.p || 0}px;
 `;

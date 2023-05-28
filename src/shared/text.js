@@ -8,3 +8,13 @@ export const ButtonText = styled.Text`
   font-weight: 700;
   font-size: ${scale(15)}px;
 `;
+
+export const HeaderText = styled.Text`
+  font-family: 'Radio Canada';
+  font-style: normal;
+  font-weight: 700;
+  font-size: ${scale(24)}px;
+  line-height: 29px;
+  color: white;
+`;
+
