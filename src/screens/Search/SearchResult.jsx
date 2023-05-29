@@ -5,26 +5,31 @@ import scale from '../../constants/responsive';
 import { useState } from 'react';
 import { IMG_Remove, IMG_Search } from '../../assets/images';
 import FONTS from '../../constants/fonts';
-import { SearchElement } from '../../components/index';
+import { GroupResult, SearchElement } from '../../components/index';
 
 // create a component
-export const SearchFocused = () => {
+export const SearchResult = () => {
 
     const [searchText, setSearchText] = useState('');
+    const [selectedId, setSelectedId] = useState('bd7acbea-c1b1-46c2-aed5-3ad53abb28ba')
     const DATA = [
         {
           id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-          title: 'First Item',
+          title: 'Kết quả phù hợp nhất',
         },
         {
           id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-          title: 'Second Item',
+          title: 'Bài hát',
         },
         {
           id: '58694a0f-3da1-471f-bd96-145571e29d72',
-          title: 'Third Item',
+          title: 'Nghệ sĩ',
         },
       ];
+
+    const removeText = () => {
+        setSearchText('');
+    }
 
     return (
         <View style={styles.container}>
@@ -39,26 +44,50 @@ export const SearchFocused = () => {
                     {searchText == '' ? (
                         <></>
                     ) : ( 
-                        <Image source={IMG_Remove}/>
+                        <TouchableOpacity onPress={() => removeText()}>
+                            <Image style={styles.removeIcon} source={IMG_Remove}/>
+                        </TouchableOpacity>
                     )}
                 </View>
                 <TouchableOpacity>
                     <Text style={styles.cancel}>Hủy</Text>
                 </TouchableOpacity>
             </View>
-            <Text style={styles.titleText}>Các tìm kiếm gần đây</Text>
-            <FlatList 
-                data={DATA}
-                renderItem={({item}) => <SearchElement 
-                                            img={require('../../assets/images/Artist.png')} 
-                                            song={'Tên bài hát'} 
-                                            other={'Album - RPT MCK'} 
-                                            result={false}/>}
-                keyExtractor={item => item.id}
-            />
-            <TouchableOpacity style={styles.deleteButton}>
-                <Text style={styles.deleteText}>Xóa các tìm kiếm gần đây</Text>
-            </TouchableOpacity>
+            
+            <View style={{height: 30, marginTop: scale(20), marginLeft: scale(20)}}>
+                <FlatList
+                    data={DATA}
+                    renderItem={({item, index}) =>
+                        item.id !== selectedId
+                        ? GroupResult({
+                            type: item.title,
+                            onPress: () => setSelectedId(item.id),
+                            color: '#121212',
+                            })
+                        : GroupResult({
+                            type: item.title,
+                            onPress: () => {},
+                            color: '#0085FF',
+                            })
+                    }
+                    initialNumToRender={4}
+                    showsHorizontalScrollIndicator={false}
+                    horizontal={true}
+                    keyExtractor={(item, index) => item.id}
+                    extraData={selectedId}
+                />
+            </View>
+            <View style={{marginTop: scale(30)}}>
+                <FlatList 
+                    data={DATA}
+                    renderItem={({item}) => <SearchElement 
+                                                img={require('../../assets/images/Artist.png')} 
+                                                song={'Tên bài hát'} 
+                                                other={'Album - RPT MCK'} 
+                                                result={false}/>}
+                    keyExtractor={item => item.id}
+                />
+            </View>
         </View>
     );
 };
@@ -93,7 +122,7 @@ const styles = StyleSheet.create({
         height: scale(24),
     },
     searchInput: {
-        width: scale(338) - scale(24) -10,
+        width: scale(338) - scale(24) - scale(30),
         height: '100%',
         color: '#DADADA',
         fontFamily: FONTS.NotoSans.Medium,
@@ -109,27 +138,14 @@ const styles = StyleSheet.create({
         width: scale(338),
         marginLeft: scale(20),
         marginTop: scale(20),
-        fontFamily: FONTS.RadioCanada.Medium,
+        fontFamily: FONTS.RadioCanada.Bold,
         fontSize: scale(24),
         lineHeight: scale(29),
         color: 'white'
     },
-    deleteButton: {
-        width: scale(200),
-        height: scale(32),
-        marginBottom: 20,
-        alignSelf: 'center',
-        borderWidth: 0.5,
-        borderRadius: scale(16),
-        borderColor: 'white',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    deleteText: {
-        fontFamily: FONTS.NotoSans.Medium,
-        fontSize: scale(13),
-        lineHeight: scale(18),
-        color: 'white'
+    removeIcon: {
+        width: scale(20),
+        height: scale(20),
     }
 });
 
