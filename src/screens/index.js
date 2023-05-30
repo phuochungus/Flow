@@ -1,5 +1,7 @@
 export { SignIn } from './SignIn/SignIn'
 export { Login } from './Login/Login'
 export { Artist } from './Artist/Artist'
-export { default as Playing } from './Playing/Playing'
+export { Playing } from './Playing/Playing'
+export { SearchFocused } from './Search/SearchFocused'
+export { SearchResult } from './Search/SearchResult'
 export { SignUp } from './SignUp/SignUp'
