@@ -1,4 +1,5 @@
 export { SignIn } from './SignIn/SignIn'
 export { Login } from './Login/Login'
 export { Artist } from './Artist/Artist'
-export { Playing } from './Playing/Playing'
+export { default as Playing } from './Playing/Playing'
+export { SignUp } from './SignUp/SignUp'
