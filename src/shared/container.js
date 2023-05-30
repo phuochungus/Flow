@@ -13,8 +13,8 @@ export const Container = styled.View`
   `;
 
 export const SizedContainer = styled(Container)`
-  height: ${props => props.height}px;
-  width: ${props => props.width}px;
+  height: ${props => props.height};
+  width: ${props => props.width};
 `;
 
 
