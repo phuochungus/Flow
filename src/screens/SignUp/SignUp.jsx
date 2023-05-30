@@ -3,10 +3,12 @@ import {Background, ButtonText, Container} from '../../shared';
 import scale from '../../constants/responsive';
 import {GradientButton, InputField} from '../../components';
 import {ScrollView} from 'react-native-gesture-handler';
-import {ActivityIndicator} from 'react-native';
+import {ActivityIndicator, Text} from 'react-native';
 import {SecuredInputField} from '../../components/securedInputField';
 import moment from 'moment';
 import Snackbar from 'react-native-snackbar';
+import {isEmail} from 'class-validator';
+import {StackActions} from 'react-navigation';
 
 export const SignUp = ({navigation}) => {
   const [email, setEmail] = useState();
@@ -15,18 +17,101 @@ export const SignUp = ({navigation}) => {
   const [DOB, setDOB] = useState();
   const [username, setUsername] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [isEmailTaken, setIsEmailTaken] = useState(false);
 
   const emailRef = useRef();
   const passwordRef = useRef();
   const rePasswordRef = useRef();
   const DOBRef = useRef();
   const usernameRef = useRef();
-  const buttonRef = useRef();
 
   function isValidDateString(dateString) {
-    let date = moment(DOB, 'DD/MM/YYYY').toDate();
+    let date = moment(dateString, 'DD/MM/YYYY').toDate();
     return date.getTime() > 0;
   }
+
+  function showSnackBar(text, backgroundColor) {
+    Snackbar.show({
+      duration: Snackbar.LENGTH_LONG,
+      text,
+      backgroundColor: backgroundColor || 'red',
+      textColor: 'white',
+    });
+  }
+
+  function validateDOB() {
+    if (isValidDateString(DOB)) return true;
+    showSnackBar('Ngày sinh không đúng định dạng: 19/05/2001, 20/1/1990');
+    return false;
+  }
+
+  function validatePasswordMatch() {
+    if (password === rePassword) return true;
+    showSnackBar('Mật khẩu không khớp');
+    return false;
+  }
+
+  function validateEmail() {
+    if (email) {
+      if (isEmail(email)) return true;
+      else showSnackBar('Email không hợp lệ');
+    } else showSnackBar('Email không được phép rỗng');
+    return false;
+  }
+
+  function validateUsername() {
+    if (username) {
+      return true;
+    } else showSnackBar('Tên không được phép rỗng');
+    return false;
+  }
+
+  const handleButton = async () => {
+    if (
+      validatePasswordMatch() &&
+      validateDOB() &&
+      validateEmail() &&
+      validateUsername()
+    ) {
+      setIsLoading(true);
+
+      var headers = new Headers();
+      headers.append('accept', '*/*');
+      headers.append('Content-Type', 'application/json');
+
+      var raw = JSON.stringify({
+        email,
+        username,
+        birth: moment(DOB, 'DD/MM/YYYY').toISOString(),
+        password,
+      });
+
+      var requestOptions = {
+        method: 'POST',
+        headers: headers,
+        body: raw,
+        redirect: 'follow',
+      };
+
+      try {
+        let response = await fetch(
+          'https://flow-backend.herokuapp.com/users',
+          requestOptions,
+        );
+        console.log(response);
+        if (response.status == 409) {
+          console.log(await response.text());
+          setIsEmailTaken(true);
+        } else if (response.status == 201) {
+          showSnackBar('Tạo tài khoản mới thành công', 'green');
+          navigation.popToTop();
+        }
+      } catch (error) {
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
 
   return (
     <Background p={15}>
@@ -44,6 +129,15 @@ export const SignUp = ({navigation}) => {
           }}
           blurOnSubmit={false}
         />
+        {isEmailTaken ? (
+          <>
+            <Text style={{color: 'red', marginBottom: 20}}>
+              *Email đã được sử dụng
+            </Text>
+          </>
+        ) : (
+          <></>
+        )}
         <SecuredInputField
           value={password}
           onChangeText={setPassword}
@@ -80,15 +174,7 @@ export const SignUp = ({navigation}) => {
           m={`0px 0px ${scale(48)}px 0px`}
           ref={DOBRef}
           onSubmitEditing={() => {
-            if (isValidDateString(DOB)) usernameRef.current.focus();
-            else {
-              Snackbar.show({
-                duration: Snackbar.LENGTH_LONG,
-                text: 'Ngày sinh không đúng định dạng: 19/05/2001, 20/1/1990',
-                backgroundColor: 'red',
-                textColor: 'black',
-              });
-            }
+            if (validateDOB()) usernameRef.current.focus();
           }}
           blurOnSubmit={false}
         />
@@ -106,7 +192,7 @@ export const SignUp = ({navigation}) => {
                 duration: Snackbar.LENGTH_LONG,
                 text: 'Ngày sinh không đúng định dạng: 19/05/2001, 20/1/1990',
                 backgroundColor: 'red',
-                textColor: 'black',
+                textColor: 'white',
               });
               DOBRef.current.focus();
             }
@@ -116,7 +202,10 @@ export const SignUp = ({navigation}) => {
           {isLoading ? (
             <ActivityIndicator size={'large'} />
           ) : (
-            <GradientButton width={scale(132)} height={scale(48)}>
+            <GradientButton
+              width={scale(132)}
+              height={scale(48)}
+              onPress={handleButton}>
               <ButtonText>Tạo tài khoản</ButtonText>
             </GradientButton>
           )}
