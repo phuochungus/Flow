@@ -1,3 +1,4 @@
+import {forwardRef} from 'react';
 import scale from '../constants/responsive';
 import {
   DropShadowButton,
