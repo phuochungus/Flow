@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {forwardRef, useEffect} from 'react';
 import {TouchableOpacity} from 'react-native';
 import {IMG_FACEBOOK, IMG_GOOGLE, IMG_LOGO} from '../../assets/images';
 import styled from 'styled-components/native';
@@ -16,14 +16,20 @@ import {
   SizedContainer,
 } from '../../shared';
 import {GradientButton, GradientButtonOutline} from '../../components';
+import {ScrollView} from 'react-native-gesture-handler';
+import {CommonActions} from '@react-navigation/native';
 
 export const SignIn = ({navigation, route}) => {
   useEffect(() => {
     if (route.params?.token) {
-      console.log('token receive: ' + route.params.token);
       AsyncStorage.setItem('access_token', route.params.token)
         .then(() => {
-          //navigate to home page after store access token
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{name: 'Artist'}],
+            }),
+          );
         })
         .catch(error => {
           console.log(error);
@@ -50,75 +56,75 @@ export const SignIn = ({navigation, route}) => {
 
   return (
     <Background p={23}>
-      <Container m={`117px 0px 0px 0px`}>
-        <Img source={IMG_LOGO} height={scale(81)} width={scale(232)} />
-      </Container>
-      <Container m={`60px 0px 0px 0px`}>
-        <SloganText>SLOGAN HAY CÁI GÌ ĐÓ SLOGAN HAY CÁI GÌ ĐÓ </SloganText>
-      </Container>
-      <Container m={`60px 0px 0px 0px`}>
-        <GradientButton
-          width={scale(364)}
-          height={scale(52)}
-          sWidth={scale(364)}
-          sHeight={scale(52)}
-          blurWidth={scale(390)}
-          blurHeight={scale(100)}
-          blurRadius={8}>
-          <ButtonText>ĐĂNG KÝ TÀI KHOẢN NGAY</ButtonText>
-        </GradientButton>
-      </Container>
-      <Container m={`32px 0px 0px 0px`}>
-        <OutlineButton onPress={handleGoogleLogin}>
-          <SizedContainer
-            flexDirection={'row'}
-            justifyContent={'flex-start'}
-            alighItems={'center'}
-            height={scale(32.05)}
-            width={scale(300)}>
-            <Container m={`0px 10px 0px 0px`}>
-              <Img source={IMG_GOOGLE} height={scale(32)} width={scale(32)} />
-            </Container>
-            <ButtonText>TIẾP TỤC BẰNG TÀI KHOẢN GOOGLE</ButtonText>
-          </SizedContainer>
-        </OutlineButton>
-      </Container>
-      <Container m={`32px 0px 0px 0px`}>
-        <OutlineButton onPress={handleFacebookLogin}>
-          <SizedContainer
-            alighItems={'center'}
-            justifyContent={'flex-start'}
-            flexDirection={'row'}
-            height={scale(32.05)}
-            width={scale(300)}>
-            <Container m={`0px 10px 0px 0px`}>
-              <Img source={IMG_FACEBOOK} height={scale(32)} width={scale(32)} />
-            </Container>
-            <ButtonText>TIẾP TỤC BẰNG TÀI KHOẢN FACEBOOK</ButtonText>
-          </SizedContainer>
-        </OutlineButton>
-      </Container>
-      <Container m={`32px 0px 0px 0px`}>
-        <GradientButtonOutline
-          width={scale(364)}
-          height={scale(52)}
-          sWidth={scale(370)}
-          sHeight={scale(55)}
-          blurWidth={scale(390)}
-          blurHeight={scale(100)}
-          onPress={() => {
-            navigation.navigate('Login');
-          }}>
-          <ButtonText>ĐĂNG NHẬP</ButtonText>
-        </GradientButtonOutline>
-      </Container>
+      <ScrollView>
+        <Container m={`117px 0px 0px 0px`}>
+          <Img source={IMG_LOGO} height={scale(81)} width={scale(232)} />
+        </Container>
+        <Container m={`60px 0px 0px 0px`}>
+          <SloganText>SLOGAN HAY CÁI GÌ ĐÓ SLOGAN HAY CÁI GÌ ĐÓ </SloganText>
+        </Container>
+        <Container m={`60px 0px 0px 0px`}>
+          <GradientButton
+            width={scale(364)}
+            height={scale(52)}
+            onPress={() => {
+              navigation.navigate('SignUp');
+            }}>
+            <ButtonText>ĐĂNG KÝ TÀI KHOẢN NGAY</ButtonText>
+          </GradientButton>
+        </Container>
+        <Container m={`32px 0px 0px 0px`}>
+          <OutlineButton onPress={handleGoogleLogin}>
+            <SizedContainer
+              flexDirection={'row'}
+              justifyContent={'flex-start'}
+              alighItems={'center'}
+              height={scale(32.05) + 'px'}
+              width={scale(300) + 'px'}>
+              <Container m={`0px 10px 0px 0px`}>
+                <Img source={IMG_GOOGLE} height={scale(32)} width={scale(32)} />
+              </Container>
+              <ButtonText>TIẾP TỤC BẰNG TÀI KHOẢN GOOGLE</ButtonText>
+            </SizedContainer>
+          </OutlineButton>
+        </Container>
+        <Container m={`32px 0px 0px 0px`}>
+          <OutlineButton onPress={handleFacebookLogin}>
+            <SizedContainer
+              alighItems={'center'}
+              justifyContent={'flex-start'}
+              flexDirection={'row'}
+              height={scale(32.05) + 'px'}
+              width={scale(300) + 'px'}>
+              <Container m={`0px 10px 0px 0px`}>
+                <Img
+                  source={IMG_FACEBOOK}
+                  height={scale(32)}
+                  width={scale(32)}
+                />
+              </Container>
+              <ButtonText>TIẾP TỤC BẰNG TÀI KHOẢN FACEBOOK</ButtonText>
+            </SizedContainer>
+          </OutlineButton>
+        </Container>
+        <Container m={`32px 0px 0px 0px`}>
+          <GradientButtonOutline
+            width={scale(364)}
+            height={scale(52)}
+            onPress={() => {
+              navigation.navigate('Login');
+            }}>
+            <ButtonText>ĐĂNG NHẬP</ButtonText>
+          </GradientButtonOutline>
+        </Container>
+      </ScrollView>
     </Background>
   );
 };
 
-export const DropShadowButton = ({children, ...rest}) => {
+export const DropShadowButton = ({onPress, children}) => {
   return (
-    <TouchableOpacity onPress={rest.onPress}>
+    <TouchableOpacity onPress={onPress}>
       <StyledDropShadow>{children}</StyledDropShadow>
     </TouchableOpacity>
   );

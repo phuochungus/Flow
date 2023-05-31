@@ -1,6 +1,7 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import {Artist, Login, SignIn} from '../screens';
 import FONTS from '../constants/fonts';
+import {SignUp} from '../screens/SignUp/SignUp';
 
 const Stack = createStackNavigator();
 
@@ -11,6 +12,26 @@ export function RootNavigation() {
         name="SignIn"
         component={SignIn}
         options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{
+          presentation: 'transparentModal',
+          title: 'TẠO TÀI KHOẢN',
+          headerStyle: {
+            backgroundColor: 'black',
+            elevation: 0,
+            shadowOpacity: 0,
+            borderBottomWidth: 0,
+          },
+          headerTitleStyle: {
+            fontFamily: FONTS.RadioCanada.Medium,
+            fontSize: 24,
+          },
+          headerTintColor: 'white',
+          headerTitleAlign: 'center',
+        }}
       />
       <Stack.Screen
         name="Login"
