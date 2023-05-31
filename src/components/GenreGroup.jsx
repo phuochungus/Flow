@@ -6,11 +6,6 @@ import FONTS from '../constants/fonts';
 
 export const GenreGroup = (props) => {
 
-    const randomColor = () => {
-        const color = Math.floor(Math.random()*16777215).toString(16).padStart(6, "0");
-        return color;
-    }
-
     return (
         <View style={styles.container}>
             <View style={{flex: 2}}>
