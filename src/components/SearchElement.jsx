@@ -1,5 +1,5 @@
 //import liraries
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import scale from '../constants/responsive';
 import { IMG_HorizontalDots, IMG_Remove } from '../assets/images';
