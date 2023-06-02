@@ -1,14 +1,16 @@
 import React from 'react';
+import {View, Image} from 'react-native';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import scale from '../constants/responsive';
 
 const PopularSongInArtist = props => {
   return (
     <Container>
       <Number>{props.number}</Number>
       <MainDetail>
-        <ImageContainer>
-          <Image source={require('../assets/images/Artist.png')} />
+        <ImageContainer height={scale(52)} width={scale(52)}>
+          <SongImage source={require('../assets/images/Artist.png')} />
           <StyleImage>
             <Round />
           </StyleImage>
@@ -46,13 +48,13 @@ const MainDetail = styled.TouchableOpacity`
 `;
 
 const ImageContainer = styled.View`
-  width: 48px;
-  height: 48px;
+  height: ${props => props.height}px;
+  width: ${props => props.width}px;
   position: relative;
   margin-right: 12px;
 `;
 
-const Image = styled.Image`
+const SongImage = styled.Image`
   width: 100%;
   height: 100%;
   border-radius: 50px;

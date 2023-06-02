@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, ScrollView, TouchableOpacity} from 'react-native';
+import {View, ScrollView, TouchableOpacity, Image} from 'react-native';
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 import PopularSongInArtist from '../../components/PopularSongInArtist';
@@ -8,133 +8,129 @@ import EntypoIcon from 'react-native-vector-icons/Entypo';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import PopularAlbum from '../../components/PopularAlbum';
 import OtherArtist from '../../components/OtherArtist';
+import scale from '../../constants/responsive';
 
 export const Artist = () => {
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <Container>
-        <ImageContainer>
-          <Image source={require('../../assets/images/Artist.png')} />
-          <BackButton>
-            <EntypoIcon name="chevron-thin-left" size={24} color="#fff" />
-          </BackButton>
-          <LinearBackground />
-          <BottomOfImage>
-            <TextContainer>
-              <NameArtist>Vũ.</NameArtist>
-              <Streaming>
-                <FeatherIcon name="headphones" size={16} color="#fff" />
-                <Number>100,000 lượt nghe hàng tháng</Number>
-              </Streaming>
-            </TextContainer>
-            <DetailContainer>
-              <DetailButton>
-                <EntypoIcon name="dots-three-vertical" size={20} color="#fff" />
-              </DetailButton>
-            </DetailContainer>
-          </BottomOfImage>
-        </ImageContainer>
-        <Description>
-          Mô tả về nghệ sĩ Mô tả về nghệ sĩ Mô tả về nghệ sĩ Mô tả về nghệ sĩ Mô
-          tả về nghệ sĩ Mô tả về nghệ sĩ Mô tả về nghệ sĩ Mô tả về nghệ sĩ
-        </Description>
-        <ButtonContainer>
-          <PlayRandomContainer>
-            <PlayButton>
-              <FontAwesomeIcon name="play" size={20} color="#000" />
-            </PlayButton>
-            <RandomContainer>
-              <RandomIcon>
-                <FontAwesomeIcon
-                  name="random"
-                  size={10}
-                  color="rgba(231, 13, 251, 1)"
-                />
-              </RandomIcon>
-            </RandomContainer>
-          </PlayRandomContainer>
-          <FollowContainer>
-            <FollowButton>
-              <FollowBackground>
-                <FollowText>Theo dõi</FollowText>
-              </FollowBackground>
-            </FollowButton>
-          </FollowContainer>
-        </ButtonContainer>
-        <Section>
-          <TitleContainer>
-            <Title>Bài hát nổi bật</Title>
-          </TitleContainer>
-          <PopularSongInArtist
-            number="1"
-            nameSong="Một vạn năm"
-            numberStreaming="Số lượt nghe"
-          />
-          <PopularSongInArtist
-            number="2"
-            nameSong="Một vạn năm"
-            numberStreaming="Số lượt nghe"
-          />
-          <PopularSongInArtist
-            number="3"
-            nameSong="Một vạn năm"
-            numberStreaming="Số lượt nghe"
-          />
-          <PopularSongInArtist
-            number="4"
-            nameSong="Một vạn năm"
-            numberStreaming="Số lượt nghe"
-          />
-          <PopularSongInArtist
-            number="5"
-            nameSong="Một vạn năm"
-            numberStreaming="Số lượt nghe"
-          />
-        </Section>
-        <Section>
-          <TitleContainer>
-            <Title>Album phổ biến</Title>
-            <TouchableOpacity>
-              <ViewAll>Xem tất cả</ViewAll>
-            </TouchableOpacity>
-          </TitleContainer>
-          <HorizontalScroll horizontal>
-            <PopularAlbum title="Một vạn năm" yearPublish="2022" />
-            <PopularAlbum title="Một vạn năm" yearPublish="2022" />
-            <PopularAlbum title="Một vạn năm" yearPublish="2022" />
-            <PopularAlbum title="Một vạn năm" yearPublish="2022" />
-          </HorizontalScroll>
-        </Section>
-        <Section>
-          <TitleContainer>
-            <Title>Nghệ sĩ bạn có thể theo dõi</Title>
-          </TitleContainer>
-          <HorizontalScroll horizontal>
-            <OtherArtist title="Hoàng Thùy Linh" />
-            <OtherArtist title="Hoàng Thùy Linh" />
-            <OtherArtist title="Hoàng Thùy Linh" />
-            <OtherArtist title="Hoàng Thùy Linh" />
-          </HorizontalScroll>
-        </Section>
-      </Container>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={{backgroundColor: '#121212'}}>
+      <ImageContainer height={scale(300)}>
+        <ArtistImage source={require('../../assets/images/Artist.png')} />
+        <BackButton>
+          <EntypoIcon name="chevron-thin-left" size={24} color="#fff" />
+        </BackButton>
+        <LinearBackground height={scale(120)} />
+        <BottomOfImage>
+          <TextContainer>
+            <NameArtist>Vũ.</NameArtist>
+            <Streaming>
+              <FeatherIcon name="headphones" size={16} color="#fff" />
+              <Number>100,000 lượt nghe hàng tháng</Number>
+            </Streaming>
+          </TextContainer>
+          <DetailContainer>
+            <DetailButton height={scale(32)} width={scale(32)}>
+              <EntypoIcon name="dots-three-vertical" size={20} color="#fff" />
+            </DetailButton>
+          </DetailContainer>
+        </BottomOfImage>
+      </ImageContainer>
+      <Description>
+        Mô tả về nghệ sĩ Mô tả về nghệ sĩ Mô tả về nghệ sĩ Mô tả về nghệ sĩ Mô
+        tả về nghệ sĩ Mô tả về nghệ sĩ Mô tả về nghệ sĩ Mô tả về nghệ sĩ
+      </Description>
+      <ButtonContainer>
+        <PlayRandomContainer height={scale(60)} width={scale(62)}>
+          <PlayButton height={scale(54)} width={scale(54)}>
+            <FontAwesomeIcon name="play" size={20} color="#000" />
+          </PlayButton>
+          <RandomContainer>
+            <RandomIcon>
+              <FontAwesomeIcon
+                name="random"
+                size={10}
+                color="rgba(231, 13, 251, 1)"
+              />
+            </RandomIcon>
+          </RandomContainer>
+        </PlayRandomContainer>
+        <FollowContainer>
+          <FollowButton>
+            <FollowBackground height={scale(48)} width={scale(152)}>
+              <FollowText>Theo dõi</FollowText>
+            </FollowBackground>
+          </FollowButton>
+        </FollowContainer>
+      </ButtonContainer>
+      <Section>
+        <TitleContainer>
+          <Title>Bài hát nổi bật</Title>
+        </TitleContainer>
+        <PopularSongInArtist
+          number="1"
+          nameSong="Một vạn năm"
+          numberStreaming="Số lượt nghe"
+        />
+        <PopularSongInArtist
+          number="2"
+          nameSong="Một vạn năm"
+          numberStreaming="Số lượt nghe"
+        />
+        <PopularSongInArtist
+          number="3"
+          nameSong="Một vạn năm"
+          numberStreaming="Số lượt nghe"
+        />
+        <PopularSongInArtist
+          number="4"
+          nameSong="Một vạn năm"
+          numberStreaming="Số lượt nghe"
+        />
+        <PopularSongInArtist
+          number="5"
+          nameSong="Một vạn năm"
+          numberStreaming="Số lượt nghe"
+        />
+      </Section>
+      <Section>
+        <TitleContainer>
+          <Title>Album phổ biến</Title>
+          <TouchableOpacity>
+            <ViewAll>Xem tất cả</ViewAll>
+          </TouchableOpacity>
+        </TitleContainer>
+        <HorizontalScroll horizontal>
+          <PopularAlbum title="Một vạn năm" yearPublish="2022" />
+          <PopularAlbum title="Một vạn năm" yearPublish="2022" />
+          <PopularAlbum title="Một vạn năm" yearPublish="2022" />
+          <PopularAlbum title="Một vạn năm" yearPublish="2022" />
+        </HorizontalScroll>
+      </Section>
+      <Section>
+        <TitleContainer>
+          <Title>Nghệ sĩ bạn có thể theo dõi</Title>
+        </TitleContainer>
+        <HorizontalScroll horizontal>
+          <OtherArtist title="Hoàng Thùy Linh" />
+          <OtherArtist title="Hoàng Thùy Linh" />
+          <OtherArtist title="Hoàng Thùy Linh" />
+          <OtherArtist title="Hoàng Thùy Linh" />
+        </HorizontalScroll>
+      </Section>
     </ScrollView>
   );
 };
 
-export default Artist;
-
-const Container = styled(View)`
-  background-color: black;
-  flex: 1;
-`;
-
-const ImageContainer = styled.View`
+const ImageContainer = styled(View)`
   width: 100%;
-  height: 300px;
+  height: ${props => props.height}px;
   position: relative;
 `;
 
-const Image = styled.Image`
+const ArtistImage = styled(Image).attrs(({source}) => ({
+  source: source,
+}))`
   width: 100%;
   height: 100%;
   border-bottom-left-radius: 50px;
@@ -187,9 +183,9 @@ const DetailContainer = styled.View`
   justify-content: flex-end;
 `;
 
-const DetailButton = styled.TouchableOpacity`
-  height: 32px;
-  width: 32px;
+const DetailButton = styled(TouchableOpacity)`
+  height: ${props => props.height}px;
+  width: ${props => props.width}px;
   align-items: center;
   justify-content: center;
   border-radius: 50px;
@@ -205,7 +201,7 @@ const LinearBackground = styled(LinearGradient).attrs({
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 120px;
+  height: ${props => props.height}px;
   border-bottom-left-radius: 50px;
   border-bottom-right-radius: 50px;
 `;
@@ -228,9 +224,9 @@ const ButtonContainer = styled.View`
   justify-content: center;
 `;
 
-const PlayRandomContainer = styled.TouchableOpacity`
-  height: 54px;
-  width: 52px;
+const PlayRandomContainer = styled(TouchableOpacity)`
+  height: ${props => props.height}px;
+  width: ${props => props.width}px;
   position: relative;
 `;
 
@@ -242,8 +238,8 @@ const PlayButton = styled(LinearGradient).attrs({
   angle: 55.82,
 })`
   border-radius: 50px;
-  height: 48px;
-  width: 48px;
+  height: ${props => props.height}px;
+  width: ${props => props.width}px;
   align-items: center;
   justify-content: center;
   padding-left: 4px;
@@ -287,8 +283,8 @@ const FollowBackground = styled(LinearGradient).attrs({
 })`
   align-items: center;
   justify-content: center;
-  height: 40px;
-  width: 132px;
+  height: ${props => props.height}px;
+  width: ${props => props.width}px;
   border-radius: 20px;
 `;
 
