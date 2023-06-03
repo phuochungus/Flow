@@ -1,5 +1,5 @@
 //import liraries
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, TextInput, Image, FlatList, TouchableOpacity } from 'react-native';
 import scale from '../../constants/responsive';
 import { useState } from 'react';
