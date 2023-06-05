@@ -8,7 +8,6 @@ import {SecuredInputField} from '../../components/securedInputField';
 import moment from 'moment';
 import Snackbar from 'react-native-snackbar';
 import {isEmail} from 'class-validator';
-import {StackActions} from 'react-navigation';
 
 export const SignUp = ({navigation}) => {
   const [email, setEmail] = useState();
