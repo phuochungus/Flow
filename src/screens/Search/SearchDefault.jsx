@@ -79,10 +79,6 @@ export const SearchDefault = () => {
             id: 17,
             genre: 'Tình yêu'
         },
-        {
-            id: 18,
-            genre: 'Dành cho bạn'
-        },
     ];
 
     const Colors = [

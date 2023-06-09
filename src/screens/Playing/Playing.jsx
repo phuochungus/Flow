@@ -1,28 +1,177 @@
 //import liraries
-import React, { Component, useSyncExternalStore } from 'react';
-import { View, Text, StyleSheet, Alert, Image, TouchableOpacity, ScrollView, SliderBase } from 'react-native';
+import React, { Component, useEffect, useState, useSyncExternalStore } from 'react';
+import { View, Text, StyleSheet, Alert, Image, TouchableOpacity, ScrollView, FlatList, ImageBackground } from 'react-native';
 import * as Progress from 'react-native-progress';
 import BackHeader from '../../components/back-header';
-import { IMG_AddPlaylist, IMG_BackDown, IMG_Dots, IMG_Like, IMG_Next, IMG_Play, IMG_Previous, IMG_Random, IMG_Repeat, IMG_Up } from '../../assets/images';
+import { IMG_AddPlaylist, IMG_BackDown, IMG_Dots, IMG_Like, IMG_Liked, IMG_Next, IMG_Play, IMG_Previous, IMG_Random, IMG_Repeat, IMG_Up } from '../../assets/images';
 import scale from '../../constants/responsive';
 import FONTS from '../../constants/fonts';
 
 // create a component
 export const Playing = () => {
+    
+    const [songInfo, setSongInfo] = useState({});
+    const [lyrics, setLyrics] = useState({});
+
+    const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDc5YTYzMzdkNzcyMDdjZDhjNDBlMzEiLCJpYXQiOjE2ODYxNDY1NTl9.g8XuVxRAen_mLGCpO2itoh7XEO33IJrLTNe9Eo4_Mhw";
+
+    const getAPI = () => {
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + accessToken);
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+        // setSongInfo({name: "Giúp anh trả lời những câu hỏi", artists: [{name: "Tên ca sĩ"}, {name: "Ten ca si 2"}, {name: "Ten ca si thu ba dai lam"}], isFavourite: true});
+        fetch("https://flow-backend.herokuapp.com/tracks/track/2nMeu6UenVvwUktBCpLMK9", requestOptions)
+            .then(response => response.json())
+            .then(result => {console.log(result); setSongInfo(result)})
+            .catch(error => console.log('error', error));
+
+        // getSong
+        // requestOptions = {
+        //     method: 'GET',
+        //     redirect: 'follow'
+        // };
+          
+        // fetch("https://flow-backend.herokuapp.com/tracks/play/2nMeu6UenVvwUktBCpLMK9", requestOptions)
+        //     //.then(response => response.json())
+        //     .then(result => console.log(result))
+        //     .catch(error => console.log('error', error));
+
+        //getLyrics
+        requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+          };
+          
+        fetch("https://flow-backend.herokuapp.com/tracks/lyrics/2qxmye6gAegTMjLKEBoR3d", requestOptions)
+            .then(response => response.json())
+            .then(result => {console.log(result); setLyrics(result)})
+            .catch(error => console.log('error', error));
+    }
+
+    useEffect(()=>{
+        getSongInfo();
+        getLyrics();
+        console.log(songInfo);
+    }, [])
+
+    const getSongInfo = () => {
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + accessToken);
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+        // setSongInfo({name: "Giúp anh trả lời những câu hỏi", artists: [{name: "Tên ca sĩ"}, {name: "Ten ca si 2"}, {name: "Ten ca si thu ba dai lam"}], isFavourite: true});
+        fetch("https://flow-backend.herokuapp.com/tracks/track/2nMeu6UenVvwUktBCpLMK9", requestOptions)
+            .then(response => response.json())
+            .then(result => {console.log(result); setSongInfo(result)})
+            .catch(error => console.log('error', error));
+    }
+
+    const getLyrics = () => {
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + accessToken);
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+          };
+          
+        fetch("https://flow-backend.herokuapp.com/tracks/lyrics/2qxmye6gAegTMjLKEBoR3d", requestOptions)
+            .then(response => response.json())
+            .then(result => {console.log(result); setLyrics(result)})
+            .catch(error => console.log('error', error));
+    }
+
+    const handleSongName = (text) => {
+        if (text == undefined)
+            return "Loading..."; 
+        let result = [];
+        if (text.length > 27) {
+            let i = 0;
+            while (i < 24) {
+                result[i] = text[i];
+                i = i + 1;
+            }
+            result[24] = ".";
+            result[25] = ".";
+            result[26] = ".";
+        }
+        else {
+            return text;
+        }
+        return result;
+    }
+
+    const handleArtistsName = (artists) => {
+        let names = [];
+        for (let i = 0; i < artists.length; i++) {
+            if (i != 0)
+                names.push(" " + artists[i].name);
+            else
+                names.push(artists[i].name);
+        }
+        let text = names.toString();
+        let result = [];
+        if (text.length > 37) {
+            let i = 0;
+            while (i < 34) {
+                result[i] = text[i];
+                i = i + 1;
+            }
+            result[34] = ".";
+            result[35] = ".";
+            result[36] = ".";
+        }
+        else {
+            return text;
+        }
+        return result;
+    }
+
+    const handleFavorites = (method) => {
+        var myHeaders = new Headers();
+        myHeaders.append("accept", "*/*");
+        myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDc5YTYzMzdkNzcyMDdjZDhjNDBlMzEiLCJpYXQiOjE2ODYxNDY1NTl9.g8XuVxRAen_mLGCpO2itoh7XEO33IJrLTNe9Eo4_Mhw");
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "id": "2nMeu6UenVvwUktBCpLMK9"
+        });
+
+        var requestOptions = {
+            method: method,
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("https://flow-backend.herokuapp.com/me/favourites", requestOptions)
+        // .then(response => response.text())
+        .then(result => {console.log("liked"); getSongInfo();})
+        .catch(error => console.log('error', error));
+    }
+
     return (
         <ScrollView style={styles.container}>
             <BackHeader onLeftButtonPressed={()=>Alert.alert("left button pressed")} img={IMG_BackDown}/>
             <View style={styles.DVDContainer}>
-                
+                <ImageBackground style={[styles.imgBackground, {transform: [{rotate: '45deg'}],}]} source={{uri: songInfo.images !== undefined ? songInfo.images[0].url : "https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg"}}>
+                    <View style = {styles.smallCircle}/>
+                </ImageBackground>
             </View>
             <View style={styles.nameArtistIconContainer}>
                 <View>
-                    <Text style={styles.songText}>ưng quá chừng</Text>
-                    <Text style={styles.artistText}>Amee</Text>
+                    <Text style={styles.songText}>{handleSongName(songInfo.name)}</Text>
+                    <Text style={styles.artistText}>{songInfo.artists !== undefined ? handleArtistsName(songInfo.artists) : "Loading..."}</Text>
                 </View>
                 <View style={styles.iconBox}>
-                    <TouchableOpacity>
-                        <Image style={styles.icon} source={IMG_Like}/>
+                    <TouchableOpacity onPress={!songInfo.isFavourite ? ()=>{handleFavorites('POST')} : ()=>{handleFavorites('DELETE')}}>
+                        <Image style={styles.icon} source={songInfo.isFavourite ? IMG_Liked : IMG_Like}/>
                     </TouchableOpacity>
                     <TouchableOpacity>
                         <Image style={styles.icon} source={IMG_AddPlaylist}/>
@@ -63,14 +212,20 @@ export const Playing = () => {
                         <Image style={styles.up} source={IMG_Up}/>
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.lyricText}>Sao hôm nay, lại cứ ngẩn ngơ thế này</Text>
-                <Text style={styles.nowLyricText}>Sao mà bây giờ đây, vũ trụ em chỉ thấy anh thôi đấy</Text>
-                <Text style={styles.lyricText}>Sao hôm nay, lại cứ ngẩn ngơ thế này</Text>
-                <Text style={styles.lyricText}>Sao hôm nay, lại cứ ngẩn ngơ thế này</Text>
-                <Text style={styles.lyricText}>Sao hôm nay, lại cứ ngẩn ngơ thế này</Text>
-                <Text style={styles.lyricText}>Sao hôm nay, lại cứ ngẩn ngơ thế này</Text>
-                <Text style={styles.lyricText}>Sao hôm nay, lại cứ ngẩn ngơ thế này</Text>
-                <Text style={styles.lyricText}>Sao hôm nay, lại cứ ngẩn ngơ thế này</Text>
+                {lyrics !== undefined ? (
+                    <ScrollView horizontal={true} style={{ width: "100%" }}>
+                        <FlatList 
+                            data={lyrics}
+                            renderItem={({item}) => <Text style={styles.lyricText}>{item.words}</Text>}
+                            keyExtractor={(item, index) => index}
+                        />
+                    </ScrollView>
+                ) : (
+                    <>
+                        <Text style={styles.lyricText}>Loading lyrics</Text>
+                        <Text style={styles.nowLyricText}>Loading lyrics</Text>
+                    </>
+                )}
             </ScrollView>
         </ScrollView>
     );
@@ -86,9 +241,13 @@ const styles = StyleSheet.create({
     DVDContainer: {
         width: scale(360),
         height: scale(360),
+        borderRadius: scale(180),
+        borderWidth: 1,
+        borderColor: 'grey',
         alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
         marginTop: scale(22),
-        backgroundColor: 'gray',
     },
     nameArtistIconContainer: {
         flexDirection: 'row',
@@ -166,6 +325,7 @@ const styles = StyleSheet.create({
     lyricBox: {
         width: scale(398),
         height: scale(161),
+        marginTop: scale(20),
         alignSelf: 'center',
         backgroundColor: 'black',
         borderTopLeftRadius: scale(20),
@@ -204,6 +364,23 @@ const styles = StyleSheet.create({
         fontSize: scale(15),
         lineHeight: scale(20),
         color: 'white',
+    },
+    imgBackground: {
+        width: scale(332), 
+        height: scale(332), 
+        borderRadius: scale(180), 
+        resizeMode: 'cover', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        overflow: 'hidden'
+    },
+    smallCircle: {
+        height: scale(88), 
+        width: scale(88), 
+        borderRadius: scale(44), 
+        borderColor: '#748182', 
+        borderWidth: 5, 
+        backgroundColor: '#1E1E1E'
     }
 });
 
