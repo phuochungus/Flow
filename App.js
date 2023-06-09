@@ -3,8 +3,7 @@
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { RootNavigation } from './src/routes';
-import { Artist } from './src/screens/Artist/Artist';
-import { Playing } from './src/screens/Playing/Playing';
+
 // create a component
 const config = {
   screens: {
@@ -19,10 +18,9 @@ const linking = {
 
 const App = () => {
   return (
-    // <NavigationContainer linking={linking}>
-    //   <RootNavigation />
-    // </NavigationContainer>
-    <Playing />
+    <NavigationContainer linking={linking}>
+      <RootNavigation />
+    </NavigationContainer>
   );
 };
 
