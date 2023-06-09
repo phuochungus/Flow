@@ -3,7 +3,6 @@
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { RootNavigation } from './src/routes';
-
 // create a component
 const config = {
   screens: {
