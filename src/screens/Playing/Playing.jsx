@@ -6,6 +6,7 @@ import BackHeader from '../../components/back-header';
 import { IMG_AddPlaylist, IMG_BackDown, IMG_Dots, IMG_Like, IMG_Liked, IMG_Next, IMG_Play, IMG_Previous, IMG_Random, IMG_Repeat, IMG_Up } from '../../assets/images';
 import scale from '../../constants/responsive';
 import FONTS from '../../constants/fonts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // create a component
 export const Playing = () => {
@@ -13,7 +14,7 @@ export const Playing = () => {
     const [songInfo, setSongInfo] = useState({});
     const [lyrics, setLyrics] = useState({});
 
-    const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDc5YTYzMzdkNzcyMDdjZDhjNDBlMzEiLCJpYXQiOjE2ODYxNDY1NTl9.g8XuVxRAen_mLGCpO2itoh7XEO33IJrLTNe9Eo4_Mhw";
+    var accessToken = AsyncStorage.getItem('access_token');
 
     const getAPI = () => {
         var myHeaders = new Headers();
@@ -136,7 +137,7 @@ export const Playing = () => {
     const handleFavorites = (method) => {
         var myHeaders = new Headers();
         myHeaders.append("accept", "*/*");
-        myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDc5YTYzMzdkNzcyMDdjZDhjNDBlMzEiLCJpYXQiOjE2ODYxNDY1NTl9.g8XuVxRAen_mLGCpO2itoh7XEO33IJrLTNe9Eo4_Mhw");
+        myHeaders.append("Authorization", "Bearer " + accessToken);
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
