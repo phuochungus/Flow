@@ -1,1 +1,1 @@
-const END_POINT = "https://flow-backend.herokuapp.com"
+export const REMOTE_BASE_URL = "https://flow-fbmj.onrender.com"
