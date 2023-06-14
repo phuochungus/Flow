@@ -35,10 +35,7 @@ export const Login = ({navigation}) => {
 
       try {
         setIsLoading(true);
-        const response = await fetch(
-          'https://flow-backend.herokuapp.com/auth/local',
-          requestOptions,
-        );
+        const response = await fetch(END_POINT + '/auth/local', requestOptions);
         if (response.status == 201) {
           const {accessToken} = await response.json();
           AsyncStorage.setItem('access_token', accessToken);

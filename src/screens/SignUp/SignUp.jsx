@@ -93,10 +93,7 @@ export const SignUp = ({navigation}) => {
       };
 
       try {
-        let response = await fetch(
-          'https://flow-backend.herokuapp.com/users',
-          requestOptions,
-        );
+        let response = await fetch(END_POINT + '/users', requestOptions);
         console.log(response);
         if (response.status == 409) {
           console.log(await response.text());

@@ -40,7 +40,7 @@ export const SignIn = ({navigation, route}) => {
 
   const handleGoogleLogin = async () => {
     try {
-      Linking.openURL('https://flow-backend.herokuapp.com/auth/google');
+      Linking.openURL(END_POINT + '/auth/google');
     } catch (error) {
       console.log(error);
     }
@@ -48,7 +48,7 @@ export const SignIn = ({navigation, route}) => {
 
   const handleFacebookLogin = async () => {
     try {
-      Linking.openURL('https://flow-backend.herokuapp.com/auth/facebook');
+      Linking.openURL(END_POINT + '/auth/facebook');
     } catch (error) {
       console.log(error);
     }
