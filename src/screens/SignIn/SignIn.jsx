@@ -18,6 +18,7 @@ import {
 import {GradientButton, GradientButtonOutline} from '../../components';
 import {ScrollView} from 'react-native-gesture-handler';
 import {CommonActions} from '@react-navigation/native';
+import { REMOTE_BASE_URL } from '../../helper/api';
 
 export const SignIn = ({navigation, route}) => {
   useEffect(() => {
@@ -40,7 +41,7 @@ export const SignIn = ({navigation, route}) => {
 
   const handleGoogleLogin = async () => {
     try {
-      Linking.openURL(END_POINT + '/auth/google');
+      Linking.openURL(REMOTE_BASE_URL + '/auth/google');
     } catch (error) {
       console.log(error);
     }
@@ -48,7 +49,7 @@ export const SignIn = ({navigation, route}) => {
 
   const handleFacebookLogin = async () => {
     try {
-      Linking.openURL(END_POINT + '/auth/facebook');
+      Linking.openURL(REMOTE_BASE_URL + '/auth/facebook');
     } catch (error) {
       console.log(error);
     }
