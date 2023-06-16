@@ -1,17 +1,32 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Image} from 'react-native';
 import styled from 'styled-components/native';
 import scale from '../constants/responsive';
 
-const PopularAlbum = props => {
+export const PopularAlbum = props => {
+  const item = props.item;
+
   return (
-    <Container>
+    <Container
+    // onPress={() => {
+    //   console.log(item.id);
+    //   props.navigation.navigate('Album', {id: item.id});
+    // }}
+    >
       <ImageContainer height={scale(120)} width={scale(120)}>
-        <AlbumImage source={require('../assets/images/Artist.png')} />
+        <AlbumImage
+          style={{backgroundColor: item.images == undefined && '#383838'}}
+          source={
+            item.images !== undefined &&
+            item.images !== null && {uri: item.images[0].url}
+          }
+        />
       </ImageContainer>
       <TextContainer>
-        <Title>{props.title}</Title>
-        <Year>{props.yearPublish}</Year>
+        <NameContainer>
+          <Name>{item.name}</Name>
+        </NameContainer>
+        {item.yearPublish && <Year>{item.yearPublish}</Year>}
       </TextContainer>
     </Container>
   );
@@ -19,9 +34,9 @@ const PopularAlbum = props => {
 
 const Container = styled.TouchableOpacity`
   flex-direction: column;
-  align-items: center;
   justify-content: flex-start;
   margin-right: 12px;
+  max-width: 120px;
 `;
 
 const ImageContainer = styled(View)`
@@ -39,20 +54,27 @@ const AlbumImage = styled(Image).attrs(({source}) => ({
 `;
 
 const TextContainer = styled.View`
+  flex: 1;
+  display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  width: 100%;
 `;
 
-const Title = styled.Text`
+const NameContainer = styled.View`
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+const Name = styled.Text`
   color: white;
   font-family: 'Noto Sans';
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 700;
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 const Year = styled.Text`
   color: #b1b5bb;
 `;
-
-export default PopularAlbum;

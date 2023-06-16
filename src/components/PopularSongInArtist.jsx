@@ -1,25 +1,41 @@
-import React from 'react';
-import {View, Image} from 'react-native';
+import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import scale from '../constants/responsive';
 
-const PopularSongInArtist = props => {
+export const PopularSongInArtist = props => {
+  const item = props.item;
+
+  const numberWithComma = x => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
+
   return (
     <Container>
       <Number>{props.number}</Number>
-      <MainDetail>
+      <MainContent>
         <ImageContainer height={scale(52)} width={scale(52)}>
-          <SongImage source={require('../assets/images/Artist.png')} />
+          <SongImage
+            style={{backgroundColor: item.images == undefined && '#383838'}}
+            source={
+              item.images !== undefined &&
+              item.images !== null && {uri: item.images[0].url}
+            }
+          />
           <StyleImage>
             <Round />
           </StyleImage>
         </ImageContainer>
         <TextContainer>
-          <Title>{props.nameSong}</Title>
-          <Streaming>{props.numberStreaming}</Streaming>
+          <Name>{item.name}</Name>
+          <Streaming>
+            <Icon name="headphones" size={12} color="#b1b5bb" />
+            <NumberCount>
+              {numberWithComma(item.viewCount)} lượt nghe
+            </NumberCount>
+          </Streaming>
         </TextContainer>
-      </MainDetail>
+      </MainContent>
       <Detail>
         <Icon name="dots-horizontal" size={28} color="#fff" />
       </Detail>
@@ -41,9 +57,9 @@ const Number = styled.Text`
   color: white;
 `;
 
-const MainDetail = styled.TouchableOpacity`
+const MainContent = styled.TouchableOpacity`
   flex-direction: row;
-  flex: 1;
+  flex: 7;
   margin: 0 20px;
 `;
 
@@ -81,25 +97,32 @@ const TextContainer = styled.View`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  flex: 1;
 `;
 
-const Title = styled.Text`
+const Name = styled.Text`
   color: white;
   font-family: 'Radio Canada';
   font-size: 15px;
   font-weight: 700;
 `;
 
-const Streaming = styled.Text`
+const Streaming = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+const NumberCount = styled.Text`
   color: #b1b5bb;
   font-family: 'Noto Sans';
   font-size: 12px;
   font-weight: 500;
+  margin-left: 4px;
 `;
 
 const Detail = styled.TouchableOpacity`
   color: #b1b5bb;
   padding: 8px 0;
+  flex: 1;
+  align-items: flex-end;
 `;
-
-export default PopularSongInArtist;

@@ -1,5 +1,5 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import {Artist, Login, SignIn} from '../screens';
+import {Artist, Login, SignIn, AllAlbum} from '../screens';
 import FONTS from '../constants/fonts';
 import {SignUp} from '../screens/SignUp/SignUp';
 
@@ -58,7 +58,30 @@ export function RootNavigation() {
         component={Artist}
         options={{
           presentation: 'transparentModal',
-          headerShown: false,
+          headerTransparent: true,
+          headerTintColor: 'white',
+          title: null,
+        }}
+      />
+      <Stack.Screen
+        name="AllAlbum"
+        component={AllAlbum}
+        options={{
+          presentation: 'transparentModal',
+          headerTitleAlign: 'center',
+          headerTintColor: 'white',
+          title: 'Danh sách Album',
+          headerTitleStyle: {
+            textTransform: 'uppercase',
+            fontFamily: FONTS.RadioCanada.Medium,
+            fontSize: 24,
+          },
+          headerStyle: {
+            backgroundColor: '#121212',
+            elevation: 0,
+            shadowOpacity: 0,
+            borderBottomWidth: 0,
+          },
         }}
       />
     </Stack.Navigator>

@@ -6,3 +6,4 @@ export { SearchFocused } from './Search/SearchFocused'
 export { SearchResult } from './Search/SearchResult'
 export { SignUp } from './SignUp/SignUp'
 export {Splash} from "./Splash/Splash"
+export {AllAlbum} from "./Artist/AllAlbum"
