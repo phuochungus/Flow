@@ -42,8 +42,6 @@ export const Artist = ({route, navigation}) => {
           setIsFavourite(result.isFavourite);
         })
         .catch(error => console.log('error', error));
-
-      console.log('load');
     }
   };
 
@@ -86,7 +84,6 @@ export const Artist = ({route, navigation}) => {
   };
 
   useEffect(() => {
-    console.log('call');
     loadArtist();
   }, [isFavourite]);
 

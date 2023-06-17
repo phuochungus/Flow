@@ -1,9 +1,11 @@
 import React, {useRef, useEffect} from 'react';
 import {Animated, Image} from 'react-native';
+import {CommonActions} from '@react-navigation/native';
 import {F, L, O, W} from '../../assets/images/Splash/';
 import styled from 'styled-components';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const Splash = () => {
+export const Splash = ({navigation}) => {
   const rotate = useRef(new Animated.Value(0)).current;
   const opacity = useRef(new Animated.Value(0)).current;
 
@@ -17,6 +19,35 @@ export const Splash = () => {
     outputRange: [0.5, 1],
   });
 
+  const checkToken = async () => {
+    try {
+      let value = await AsyncStorage.getItem('access_token');
+      if (value != null) {
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [
+              {
+                name: 'Artist',
+                params: {
+                  id: '00FQb4jTyendYWaN8pK0wa',
+                },
+              },
+            ],
+          }),
+        );
+      } else {
+        navigation.navigate('SignIn');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const clearAsyncStorage = async () => {
+    AsyncStorage.removeItem('access_token');
+  };
+
   useEffect(() => {
     Animated.sequence([
       Animated.timing(opacity, {
@@ -29,7 +60,9 @@ export const Splash = () => {
         duration: 1600,
         useNativeDriver: true,
       }),
-    ]).start();
+    ]).start(() => {
+      checkToken();
+    });
   }, [opacity]);
 
   return (
