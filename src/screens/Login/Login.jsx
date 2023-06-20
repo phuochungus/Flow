@@ -47,7 +47,14 @@ export const Login = ({navigation}) => {
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
-              routes: [{name: 'Artist'}],
+              routes: [
+                {
+                  name: 'Artist',
+                  params: {
+                    id: '00FQb4jTyendYWaN8pK0wa',
+                  },
+                },
+              ],
             }),
           );
         } else if (response.status == 401) {
