@@ -1,11 +1,147 @@
 //import liraries
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, FlatList } from 'react-native';
 import scale from '../../constants/responsive';
 import FONTS from '../../constants/fonts';
-import { IMG_Remove, IMG_Search } from '../../assets/images';
+import { IMG_Search } from '../../assets/images';
+import { GenreGroup } from '../../components/index';
 
 export const SearchDefault = () => {
+
+    const [DataGroup, setDataGroup] = useState([]);
+
+    const DataTest = [
+        {
+            id: 1,
+            genre: 'Nhạc Việt'
+        },
+        {
+            id: 2,
+            genre: 'Cổ điển'
+        },
+        {
+            id: 3,
+            genre: 'Blues'
+        },
+        {
+            id: 4,
+            genre: 'Nhạc không lời'
+        },
+        {
+            id: 5,
+            genre: 'Anime'
+        },
+        {
+            id: 6,
+            genre: 'Pop'
+        },
+        {
+            id: 7,
+            genre: 'Bảng xếp hạng'
+        },
+        {
+            id: 8,
+            genre: 'Hip hop'
+        },
+        {
+            id: 9,
+            genre: 'K - Pop'
+        },
+        {
+            id: 10,
+            genre: 'Mới phát hành'
+        },
+        {
+            id: 11,
+            genre: 'J - Pop'
+        },
+        {
+            id: 12,
+            genre: 'Funk'
+        },
+        {
+            id: 13,
+            genre: 'Chơi game'
+        },
+        {
+            id: 14,
+            genre: 'Indie'
+        },
+        {
+            id: 15,
+            genre: 'R&B'
+        },
+        {
+            id: 16,
+            genre: 'Rock'
+        },
+        {
+            id: 17,
+            genre: 'Tình yêu'
+        },
+        {
+            id: 18,
+            genre: 'Dành cho bạn'
+        },
+    ];
+
+    const Colors = [
+        {
+            id: 1,
+            colors: [
+                '#056951',
+                '#203264',
+                '#CF4321',
+                '#B02896',
+                '#7358FF',
+                '#BD6220'
+            ]
+        },
+        {
+            id: 2,
+            colors: [
+                '#1E82AC',
+                '#75A768',
+                '#E8125C',
+                '#25319C',
+                '#0C73EC',
+                '#056951'
+            ]
+        },
+        {
+            id: 3,
+            colors: [
+                '#1E82AC',
+                '#5645AB',
+                '#B02896',
+                '#056951',
+                '#3371E4',
+                '#E13300'
+            ]
+        }
+    ]
+
+    useEffect(()=>{
+            let count = 0;
+            let array = [];
+            let result = [];
+            for (let i = 0; i < DataTest.length; i++) {
+                if ((i + 1) % 6 == 0) {
+                    array.push(DataTest[i].genre);
+                    count++;
+                    result.push({id: result.length, genre: array});
+                    array = [];
+                } else {
+                        array.push(DataTest[i].genre);
+                }
+            }
+            if (array.length > 0) {
+                count++;
+                result.push({id: result.length, genre: array});
+            }
+            console.log(result);
+            setDataGroup(result);
+    },[]);
 
     return (
         <View style={styles.container}>
@@ -27,11 +163,19 @@ export const SearchDefault = () => {
                 </TouchableOpacity>
             </View>
             <Text style={styles.titleText}>Duyệt tìm tất cả</Text>
+            {DataGroup.length > 0 ? (
+                <FlatList 
+                    data={DataGroup}
+                    renderItem={({index, item}) => <GenreGroup genre={item.genre} colors={Colors[index].colors}/>}
+                    keyExtractor={item => item.id}
+                />
+            ) : (
+                <></>
+            )}
         </View>
     );
 };
 
-// define your styles
 const styles = StyleSheet.create({
     container: {
         flex: 1,

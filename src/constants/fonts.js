@@ -2,7 +2,8 @@ const NotoSans = 'NotoSans-';
 
 const FONTS = {
   RadioCanada: {
-    Medium: 'RadioCanada-Medium'
+    Medium: 'RadioCanada-Medium',
+    Bold: 'RadioCanada-Bold'
   },
   NotoSans: {
     Black: NotoSans + 'Black',

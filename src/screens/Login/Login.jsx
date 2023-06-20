@@ -7,6 +7,7 @@ import Snackbar from 'react-native-snackbar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ActivityIndicator} from 'react-native';
 import {CommonActions} from '@react-navigation/native';
+import {REMOTE_BASE_URL} from '../../helper/api';
 
 export const Login = ({navigation}) => {
   const [username, setUsername] = useState();
@@ -36,7 +37,7 @@ export const Login = ({navigation}) => {
       try {
         setIsLoading(true);
         const response = await fetch(
-          'https://flow-fbmj.onrender.com/auth/local',
+          REMOTE_BASE_URL + '/auth/local',
           requestOptions,
         );
         if (response.status == 201) {
