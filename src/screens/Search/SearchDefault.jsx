@@ -6,78 +6,95 @@ import FONTS from '../../constants/fonts';
 import { IMG_Search } from '../../assets/images';
 import { GenreGroup } from '../../components/index';
 
-export const SearchDefault = () => {
+export const SearchDefault = ({navigation, route}) => {
 
     const [DataGroup, setDataGroup] = useState([]);
 
     const DataTest = [
         {
             id: 1,
-            genre: 'Nhạc Việt'
+            genre: 'Nhạc Việt',
+            apiName: "NhacViet",
         },
         {
             id: 2,
-            genre: 'Cổ điển'
+            genre: 'Cổ điển',
+            apiName: "Classic",
         },
         {
             id: 3,
-            genre: 'Blues'
+            genre: 'Blues',
+            apiName: "Blues",
         },
         {
             id: 4,
-            genre: 'Nhạc không lời'
+            genre: 'Nhạc không lời',
+            apiName: "InstrumentalMusic",
         },
         {
             id: 5,
-            genre: 'Anime'
+            genre: 'Anime',
+            apiName: "Anime",
         },
         {
             id: 6,
-            genre: 'Pop'
+            genre: 'Pop',
+            apiName: "Pop",
         },
         {
             id: 7,
-            genre: 'Bảng xếp hạng'
+            genre: 'Bảng xếp hạng',
+            apiName: "Top",
         },
         {
             id: 8,
-            genre: 'Hip hop'
+            genre: 'Hip hop',
+            apiName: "HipHop",
         },
         {
             id: 9,
-            genre: 'K - Pop'
+            genre: 'K - Pop',
+            apiName: "KPop",
         },
         {
             id: 10,
-            genre: 'Mới phát hành'
+            genre: 'Mới phát hành',
+            apiName: "NewMusic",
         },
         {
             id: 11,
-            genre: 'J - Pop'
+            genre: 'J - Pop',
+            apiName: "JPop",
         },
         {
             id: 12,
-            genre: 'Funk'
+            genre: 'Funk',
+            apiName: "Funk",
         },
         {
             id: 13,
-            genre: 'Chơi game'
+            genre: 'Chơi game',
+            apiName: "Gaming",
         },
         {
             id: 14,
-            genre: 'Indie'
+            genre: 'Indie',
+            apiName: "Indie",
         },
         {
             id: 15,
-            genre: 'R&B'
+            genre: 'R&B',
+            apiName: "R&B",
         },
         {
             id: 16,
-            genre: 'Rock'
+            genre: 'Rock',
+            apiName: "Rock",
         },
         {
             id: 17,
-            genre: 'Tình yêu'
+            genre: 'Tình yêu',
+            apiName: "Love",
         },
     ];
 
@@ -118,25 +135,28 @@ export const SearchDefault = () => {
     ]
 
     useEffect(()=>{
-            let count = 0;
-            let array = [];
-            let result = [];
-            for (let i = 0; i < DataTest.length; i++) {
-                if ((i + 1) % 6 == 0) {
-                    array.push(DataTest[i].genre);
-                    count++;
-                    result.push({id: result.length, genre: array});
-                    array = [];
-                } else {
-                        array.push(DataTest[i].genre);
-                }
-            }
-            if (array.length > 0) {
+        let count = 0;
+        let array = [];
+        let result = [];
+        let arrApiName = [];
+        for (let i = 0; i < DataTest.length; i++) {
+            if ((i + 1) % 6 == 0) {
+                array.push(DataTest[i].genre);
+                arrApiName.push(DataTest[i].apiName);
                 count++;
-                result.push({id: result.length, genre: array});
+                result.push({id: result.length, genre: array, apiName: arrApiName});
+                array = [];
+                arrApiName = [];
+            } else {
+                    array.push(DataTest[i].genre);
+                    arrApiName.push(DataTest[i].apiName);
             }
-            console.log(result);
-            setDataGroup(result);
+        }
+        if (array.length > 0) {
+            count++;
+            result.push({id: result.length, genre: array, apiName: arrApiName});
+        }
+        setDataGroup(result);
     },[]);
 
     return (
@@ -145,24 +165,26 @@ export const SearchDefault = () => {
             <View style={styles.header}>
                 <View style={styles.search}>
                     <Image style={styles.searchIcon} source={IMG_Search}/>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={()=>navigation.navigate('SearchFocused')}>
                         <TextInput onChangeText={text => onChangeText(text)}
                                     value={''}
                                     editable={false}
-                                    placeholder={'Bài hát, nghệ sĩ hoặc podcast'}
+                                    placeholder={'Bài hát, nghệ sĩ hoặc album'}
                                     placeholderTextColor={'#8A9A9D'}
                                     style={styles.searchInput}></TextInput>
                     </TouchableOpacity> 
                 </View>
-                <TouchableOpacity>
-                    <Text style={styles.cancel}>Hủy</Text>
-                </TouchableOpacity>
             </View>
             <Text style={styles.titleText}>Duyệt tìm tất cả</Text>
             {DataGroup.length > 0 ? (
                 <FlatList 
                     data={DataGroup}
-                    renderItem={({index, item}) => <GenreGroup genre={item.genre} colors={Colors[index].colors}/>}
+                    renderItem={({index, item}) => <GenreGroup genre={item.genre} 
+                                                                colors={Colors[index].colors} 
+                                                                apiName={item.apiName}
+                                                                listSong={item.listSong}
+                                                                navigation={navigation}
+                                                                />}
                     keyExtractor={item => item.id}
                 />
             ) : (
@@ -197,7 +219,7 @@ const styles = StyleSheet.create({
     },
     search: {
         flexDirection: 'row',
-        width: scale(338),
+        width: '100%',
         height: '100%',
         alignItems: 'center',
         justifyContent: 'flex-start',
@@ -213,7 +235,7 @@ const styles = StyleSheet.create({
     searchInput: {
         width: scale(338) - scale(24) -10,
         height: '100%',
-        color: '#8A9A9D',
+        color: 'white',
         fontFamily: FONTS.NotoSans.Medium,
         fontSize: scale(15),
     },

@@ -1,5 +1,5 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import {Artist, Login, SignIn} from '../screens';
+import {Artist, Login, SearchDefault, SearchFocused, SearchResult, SignIn} from '../screens';
 import FONTS from '../constants/fonts';
 import {SignUp} from '../screens/SignUp/SignUp';
 
@@ -56,6 +56,30 @@ export function RootNavigation() {
       <Stack.Screen
         name="Artist"
         component={Artist}
+        options={{
+          presentation: 'transparentModal',
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="SearchDefault"
+        component={SearchDefault}
+        options={{
+          presentation: 'transparentModal',
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="SearchFocused"
+        component={SearchFocused}
+        options={{
+          presentation: 'transparentModal',
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="SearchResult"
+        component={SearchResult}
         options={{
           presentation: 'transparentModal',
           headerShown: false,

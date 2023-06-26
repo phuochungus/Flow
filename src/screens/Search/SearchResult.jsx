@@ -1,46 +1,87 @@
 //import liraries
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, Image, FlatList, TouchableOpacity } from 'react-native';
 import scale from '../../constants/responsive';
 import { useState } from 'react';
 import { IMG_Remove, IMG_Search } from '../../assets/images';
 import FONTS from '../../constants/fonts';
 import { GroupResult, SearchElement } from '../../components/index';
+import useDebounce from '../../hooks/useDebounce';
 
 // create a component
-export const SearchResult = () => {
+export const SearchResult = ({navigation, route}) => {
 
     const [searchText, setSearchText] = useState('');
-    const [selectedId, setSelectedId] = useState('bd7acbea-c1b1-46c2-aed5-3ad53abb28ba')
+    const [selectedId, setSelectedId] = useState('mostRelevant');
+    const [searchResult, setSearchResult] = useState({mostRelevant: [], albums: [], tracks: [], artists: []});
+
     const DATA = [
         {
-          id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+          id: 'mostRelevant',
           title: 'Kết quả phù hợp nhất',
         },
         {
-          id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+          id: 'tracks',
           title: 'Bài hát',
         },
         {
-          id: '58694a0f-3da1-471f-bd96-145571e29d72',
+          id: 'artist',
           title: 'Nghệ sĩ',
         },
+        {
+            id: 'albums',
+            title: 'Album'
+        }
       ];
+
+    const listSong = route.params.listSong;
+    const type = route.params.type;
 
     const removeText = () => {
         setSearchText('');
     }
 
+    const handleSearch = (text) => {
+        setSearchText(text);
+    }
+
+    const executeSearchQuery = (text)=> {
+        if (text == '') {
+            setSearchResult({mostRelevant: [], albums: [], tracks: [], artists: []});
+            return;
+        }
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+        };
+          
+        fetch("https://flow-fbmj.onrender.com/search?query=" + text, requestOptions)
+            .then(response => response.json())
+            .then(result => { setSearchResult(result)})
+            .catch(error => console.log('error', error));
+    } 
+
+    const debounceSearch = useDebounce(searchText, 500);
+    useEffect(()=>{
+        if (debounceSearch == ''){
+            setSearchResult({mostRelevant: [], albums: [], tracks: [], artists: []});
+        }
+        else {
+            executeSearchQuery(debounceSearch);
+        }
+    }, [debounceSearch])
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <View style={styles.search}>
+                <TouchableOpacity style={styles.search}>
                     <Image style={styles.searchIcon} source={IMG_Search}/>
-                    <TextInput onChangeText={text => setSearchText(text)}
+                    <TextInput onChangeText={(text) => {handleSearch(text)}}
                                 value={searchText}
-                                placeholder={'Bài hát, nghệ sĩ hoặc podcast'}
+                                editable={type == 'all' ? false : true}
+                                placeholder={'Bài hát, nghệ sĩ hoặc album'}
                                 placeholderTextColor={'#DADADA'}
-                                style={styles.searchInput}></TextInput>
+                                style={styles.searchInput}/>
                     {searchText == '' ? (
                         <></>
                     ) : ( 
@@ -48,44 +89,69 @@ export const SearchResult = () => {
                             <Image style={styles.removeIcon} source={IMG_Remove}/>
                         </TouchableOpacity>
                     )}
-                </View>
-                <TouchableOpacity>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigation.navigate("SearchDefault")}>
                     <Text style={styles.cancel}>Hủy</Text>
                 </TouchableOpacity>
             </View>
-            
-            <View style={{height: 30, marginTop: scale(20), marginLeft: scale(20)}}>
-                <FlatList
-                    data={DATA}
-                    renderItem={({item, index}) =>
-                        item.id !== selectedId
-                        ? GroupResult({
-                            type: item.title,
-                            onPress: () => setSelectedId(item.id),
-                            color: '#121212',
-                            })
-                        : GroupResult({
-                            type: item.title,
-                            onPress: () => {},
-                            color: '#0085FF',
-                            })
-                    }
-                    initialNumToRender={4}
-                    showsHorizontalScrollIndicator={false}
-                    horizontal={true}
-                    keyExtractor={(item, index) => item.id}
-                    extraData={selectedId}
-                />
-            </View>
-            <View style={{marginTop: scale(30)}}>
+            {type !== 'all' ? (
+                <>
+                    <View style={{height: 30, marginTop: scale(20), marginLeft: scale(20)}}>
+                        <FlatList
+                            data={DATA}
+                            renderItem={({item, index}) =>
+                                item.id !== selectedId
+                                ? GroupResult({
+                                    type: item.title,
+                                    onPress: () => setSelectedId(item.id),
+                                    color: '#121212',
+                                    })
+                                : GroupResult({
+                                    type: item.title,
+                                    onPress: () => {},
+                                    color: '#0085FF',
+                                    })
+                            }
+                            initialNumToRender={4}
+                            showsHorizontalScrollIndicator={false}
+                            horizontal={true}
+                            keyExtractor={(item, index) => item.id}
+                            extraData={selectedId}
+                        />
+                    </View>
+                    <View style={{marginTop: scale(30), marginBottom: scale(50)}}>
+                        <FlatList 
+                            data={selectedId == 'mostRelevant' ? searchResult.mostRelevant : 
+                            selectedId == 'albums' ? searchResult.albums : 
+                            selectedId == 'tracks' ? searchResult.tracks : searchResult.artists}
+                            renderItem={({item}) => <SearchElement 
+                                                        id={item.id}
+                                                        img={{uri: item.images[0].url}} 
+                                                        song={item.name} 
+                                                        type={item.type} 
+                                                        artists={item.artists}
+                                                        result={true}
+                                                        navigation={navigation}
+                                                        onPress={()=>removeHistory(item.id)}/>}
+                            keyExtractor={item => item.id}
+                        />
+                    </View>
+                    
+                </>
+                
+            ) : (<></>)}
+            <View style={{marginTop: scale(30), marginBottom: scale(50)}}>
                 <FlatList 
-                    data={DATA}
+                    data={listSong}
                     renderItem={({item}) => <SearchElement 
-                                                img={require('../../assets/images/Artist.png')} 
-                                                song={'Tên bài hát'} 
-                                                other={'Album - RPT MCK'} 
-                                                result={false}/>}
-                    keyExtractor={item => item.id}
+                                                id={item.id}
+                                                img={{uri: item.images[0].url}} 
+                                                song={item.name} 
+                                                type={item.type} 
+                                                artists={item.artists}
+                                                result={true}
+                                                navigation={navigation}/>}
+                    keyExtractor={(item, index) => index}
                 />
             </View>
         </View>
@@ -116,6 +182,7 @@ const styles = StyleSheet.create({
         borderRadius: scale(22),
         borderColor: 'grey',
         borderWidth: 1,
+        //backgroundColor: 'white'
     },
     searchIcon: {
         width: scale(24),
