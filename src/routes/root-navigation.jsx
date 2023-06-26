@@ -1,5 +1,5 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import {Artist, Login, SearchDefault, SearchFocused, SearchResult, SignIn} from '../screens';
+import {Artist, Login, SignIn, SearchDefault, SearchFocused, SearchResult, AllAlbum, Splash} from '../screens';
 import FONTS from '../constants/fonts';
 import {SignUp} from '../screens/SignUp/SignUp';
 
@@ -8,6 +8,14 @@ const Stack = createStackNavigator();
 export function RootNavigation() {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="Splash"
+        component={Splash}
+        options={{
+          presentation: 'transparentModal',
+          headerShown: false,
+        }}
+      />
       <Stack.Screen
         name="SignIn"
         component={SignIn}
@@ -58,7 +66,30 @@ export function RootNavigation() {
         component={Artist}
         options={{
           presentation: 'transparentModal',
-          headerShown: false,
+          headerTransparent: true,
+          headerTintColor: 'white',
+          title: null,
+        }}
+      />
+      <Stack.Screen
+        name="AllAlbum"
+        component={AllAlbum}
+        options={{
+          presentation: 'transparentModal',
+          headerTitleAlign: 'center',
+          headerTintColor: 'white',
+          title: 'Danh sách Album',
+          headerTitleStyle: {
+            textTransform: 'uppercase',
+            fontFamily: FONTS.RadioCanada.Medium,
+            fontSize: 24,
+          },
+          headerStyle: {
+            backgroundColor: '#121212',
+            elevation: 0,
+            shadowOpacity: 0,
+            borderBottomWidth: 0,
+          },
         }}
       />
       <Stack.Screen
