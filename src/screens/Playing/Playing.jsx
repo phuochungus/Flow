@@ -9,14 +9,15 @@ import FONTS from '../../constants/fonts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // create a component
-export const Playing = () => {
+export const Playing = ({navigation, route}) => {
     
     const [songInfo, setSongInfo] = useState({});
     const [lyrics, setLyrics] = useState({});
 
-    var accessToken = AsyncStorage.getItem('access_token');
+    const id = route.params.id;
 
-    const getAPI = () => {
+    const getAPI = async () => {
+        var accessToken = await AsyncStorage.getItem('access_token');
         var myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + accessToken);
         var requestOptions = {
@@ -24,7 +25,6 @@ export const Playing = () => {
             headers: myHeaders,
             redirect: 'follow'
         };
-        // setSongInfo({name: "Giúp anh trả lời những câu hỏi", artists: [{name: "Tên ca sĩ"}, {name: "Ten ca si 2"}, {name: "Ten ca si thu ba dai lam"}], isFavourite: true});
         fetch("https://flow-backend.herokuapp.com/tracks/track/2nMeu6UenVvwUktBCpLMK9", requestOptions)
             .then(response => response.json())
             .then(result => {console.log(result); setSongInfo(result)})
@@ -36,7 +36,7 @@ export const Playing = () => {
         //     redirect: 'follow'
         // };
           
-        // fetch("https://flow-backend.herokuapp.com/tracks/play/2nMeu6UenVvwUktBCpLMK9", requestOptions)
+        // fetch("https://flow-backend.herokuapp.com/tracks/v2/play/2nMeu6UenVvwUktBCpLMK9", requestOptions)
         //     //.then(response => response.json())
         //     .then(result => console.log(result))
         //     .catch(error => console.log('error', error));
@@ -47,9 +47,9 @@ export const Playing = () => {
             redirect: 'follow'
           };
           
-        fetch("https://flow-backend.herokuapp.com/tracks/lyrics/2qxmye6gAegTMjLKEBoR3d", requestOptions)
-            .then(response => response.json())
-            .then(result => {console.log(result); setLyrics(result)})
+          fetch("https://flow-fbmj.onrender.com/lyrics/2nMeu6UenVvwUktBCpLMK9", requestOptions)
+            .then(response => response.text())
+            .then(result => { console.log(result); setLyrics(result); })
             .catch(error => console.log('error', error));
     }
 
@@ -59,7 +59,8 @@ export const Playing = () => {
         console.log(songInfo);
     }, [])
 
-    const getSongInfo = () => {
+    const getSongInfo = async () => {
+        const accessToken = await AsyncStorage.getItem('access_token');
         var myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + accessToken);
         var requestOptions = {
@@ -68,13 +69,14 @@ export const Playing = () => {
             redirect: 'follow'
         };
         // setSongInfo({name: "Giúp anh trả lời những câu hỏi", artists: [{name: "Tên ca sĩ"}, {name: "Ten ca si 2"}, {name: "Ten ca si thu ba dai lam"}], isFavourite: true});
-        fetch("https://flow-backend.herokuapp.com/tracks/track/2nMeu6UenVvwUktBCpLMK9", requestOptions)
+        fetch("https://flow-fbmj.onrender.com/tracks/track/" + id, requestOptions)
             .then(response => response.json())
             .then(result => {console.log(result); setSongInfo(result)})
             .catch(error => console.log('error', error));
     }
 
-    const getLyrics = () => {
+    const getLyrics = async () => {
+        const accessToken = await AsyncStorage.getItem('access_token');
         var myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + accessToken);
         var requestOptions = {
@@ -82,7 +84,7 @@ export const Playing = () => {
             redirect: 'follow'
           };
           
-        fetch("https://flow-backend.herokuapp.com/tracks/lyrics/2qxmye6gAegTMjLKEBoR3d", requestOptions)
+        fetch("https://flow-fbmj.onrender.com/tracks/lyrics/" + id, requestOptions)
             .then(response => response.json())
             .then(result => {console.log(result); setLyrics(result)})
             .catch(error => console.log('error', error));
@@ -134,14 +136,15 @@ export const Playing = () => {
         return result;
     }
 
-    const handleFavorites = (method) => {
+    const handleFavorites = async (method) => {
+        const accessToken = await AsyncStorage.getItem('access_token');
         var myHeaders = new Headers();
         myHeaders.append("accept", "*/*");
         myHeaders.append("Authorization", "Bearer " + accessToken);
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            "id": "2nMeu6UenVvwUktBCpLMK9"
+            "id": id
         });
 
         var requestOptions = {
@@ -151,7 +154,7 @@ export const Playing = () => {
             redirect: 'follow'
         };
 
-        fetch("https://flow-backend.herokuapp.com/me/favourites", requestOptions)
+        fetch("https://flow-fbmj.onrender.com/me/favourites", requestOptions)
         // .then(response => response.text())
         .then(result => {console.log("liked"); getSongInfo();})
         .catch(error => console.log('error', error));
