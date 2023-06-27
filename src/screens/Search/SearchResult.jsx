@@ -15,7 +15,7 @@ export const SearchResult = ({navigation, route}) => {
     const [selectedId, setSelectedId] = useState('mostRelevant');
     const [searchResult, setSearchResult] = useState({mostRelevant: [], albums: [], tracks: [], artists: []});
 
-    const DATA = [
+    const DataType = [
         {
           id: 'mostRelevant',
           title: 'Kết quả phù hợp nhất',
@@ -98,7 +98,7 @@ export const SearchResult = ({navigation, route}) => {
                 <>
                     <View style={{height: 30, marginTop: scale(20), marginLeft: scale(20)}}>
                         <FlatList
-                            data={DATA}
+                            data={DataType}
                             renderItem={({item, index}) =>
                                 item.id !== selectedId
                                 ? GroupResult({
@@ -126,7 +126,7 @@ export const SearchResult = ({navigation, route}) => {
                             selectedId == 'tracks' ? searchResult.tracks : searchResult.artists}
                             renderItem={({item}) => <SearchElement 
                                                         id={item.id}
-                                                        img={{uri: item.images[0].url}} 
+                                                        img={item.images[0].url} 
                                                         song={item.name} 
                                                         type={item.type} 
                                                         artists={item.artists}
@@ -145,7 +145,7 @@ export const SearchResult = ({navigation, route}) => {
                     data={listSong}
                     renderItem={({item}) => <SearchElement 
                                                 id={item.id}
-                                                img={{uri: item.images[0].url}} 
+                                                img={item.images[0].url} 
                                                 song={item.name} 
                                                 type={item.type} 
                                                 artists={item.artists}

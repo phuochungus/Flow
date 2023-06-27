@@ -1,13 +1,14 @@
 //import liraries
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, AccessibilityInfo } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import FastImage from 'react-native-fast-image'
 import scale from '../constants/responsive';
 import { IMG_HorizontalDots, IMG_Remove } from '../assets/images';
 import FONTS from '../constants/fonts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const SearchElement = (props) => {
 
-    const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDc5YTYzMzdkNzcyMDdjZDhjNDBlMzEiLCJpYXQiOjE2ODYxNDY1NTl9.g8XuVxRAen_mLGCpO2itoh7XEO33IJrLTNe9Eo4_Mhw";
 
     const handleSongName = (text) => {
         if (text == undefined)
@@ -67,9 +68,8 @@ export const SearchElement = (props) => {
         }
     }
 
-    const addToHistory = (id, type)=> {
-        if (accessToken == undefined)
-            return;
+    const addToHistory = async (id, type) => {
+        const accessToken = await AsyncStorage.getItem('access_token');
         var myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + accessToken);
         myHeaders.append("Content-Type", "application/json");
@@ -104,7 +104,7 @@ export const SearchElement = (props) => {
         <View style={styles.container} >
             <TouchableOpacity onPress={()=>onItemPress(props.id, props.result, props.type)}>
                 <View style={styles.leftContainer}>
-                    <Image style={styles.image} source={props.img}/>
+                    <FastImage style={styles.image} source={{uri: props.img, cache: FastImage.cacheControl.cacheOnly}}/>
                     <View style={{marginLeft: scale(12)}}>
                         <Text style={styles.song}>{handleSongName(props.song)}</Text>
                         <Text style={styles.otherText}>{handleType(props.type)}</Text>

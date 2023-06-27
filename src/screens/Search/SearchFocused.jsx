@@ -96,7 +96,7 @@ export const SearchFocused = ({navigation, route}) => {
                         data={history}
                         renderItem={({item}) => <SearchElement 
                                                     id={item.id}
-                                                    img={{uri: item.images[0].url}} 
+                                                    img={item.images[0].url} 
                                                     song={item.name} 
                                                     type={item.type} 
                                                     artists={item.artists}
@@ -116,7 +116,7 @@ export const SearchFocused = ({navigation, route}) => {
                         data={searchResult.mostRelevant}
                         renderItem={({item}) => <SearchElement 
                                                     id={item.id}
-                                                    img={{uri: item.images[0].url}} 
+                                                    img={item.images[0].url} 
                                                     song={item.name} 
                                                     type={item.type} 
                                                     artists={item.artists}

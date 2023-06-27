@@ -9,6 +9,14 @@ export function RootNavigation() {
   return (
     <Stack.Navigator>
       <Stack.Screen
+        name="SearchDefault"
+        component={SearchDefault}
+        options={{
+          presentation: 'transparentModal',
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="Splash"
         component={Splash}
         options={{
@@ -92,14 +100,7 @@ export function RootNavigation() {
           },
         }}
       />
-      <Stack.Screen
-        name="SearchDefault"
-        component={SearchDefault}
-        options={{
-          presentation: 'transparentModal',
-          headerShown: false,
-        }}
-      />
+
       <Stack.Screen
         name="SearchFocused"
         component={SearchFocused}

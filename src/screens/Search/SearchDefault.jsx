@@ -10,7 +10,7 @@ export const SearchDefault = ({navigation, route}) => {
 
     const [DataGroup, setDataGroup] = useState([]);
 
-    const DataTest = [
+    const DataGenre = [
         {
             id: 1,
             genre: 'Nhạc Việt',
@@ -139,17 +139,17 @@ export const SearchDefault = ({navigation, route}) => {
         let array = [];
         let result = [];
         let arrApiName = [];
-        for (let i = 0; i < DataTest.length; i++) {
+        for (let i = 0; i < DataGenre.length; i++) {
             if ((i + 1) % 6 == 0) {
-                array.push(DataTest[i].genre);
-                arrApiName.push(DataTest[i].apiName);
+                array.push(DataGenre[i].genre);
+                arrApiName.push(DataGenre[i].apiName);
                 count++;
                 result.push({id: result.length, genre: array, apiName: arrApiName});
                 array = [];
                 arrApiName = [];
             } else {
-                    array.push(DataTest[i].genre);
-                    arrApiName.push(DataTest[i].apiName);
+                    array.push(DataGenre[i].genre);
+                    arrApiName.push(DataGenre[i].apiName);
             }
         }
         if (array.length > 0) {
