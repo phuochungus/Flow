@@ -1,106 +1,69 @@
-import React, {useEffect, useState} from 'react';
-import {View, Image} from 'react-native';
+import React from 'react';
+import {View, Image, ImageBackground} from 'react-native';
 import styled from 'styled-components/native';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import scale from '../../constants/responsive';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const AllAlbum = () => {
+export const AllAlbum = ({route, navigation}) => {
+  const albums = route.params.item;
+  //console.log(item);
   return (
     <Container showsVerticalScrollIndicator={false}>
-      <ItemContainer>
-        <ImageContainer width={scale(92)} height={scale(72)}>
-          <CircleContainer width={scale(68)} height={scale(72)}>
-            <Circle
-              height={scale(68)}
-              source={require('../../assets/images/Artist.png')}
-            />
-          </CircleContainer>
-          <Rectangle
-            width={scale(72)}
-            height={scale(72)}
-            source={require('../../assets/images/Artist.png')}
-          />
-        </ImageContainer>
+      {albums.map(item => {
+        return (
+          <ItemContainer
+            key={item.id}
+            // onPress={() => {
+            //   navigation.push('Album', {id: item.id});
+            // }}
+          >
+            <ImageContainer width={scale(112)} height={scale(72)}>
+              <CircleContainer width={scale(72)} height={scale(72)}>
+                <Circle
+                  imageStyle={{borderRadius: 100}}
+                  width={scale(64)}
+                  height={scale(64)}
+                  source={
+                    !item.images
+                      ? require('../../assets/images/Loading.png')
+                      : {uri: item.images[1].url}
+                  }>
+                  <Round />
+                </Circle>
+              </CircleContainer>
+              <Rectangle
+                width={scale(72)}
+                height={scale(72)}
+                source={
+                  !item.images
+                    ? require('../../assets/images/Loading.png')
+                    : {uri: item.images[0].url}
+                }
+              />
+            </ImageContainer>
 
-        <TextContainer>
-          <Name>Tên album</Name>
-          <ArtistContainer>
-            <Artist>Tên ca sĩ</Artist>
-            <EntypoIcon name="dot-single" size={16} color="#dadada" />
-            <Artist>Tên ca sĩ</Artist>
-            <EntypoIcon name="dot-single" size={16} color="#dadada" />
-            <Artist>Tên ca sĩ</Artist>
-            <EntypoIcon name="dot-single" size={16} color="#dadada" />
-            <Artist>Tên ca sĩ</Artist>
-            <EntypoIcon name="dot-single" size={16} color="#dadada" />
-            <Artist>Tên ca sĩ</Artist>
-            <EntypoIcon name="dot-single" size={16} color="#dadada" />
-          </ArtistContainer>
-        </TextContainer>
-      </ItemContainer>
-      <ItemContainer>
-        <ImageContainer width={scale(92)} height={scale(72)}>
-          <CircleContainer width={scale(68)} height={scale(72)}>
-            <Circle
-              height={scale(68)}
-              source={require('../../assets/images/Artist.png')}
-            />
-          </CircleContainer>
-          <Rectangle
-            width={scale(72)}
-            height={scale(72)}
-            source={require('../../assets/images/Artist.png')}
-          />
-        </ImageContainer>
-
-        <TextContainer>
-          <Name>Tên album</Name>
-          <ArtistContainer>
-            <Artist>Tên ca sĩ</Artist>
-            <EntypoIcon name="dot-single" size={16} color="#dadada" />
-            <Artist>Tên ca sĩ</Artist>
-            <EntypoIcon name="dot-single" size={16} color="#dadada" />
-            <Artist>Tên ca sĩ</Artist>
-            <EntypoIcon name="dot-single" size={16} color="#dadada" />
-            <Artist>Tên ca sĩ</Artist>
-            <EntypoIcon name="dot-single" size={16} color="#dadada" />
-            <Artist>Tên ca sĩ</Artist>
-            <EntypoIcon name="dot-single" size={16} color="#dadada" />
-          </ArtistContainer>
-        </TextContainer>
-      </ItemContainer>
-      <ItemContainer>
-        <ImageContainer width={scale(92)} height={scale(72)}>
-          <CircleContainer width={scale(68)} height={scale(72)}>
-            <Circle
-              height={scale(68)}
-              source={require('../../assets/images/Artist.png')}
-            />
-          </CircleContainer>
-          <Rectangle
-            width={scale(72)}
-            height={scale(72)}
-            source={require('../../assets/images/Artist.png')}
-          />
-        </ImageContainer>
-
-        <TextContainer>
-          <Name>Tên album</Name>
-          <ArtistContainer>
-            <Artist>Tên ca sĩ</Artist>
-            <EntypoIcon name="dot-single" size={16} color="#dadada" />
-            <Artist>Tên ca sĩ</Artist>
-            <EntypoIcon name="dot-single" size={16} color="#dadada" />
-            <Artist>Tên ca sĩ</Artist>
-            <EntypoIcon name="dot-single" size={16} color="#dadada" />
-            <Artist>Tên ca sĩ</Artist>
-            <EntypoIcon name="dot-single" size={16} color="#dadada" />
-            <Artist>Tên ca sĩ</Artist>
-            <EntypoIcon name="dot-single" size={16} color="#dadada" />
-          </ArtistContainer>
-        </TextContainer>
-      </ItemContainer>
+            <TextContainer>
+              <Name>{item.name}</Name>
+              <ArtistContainer>
+                {item.artists.map((value, index) => {
+                  return (
+                    <ArtistItem key={value.id}>
+                      <Artist key={index}>{value.name}</Artist>
+                      {item.artists[index + 1] && (
+                        <EntypoIcon
+                          name="dot-single"
+                          size={16}
+                          color="#dadada"
+                        />
+                      )}
+                    </ArtistItem>
+                  );
+                })}
+              </ArtistContainer>
+            </TextContainer>
+          </ItemContainer>
+        );
+      })}
     </Container>
   );
 };
@@ -143,12 +106,14 @@ const CircleContainer = styled(View)`
   right: 0;
 `;
 
-const Circle = styled(Image).attrs(({source}) => ({
+const Circle = styled(ImageBackground).attrs(({source}) => ({
   source: source,
 }))`
-  width: 100%;
+  width: ${props => props.width}px;
   height: ${props => props.height}px;
-  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const TextContainer = styled.View`
@@ -173,9 +138,24 @@ const ArtistContainer = styled.View`
   flex-wrap: wrap;
 `;
 
+const ArtistItem = styled.View`
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+`;
+
 const Artist = styled.Text`
   font-family: Noto Sans;
   font-size: 13px;
   font-weight: 400;
   color: #dadada;
+`;
+
+const Round = styled.View`
+  width: 32%;
+  height: 32%;
+  border-radius: 50px;
+  background-color: #1e1e1e;
+  border: 1px solid #748182;
 `;

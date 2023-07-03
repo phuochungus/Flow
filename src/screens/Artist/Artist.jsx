@@ -13,7 +13,7 @@ import scale from '../../constants/responsive';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const Artist = ({route, navigation}) => {
-  const [id, setId] = useState(route.params.id);
+  const id = route.params.id;
   const [artist, setArtist] = useState({});
   const [description, setDescription] = useState(null);
   const [isFavourite, setIsFavourite] = useState(null);
@@ -32,7 +32,7 @@ export const Artist = ({route, navigation}) => {
       };
 
       fetch(
-        'https://flow-fbmj.onrender.com/artists/artist/' + id,
+        'https://flow-fbmj.onrender.com/artists/v2/artist/' + id,
         requestOptions,
       )
         .then(response => response.json())
@@ -99,16 +99,18 @@ export const Artist = ({route, navigation}) => {
       style={{backgroundColor: '#121212'}}>
       <ImageContainer height={scale(300)}>
         <ArtistImage
-          style={{backgroundColor: artist.images == undefined && '#383838'}}
+          style={{resizeMode: 'contain'}}
           source={
-            artist.images !== undefined ? {uri: artist.images[0].url} : null
+            artist.images !== undefined
+              ? {uri: artist.images[0]?.url}
+              : require('../../assets/images/Loading.png')
           }
         />
+
         {/* <BackButton>
           <EntypoIcon name="chevron-thin-left" size={24} color="#fff" />
         </BackButton> */}
         <LinearBackground height={scale(120)} />
-
         <BottomOfImage>
           <TextContainer>
             <NameArtist>
@@ -192,7 +194,12 @@ export const Artist = ({route, navigation}) => {
       <Section>
         <TitleContainer>
           <Title>Album phổ biến</Title>
-          <TouchableOpacity onPress={() => navigation.navigate('AllAlbum')}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('AllAlbum', {
+                item: artist.albums,
+              })
+            }>
             <ViewAll>Xem tất cả</ViewAll>
           </TouchableOpacity>
         </TitleContainer>
