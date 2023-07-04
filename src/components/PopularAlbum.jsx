@@ -15,8 +15,9 @@ export const PopularAlbum = props => {
     >
       <ImageContainer height={scale(120)} width={scale(120)}>
         <AlbumImage
+          style={{backgroundColor: item.images == undefined && '#383838'}}
           source={
-            item.images === undefined || item.images === null
+            !item.images
               ? require('../assets/images/Loading.png')
               : {uri: item.images[0].url}
           }

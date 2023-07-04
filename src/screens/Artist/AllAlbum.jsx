@@ -1,12 +1,13 @@
 import React from 'react';
-import {View, Image, ImageBackground} from 'react-native';
+import {View, Image, ImageBackground, Animated} from 'react-native';
 import styled from 'styled-components/native';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import scale from '../../constants/responsive';
+import FONTS from '../../constants/fonts';
 
 export const AllAlbum = ({route, navigation}) => {
   const albums = route.params.item;
-  //console.log(item);
+
   return (
     <Container showsVerticalScrollIndicator={false}>
       {albums.map(item => {
@@ -158,4 +159,41 @@ const Round = styled.View`
   border-radius: 50px;
   background-color: #1e1e1e;
   border: 1px solid #748182;
+`;
+
+const HeaderTitle = styled.View`
+  display: flex;
+  flex: 1;
+  align-items: flex-start;
+  justify-content: center;
+`;
+
+const HeaderStyle = styled.Text`
+  text-transform: uppercase;
+  font-family: ${FONTS.RadioCanada.Medium};
+  font-size: 24px;
+  color: white;
+  text-align: center;
+`;
+
+const SearchView = styled(Animated.View)`
+  border: 1px solid #b1b5bb;
+  border-radius: 100px;
+  background-color: #1e1e1e;
+  align-self: stretch;
+  padding: 6px 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  align-self: stretch;
+`;
+
+const Input = styled.TextInput`
+  font-family: ${FONTS.NotoSans.Regular};
+  font-size: 15px;
+  color: white;
+  padding: 0px;
+  flex: 1;
 `;

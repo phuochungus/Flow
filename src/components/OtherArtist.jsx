@@ -14,9 +14,9 @@ export const OtherArtist = props => {
       <ImageContainer height={scale(120)} width={scale(120)}>
         <ArtistImage
           source={
-            item.images && item.images.lenth !== 0
-              ? {uri: item.images[0]?.url}
-              : require('../assets/images/Loading.png')
+            !item.images
+              ? require('../assets/images/Loading.png')
+              : {uri: item.images[0]?.url}
           }
         />
       </ImageContainer>
