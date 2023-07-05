@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, ScrollView, TouchableOpacity, Image} from 'react-native';
+import {View, ScrollView, TouchableOpacity, Pressable} from 'react-native';
 import {
   OtherArtist,
   PopularSongInArtist,
@@ -13,7 +13,7 @@ import scale from '../../constants/responsive';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const Artist = ({route, navigation}) => {
-  const [id, setId] = useState(route.params.id);
+  const id = route.params.id;
   const [artist, setArtist] = useState({});
   const [description, setDescription] = useState(null);
   const [isFavourite, setIsFavourite] = useState(null);
@@ -32,7 +32,7 @@ export const Artist = ({route, navigation}) => {
       };
 
       fetch(
-        'https://flow-fbmj.onrender.com/artists/artist/' + id,
+        'https://flow-fbmj.onrender.com/artists/v2/artist/' + id,
         requestOptions,
       )
         .then(response => response.json())
@@ -99,16 +99,18 @@ export const Artist = ({route, navigation}) => {
       style={{backgroundColor: '#121212'}}>
       <ImageContainer height={scale(300)}>
         <ArtistImage
-          style={{backgroundColor: artist.images == undefined && '#383838'}}
+          style={{resizeMode: 'contain'}}
           source={
-            artist.images !== undefined ? {uri: artist.images[0].url} : null
+            !artist.images
+              ? require('../../assets/images/Loading.png')
+              : {uri: artist.images[0]?.url}
           }
         />
+
         {/* <BackButton>
           <EntypoIcon name="chevron-thin-left" size={24} color="#fff" />
         </BackButton> */}
         <LinearBackground height={scale(120)} />
-
         <BottomOfImage>
           <TextContainer>
             <NameArtist>
@@ -132,6 +134,19 @@ export const Artist = ({route, navigation}) => {
       </Description>
 
       <ButtonContainer>
+        {/* Follow */}
+        <GradientBackground height={scale(48)} width={scale(160)}>
+          {isFavourite ? (
+            <FollowingButton onPress={handleFavourite}>
+              <FollowText>Đang theo dõi</FollowText>
+            </FollowingButton>
+          ) : (
+            <UnfollowingButton onPress={handleFavourite}>
+              <FollowText>Theo dõi</FollowText>
+            </UnfollowingButton>
+          )}
+        </GradientBackground>
+
         {/* PlayRandomButton */}
         <PlayRandomButton height={scale(60)} width={scale(62)}>
           <PlayBackground height={scale(54)} width={scale(54)}>
@@ -148,27 +163,14 @@ export const Artist = ({route, navigation}) => {
           </RandomBorder>
         </PlayRandomButton>
 
-        {/* Follow */}
-        <GradientBackground height={scale(48)} width={scale(160)}>
-          {isFavourite ? (
-            <FollowingButton onPress={handleFavourite}>
-              <FollowText>Đang theo dõi</FollowText>
-            </FollowingButton>
-          ) : (
-            <UnfollowingButton onPress={handleFavourite}>
-              <FollowText>Theo dõi</FollowText>
-            </UnfollowingButton>
-          )}
-        </GradientBackground>
-
         {/* Share */}
-        <ShareButton height={scale(54)} width={scale(54)}>
+        {/* <ShareButton height={scale(54)} width={scale(54)}>
           <ShareBorder>
             <ShareBackground>
               <FeatherIcon name="share-2" size={24} color="#E70DFB" />
             </ShareBackground>
           </ShareBorder>
-        </ShareButton>
+        </ShareButton> */}
       </ButtonContainer>
 
       <Section>
@@ -192,9 +194,15 @@ export const Artist = ({route, navigation}) => {
       <Section>
         <TitleContainer>
           <Title>Album phổ biến</Title>
-          <TouchableOpacity onPress={() => navigation.navigate('AllAlbum')}>
+          <Pressable
+            disabled={artist && false}
+            onPress={() =>
+              navigation.navigate('AllAlbum', {
+                item: artist.albums,
+              })
+            }>
             <ViewAll>Xem tất cả</ViewAll>
-          </TouchableOpacity>
+          </Pressable>
         </TitleContainer>
         <HorizontalScroll horizontal showsHorizontalScrollIndicator={false}>
           {artist.albums !== undefined &&
@@ -319,12 +327,16 @@ const ButtonContainer = styled.View`
   margin: 28px 20px;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
+  position: relative;
 `;
 
 const PlayRandomButton = styled(TouchableOpacity)`
   height: ${props => props.height}px;
+
   width: ${props => props.width}px;
-  position: relative;
+  position: absolute;
+  left: 0;
 `;
 
 const PlayBackground = styled(LinearGradient).attrs({

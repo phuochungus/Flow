@@ -2,7 +2,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {Artist, Login, SignIn, AllAlbum, Splash} from '../screens';
 import FONTS from '../constants/fonts';
 import {SignUp} from '../screens/SignUp/SignUp';
-
+import {Dimensions} from 'react-native';
 const Stack = createStackNavigator();
 
 export function RootNavigation() {
@@ -76,13 +76,15 @@ export function RootNavigation() {
         component={AllAlbum}
         options={{
           presentation: 'transparentModal',
-          headerTitleAlign: 'center',
           headerTintColor: 'white',
-          title: 'Danh sách Album',
+          headerTitle: 'Danh sách Album',
+          headerTitleAlign: 'center',
+          headerTitleContainerStyle: {width: Dimensions.get('window').width},
           headerTitleStyle: {
-            textTransform: 'uppercase',
             fontFamily: FONTS.RadioCanada.Medium,
             fontSize: 24,
+            textTransform: 'uppercase',
+            textAlign: 'center',
           },
           headerStyle: {
             backgroundColor: '#121212',
