@@ -1,20 +1,39 @@
 //import liraries
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Alert, Image, TouchableOpacity, ScrollView, FlatList, ImageBackground } from 'react-native';
-import * as Progress from 'react-native-progress';
 import BackHeader from '../../components/back-header';
-import { IMG_AddPlaylist, IMG_BackDown, IMG_Dots, IMG_Like, IMG_Liked, IMG_Next, IMG_Play, IMG_Previous, IMG_Random, IMG_Repeat, IMG_Up } from '../../assets/images';
+import { IMG_AddPlaylist, IMG_BackDown, IMG_Dots, IMG_Like, IMG_Liked, IMG_Next, IMG_Pause, IMG_PinkRepeat, IMG_Play, IMG_Previous, IMG_Random, IMG_Repeat, IMG_Up } from '../../assets/images';
 import scale from '../../constants/responsive';
 import FONTS from '../../constants/fonts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SoundPlayer from 'react-native-sound';
+import Slider from '@react-native-community/slider';
+import { PlayingContext } from '../../constants/playingContext';
+
 
 // create a component
 export const Playing = ({navigation, route}) => {
     
     const [songInfo, setSongInfo] = useState({});
     const [lyrics, setLyrics] = useState({});
+    const [song, setSong] = useState();
+    const [isUpLyrics, setIsUpLyrics] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(false);
 
-    const id = route.params.id;
+    const { player2, changePlayer, setListSounds } = useContext(PlayingContext);
+
+    SoundPlayer.setCategory('Playback');
+
+
+    //type === 'back' => navigate from miniPlaying
+    //type === 'single' => navigate from a Song
+    //type === 'list' => navigate from playlist
+
+    // const list = route.params.list;
+    // const id = route.params.id;
+    const type = route.params.type;
+    const id = '1cekjzdAUf8KDjyJROCRpn';
+    //const type = 'back';
 
     const getAPI = async () => {
         var accessToken = await AsyncStorage.getItem('access_token');
@@ -53,42 +72,124 @@ export const Playing = ({navigation, route}) => {
             .catch(error => console.log('error', error));
     }
 
+    const setPlayer = async ()=>{
+        if (player2)
+            await changePlayer(id);
+    }
+
+    const getCurrTime = async () => {
+        const currTime = await AsyncStorage.getItem('current-time');
+        console.log('currTime');
+        console.log(currTime);
+        return parseInt(currTime);
+    }
+
+    const getCurrId = async () => {
+        const id = await AsyncStorage.getItem('id-playing');
+        return id;
+    }
+
+    const setLstSound = async () => {
+        const lst = [];
+        if (type === 'list') { 
+            await player2.setListSounds(list);
+            lst = list;
+            await AsyncStorage.setItem('list-sound', JSON.stringify(lst));
+        }
+        else if (type === 'single') {
+            await player2.setListSounds([{'id': id}, {'id': '3zhbXKFjUDw40pTYyCgt1Y'}]);
+            lst = [{'id': id}]
+            await AsyncStorage.setItem('list-sound', JSON.stringify(lst));
+        }
+        else if (type === 'back') {
+
+        }
+        // await player2.setListSounds([{'id': id}, {'id': '3zhbXKFjUDw40pTYyCgt1Y'}]);
+        // await AsyncStorage.setItem('list-sound', JSON.stringify([{'id': id}, {'id': '3zhbXKFjUDw40pTYyCgt1Y'}]));
+    }
+
     useEffect(()=>{
-        getSongInfo();
-        getLyrics();
-        console.log(songInfo);
+        console.log(player2);
+        getCurrTime();
+        //getSongInfo();
+        //getLyrics();
+        //getSong();
+        //setPlayer();
+        //changePlayer(id);
+        //console.log('currTime');
+        //console.log(getCurrTime());
+        //player2.setCurrentTime(getCurrTime());
+        console.log('hihi');
+        // async ()=>{
+        //     const id = 'abc';
+        //     id = await AsyncStorage.getItem('id-playing');
+        //     console.log(id);
+        // }
+        //console.log(AsyncStorage.getItem('id-playing'));
+        AsyncStorage.setItem('access_token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDc5YTYzMzdkNzcyMDdjZDhjNDBlMzEiLCJpYXQiOjE2ODg2MTY4Mjl9.XDfJ12aZ4M6hNj63np9eaXd7R7EsyskvWo7FduEP6do');
+    }, [player2.index])
+
+    const getlist = async () => {
+        const list = await AsyncStorage.getItem('list-sound');
+        console.log('abc');
+        const result = JSON.parse(list);
+        console.log(result);
+    }
+
+    useEffect(()=>{
+        // if (type !== 'back')
+        //     setLstSound();
+        //player2.setIndex(0);
+        setLstSound();
+        getlist();
     }, [])
 
-    const getSongInfo = async () => {
-        const accessToken = await AsyncStorage.getItem('access_token');
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer " + accessToken);
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-        // setSongInfo({name: "Giúp anh trả lời những câu hỏi", artists: [{name: "Tên ca sĩ"}, {name: "Ten ca si 2"}, {name: "Ten ca si thu ba dai lam"}], isFavourite: true});
-        fetch("https://flow-fbmj.onrender.com/tracks/track/" + id, requestOptions)
-            .then(response => response.json())
-            .then(result => {console.log(result); setSongInfo(result)})
-            .catch(error => console.log('error', error));
-    }
+    useEffect(()=>{
+        console.log(player2.songInfo);
+    }, [player2.songInfo, player2.lyrics])
 
-    const getLyrics = async () => {
-        const accessToken = await AsyncStorage.getItem('access_token');
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer " + accessToken);
-        var requestOptions = {
-            method: 'GET',
-            redirect: 'follow'
-          };
+    // const getSongInfo = async () => {
+    //     const accessToken = await AsyncStorage.getItem('access_token');
+    //     var myHeaders = new Headers();
+    //     myHeaders.append("Authorization", "Bearer " + accessToken);
+    //     var requestOptions = {
+    //         method: 'GET',
+    //         headers: myHeaders,
+    //         redirect: 'follow'
+    //     };
+    //     fetch("https://flow-fbmj.onrender.com/tracks/track/" + id, requestOptions)
+    //         .then(response => response.json())
+    //         .then(result => {console.log(result); setSongInfo(result)})
+    //         .catch(error => console.log('error', error));
+    // }
+
+    // const getLyrics = async () => {
+    //     const accessToken = await AsyncStorage.getItem('access_token');
+    //     var myHeaders = new Headers();
+    //     myHeaders.append("Authorization", "Bearer " + accessToken);
+    //     var requestOptions = {
+    //         method: 'GET',
+    //         redirect: 'follow'
+    //       };
           
-        fetch("https://flow-fbmj.onrender.com/tracks/lyrics/" + id, requestOptions)
-            .then(response => response.json())
-            .then(result => {console.log(result); setLyrics(result)})
-            .catch(error => console.log('error', error));
-    }
+    //     fetch("https://flow-fbmj.onrender.com/lyrics/" + id, requestOptions)
+    //         .then(response => response.json())
+    //         .then(result => {setLyrics(result)})
+    //         .catch(error => console.log('error', error));
+    // }
+
+    // const getSong = async () => {
+    //             // getSong
+    //     const Sound = await new SoundPlayer('https://flow-fbmj.onrender.com/tracks/v2/play/' + id, null, (error) => {
+    //         if (error) {
+    //             console.log('failed to load the sound', error);
+    //             return;
+    //         }
+    //         // if loaded successfully
+    //         setSong(Sound);
+    //         console.log('duration in seconds: ' + Sound.getDuration() + 'number of channels: ' + Sound.getNumberOfChannels());
+    //     })
+    // }
 
     const handleSongName = (text) => {
         if (text == undefined)
@@ -136,91 +237,92 @@ export const Playing = ({navigation, route}) => {
         return result;
     }
 
-    const handleFavorites = async (method) => {
-        const accessToken = await AsyncStorage.getItem('access_token');
-        var myHeaders = new Headers();
-        myHeaders.append("accept", "*/*");
-        myHeaders.append("Authorization", "Bearer " + accessToken);
-        myHeaders.append("Content-Type", "application/json");
-
-        var raw = JSON.stringify({
-            "id": id
-        });
-
-        var requestOptions = {
-            method: method,
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
-
-        fetch("https://flow-fbmj.onrender.com/me/favourites", requestOptions)
-        // .then(response => response.text())
-        .then(result => {console.log("liked"); getSongInfo();})
-        .catch(error => console.log('error', error));
-    }
-
     return (
         <ScrollView style={styles.container}>
-            <BackHeader onLeftButtonPressed={()=>Alert.alert("left button pressed")} img={IMG_BackDown}/>
-            <View style={styles.DVDContainer}>
-                <ImageBackground style={[styles.imgBackground, {transform: [{rotate: '45deg'}],}]} source={{uri: songInfo.images !== undefined ? songInfo.images[0].url : "https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg"}}>
-                    <View style = {styles.smallCircle}/>
-                </ImageBackground>
-            </View>
-            <View style={styles.nameArtistIconContainer}>
-                <View>
-                    <Text style={styles.songText}>{handleSongName(songInfo.name)}</Text>
-                    <Text style={styles.artistText}>{songInfo.artists !== undefined ? handleArtistsName(songInfo.artists) : "Loading..."}</Text>
+            <View style={{opacity: isUpLyrics !== false ? 0 : 1}}>
+                <BackHeader onLeftButtonPressed={()=>Alert.alert("left button pressed")} img={IMG_BackDown} navigation={navigation}/>
+                <View style={styles.DVDContainer}>
+                    <ImageBackground style={[styles.imgBackground, {transform: [{rotate: '45deg'}],}]} source={{uri: player2?.songInfo.images !== undefined ? player2?.songInfo.images[0].url : "https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg"}}>
+                        <View style = {styles.smallCircle}/>
+                    </ImageBackground>
                 </View>
-                <View style={styles.iconBox}>
-                    <TouchableOpacity onPress={!songInfo.isFavourite ? ()=>{handleFavorites('POST')} : ()=>{handleFavorites('DELETE')}}>
-                        <Image style={styles.icon} source={songInfo.isFavourite ? IMG_Liked : IMG_Like}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Image style={styles.icon} source={IMG_AddPlaylist}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Image style={styles.iconDots} source={IMG_Dots}/>
-                    </TouchableOpacity>
+                <View style={styles.nameArtistIconContainer}>
+                    <View>
+                        <Text style={styles.songText}>{handleSongName(player2?.songInfo.name)}</Text>
+                        <Text style={styles.artistText}>{player2?.songInfo.artists !== undefined ? handleArtistsName(player2?.songInfo.artists) : "Loading..."}</Text>
+                    </View>
+                    <View style={styles.iconBox}>
+                        <TouchableOpacity onPress={!player2?.songInfo.isFavourite ? ()=>{player2?.handleFavorites('POST'); setIsFavorite(!isFavorite)} : ()=>{player2?.handleFavorites('DELETE'); setIsFavorite(!isFavorite)}}>
+                            <Image style={styles.icon} source={player2?.songInfo.isFavourite ? IMG_Liked : IMG_Like}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Image style={styles.icon} source={IMG_AddPlaylist}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Image style={styles.iconDots} source={IMG_Dots}/>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
+           
             <View style={styles.progressTimeContainer}>
-                <Progress.Bar progress={0.4} width={scale(398)} color='#E70DFB' unfilledColor='black' borderColor='black'/>
+                <Slider style={{width: scale(398), height: scale(6)}} 
+                        minimumValue={0}
+                        maximumValue={player2?.duration}
+                        value={player2?.currentTime}
+                        minimumTrackTintColor="#E70DFB"
+                        maximumTrackTintColor="black"
+                        thumbTintColor='#E70DFB'
+                        onTouchStart={player2?.pause}
+                        onTouchEnd={player2?.play}
+                        onSlidingComplete={(seconds) => player2?.seekToTime(seconds)}/>
                 <View style={styles.timeContainer}>
-                    <Text style={styles.timeText}>2:04</Text>
-                    <Text style={styles.timeText}>4:12</Text>
+                    <Text style={styles.timeText}>{player2?.currentTimeString}</Text>
+                    <Text style={styles.timeText}>{player2?.durationString}</Text>
                 </View>
             </View>
             <View style={styles.playIconsContainer}>
-                <TouchableOpacity>
-                    <Image style={styles.repeatRandom} source={IMG_Repeat}/>
+                <TouchableOpacity onPress={player2 ? player2.loop : ()=>{}}>
+                    <Image style={styles.repeatRandom} source={player2?.isLoop ? IMG_PinkRepeat : IMG_Repeat}/>
                 </TouchableOpacity>
-                <TouchableOpacity>
-                    <Image style={styles.preNext} source={IMG_Previous}/>
+                <TouchableOpacity onPress={player2 ? player2.previous : ()=>{}} 
+                                    disabled={player2 ? player2.isDisabledButtonPrevious : ()=> {}}> 
+                    <Image style={[styles.preNext, {opacity: player2?.isDisabledButtonPrevious === false ? 1 : 0.2}]} source={IMG_Previous}/>
                 </TouchableOpacity>
-                <TouchableOpacity>
-                    <Image style={styles.play} source={IMG_Play}/>
+                {
+                    player2?.status === 'play' ? (
+                        <TouchableOpacity onPress={player2 ? player2.pause : ()=>{}} 
+                                            disabled={player2 ? player2.isDisabledButtonPause : ()=> {}}>
+                            <Image style={[styles.play, {opacity: player2?.isDisabledButtonPause === false ? 1 : 0.2}]} source={IMG_Pause}/>
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity onPress={player2 ? player2.play : ()=>{}} 
+                                            disabled={player2 ? player2.isDisabledButtonPlay : ()=> {}}>
+                            <Image style={[styles.play, {opacity: player2?.isDisabledButtonPlay === false ? 1 : 0.2}]} source={IMG_Play}/>
+                        </TouchableOpacity>
+                    )
+                }
+                <TouchableOpacity onPress={player2 ? player2.next : ()=>{}} 
+                                    disabled={player2 ? player2.isDisabledButtonNext : ()=> {}}>
+                    <Image style={[styles.preNext, {opacity: player2?.isDisabledButtonNext === false ? 1 : 0.2}]} source={IMG_Next}/>
                 </TouchableOpacity>
-                <TouchableOpacity>
-                    <Image style={styles.preNext} source={IMG_Next}/>
-                </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={player2 ? player2.shuffle : ()=>{}}>
                     <Image style={styles.repeatRandom} source={IMG_Random}/>
                 </TouchableOpacity>
             </View>
-            <ScrollView style={styles.lyricBox}>
+            <ScrollView style={isUpLyrics !== false ? styles.largeLyricBox : styles.lyricBox}>
                 <View style={styles.lyricTop}>
                     <Text style={styles.titleText}>Lời bài hát</Text>
-                    <TouchableOpacity>
-                        <Image style={styles.up} source={IMG_Up}/>
+                    <TouchableOpacity onPress={isUpLyrics !== false ? ()=>setIsUpLyrics(false) : ()=>setIsUpLyrics(true)}>
+                        <Image style={[styles.up, {transform: [{rotate: isUpLyrics !== false ? '180deg' : '0deg'}],}]} source={IMG_Up}/>
                     </TouchableOpacity>
                 </View>
-                {lyrics !== undefined ? (
+                {player2?.lyrics !== undefined ? (
                     <ScrollView horizontal={true} style={{ width: "100%" }}>
                         <FlatList 
-                            data={lyrics}
-                            renderItem={({item}) => <Text style={styles.lyricText}>{item.words}</Text>}
+                            data={player2?.lyrics}
+                            renderItem={({item, index}) => 
+                                <Text style={(player2?.currentTime * 1000 < player2?.lyrics[index + 1]?.startTimeMs && player2?.currentTime * 1000 >= item.startTimeMs) ? styles.nowLyricText : styles.lyricText}>{item.words}</Text>}
                             keyExtractor={(item, index) => index}
                         />
                     </ScrollView>
@@ -252,6 +354,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: scale(22),
+        shadowColor: 'black',
+        elevation: 15,
     },
     nameArtistIconContainer: {
         flexDirection: 'row',
@@ -326,9 +430,20 @@ const styles = StyleSheet.create({
         width: scale(68),
         height: scale(68),
     },
+    largeLyricBox: {
+        position: 'absolute',
+        width: scale(398),
+        height: scale(500),
+        alignSelf: 'center',
+        backgroundColor: '#1E1E1E',
+        borderTopLeftRadius: scale(20),
+        borderTopRightRadius: scale(20),
+        //borderWidth: 1,
+        //borderColor: '#B1B5BB',
+    },
     lyricBox: {
         width: scale(398),
-        height: scale(161),
+        height: scale(190),
         marginTop: scale(20),
         alignSelf: 'center',
         backgroundColor: 'black',
@@ -360,6 +475,7 @@ const styles = StyleSheet.create({
         fontFamily: FONTS.NotoSans.Medium,
         fontSize: scale(12),
         lineHeight: scale(16),
+        width: scale(366),
         color: '#B1B5BB',
     },
     nowLyricText: {
@@ -367,6 +483,7 @@ const styles = StyleSheet.create({
         fontFamily: FONTS.NotoSans.Medium,
         fontSize: scale(15),
         lineHeight: scale(20),
+        width: scale(366),
         color: 'white',
     },
     imgBackground: {

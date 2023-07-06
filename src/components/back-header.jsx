@@ -11,7 +11,7 @@ const BackHeader = (props) => {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.back} onPress={props.onLeftButtonPress}>
+            <TouchableOpacity style={styles.back} onPress={()=>props.navigation.goBack()}>
                 <Image style={styles.img} source={props.img}/>
             </TouchableOpacity>
             <View style={styles.titleTextContainer}>
