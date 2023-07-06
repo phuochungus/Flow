@@ -1,19 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 const SongInAlbum = props => {
+  const item = props.item;
   return (
     <Container>
       <MainDetail>
         <TextContainer>
-          <Title>{props.nameSong}</Title>
-          <Artist>{props.nameArtist}</Artist>
+          <Title>{item.name}</Title>
+          <Artist>{item.artists[0].name}</Artist>
         </TextContainer>
       </MainDetail>
       <Detail>
-        <Icon name="dots-horizontal" size={28} color="#fff" />
+        <Icon name="play" size={32} color="#fff" />
       </Detail>
     </Container>
   );

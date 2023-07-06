@@ -1,5 +1,5 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import {Artist, Login, SignIn, AllAlbum, Splash} from '../screens';
+import {Artist, Login, SignIn, AllAlbum, Splash, Album, Home, Playing} from '../screens';
 import FONTS from '../constants/fonts';
 import {SignUp} from '../screens/SignUp/SignUp';
 
@@ -8,6 +8,16 @@ const Stack = createStackNavigator();
 export function RootNavigation() {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name = "Home"
+        component={ Home }
+        options={{
+          presentation: 'transparentModal',
+          headerTransparent: true,
+          headerTintColor: 'white',
+          title: null,
+        }}
+        />
       <Stack.Screen
         name="Splash"
         component={Splash}

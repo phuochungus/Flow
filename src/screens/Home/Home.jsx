@@ -1,18 +1,111 @@
-import React from 'react';
-import {View, ScrollView, TouchableOpacity} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, ScrollView, TouchableHighlight, Text } from 'react-native';
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
-import PopularSongInArtist from '../../components/PopularSongInArtist';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
-import PopularAlbum from '../../components/PopularAlbum';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';;
 import OtherArtist from '../../components/OtherArtist';
 import PopularAlbumInHome from '../../components/PopularAlbumInHome';
 import RecentSong from '../../components/RecentSong';
+import FamousArtist from '../../components/FamousArtist';
 
 
 export const Home = () => {
+  const [song, setSong] = useState([]);
+  const [album, setAlbum] = useState([]);
+  const [artist, setArtist] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(false);
+  const [items, setItems] = useState([]);
+  const [user, setUser] = useState([]);
+
+
+  const loadUser = async () => {
+    if (Object.keys(album).length === 0) {
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDc5YTYzMzdkNzcyMDdjZDhjNDBlMzEiLCJpYXQiOjE2ODg0NDU4NDV9.CIN73r3GXK1n1sgmspC2RcsEY5VsOoTN-gesos_NUuk");  
+
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      fetch('https://flow-fbmj.onrender.com/me/profile', requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        setUser(result);
+        setItems(result.recentlyPlayed);
+        console.log(result.recentlyPlayed);
+      })
+      .catch(error => console.log('error', error));
+    }
+  };
+
+  const loadTrack = async () => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+    
+    fetch("https://flow-fbmj.onrender.com/tracks/top50", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        setAlbum(result);
+        //console.log(result);
+        //var obj = result.images[0].url; 
+        //setItems(obj.toString()); 
+      })
+      .catch(error => console.log('error', error));
+  }
+
+  const loadArtist = async () => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+    
+    fetch("https://flow-fbmj.onrender.com/artists/typical_artists", requestOptions)
+      .then(response => response.json())
+      .then(result => result.slice(0,10))
+      .then(result => {
+        setArtist(result);
+        //console.log(result);
+        //var obj = result.images[0].url; 
+        //setItems(obj.toString()); 
+      })
+      .catch(error => console.log('error', error));
+  }
+
+  const loadSong = async () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDc5YTYzMzdkNzcyMDdjZDhjNDBlMzEiLCJpYXQiOjE2ODg0NDU4NDV9.CIN73r3GXK1n1sgmspC2RcsEY5VsOoTN-gesos_NUuk");
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      "id": "4W2poMwGzKQHtpNCthoGhC"
+    });
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      //body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("https://flow-fbmj.onrender.com/me/play_history", requestOptions)
+      .then(response => response.json())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  }
+
+  useEffect(() => {
+    loadTrack();
+    loadArtist();
+    loadSong();
+    loadUser();
+  },[]);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Container>
@@ -24,7 +117,7 @@ export const Home = () => {
             </Avata>
             <TextUser>
                 <Welcome>Welcome back !</Welcome>
-                <Name>aaaa</Name>
+                <Name>{user.username}</Name>
             </TextUser>
             <Icon>
                 <FeatherIcon name="bar-chart-2" size={22} color="#fff"/>
@@ -39,27 +132,38 @@ export const Home = () => {
                 <History>Xem tất cả</History>
             </TitleContainer>
             <SongContainer>
-                <RecentSong nameSong={'SHUTDOWN'} nameArtist={'BLACKPINK'} />
-                <RecentSong nameSong={'SHUTDOWN'} nameArtist={'BLACKPINK'} />
-                <RecentSong nameSong={'SHUTDOWN'} nameArtist={'BLACKPINK'} />
+                {
+                  items.slice(0,5)
+                  .map((item, index)=>{
+                    return <RecentSong id={item}/>
+                  })
+                }
             </SongContainer>
         </ListSong>
         <ListAlbum>
             <TitleContainer>
-                <Title>Album nổi bật</Title>
+                <Title>Bài hát nổi bật</Title>
             </TitleContainer>
             <AlbumContainer horizontal={true} >
-                <PopularAlbumInHome title={'BORN PINK'} artist={'BLACKPINK'}/>
-                <PopularAlbumInHome title={'BORN PINK'} artist={'BLACKPINK'}/>
-            </AlbumContainer>
+              {
+                album.slice(0,10)
+                .map((item, index) =>  {
+                  //console.log(item);
+                  return <PopularAlbumInHome item={item}/>
+                })
+              }
+              </AlbumContainer>
         </ListAlbum>
-        <Title>Nghệ sĩ nổi bật</Title>
+        <TitleContainer>
+          <Title>Nghệ sĩ nổi bật</Title>
+        </TitleContainer>
         <ArtistContainer horizontal={true}>
-            <OtherArtist title={'BlackPink'}/>
-            <OtherArtist title={'BlackPink'}/>
-            <OtherArtist title={'BlackPink'}/>
-            <OtherArtist title={'BlackPink'}/>
-            <OtherArtist title={'BlackPink'}/>
+          {
+            artist.slice(0,10)
+            .map((item, index) => {
+              return <FamousArtist uri={item.images[0].url.toString()} title={item.name} />
+            })
+          }
         </ArtistContainer>
       </Container>
     </ScrollView>
@@ -195,7 +299,8 @@ const AlbumContainer = styled.ScrollView`
 const ArtistContainer = styled.ScrollView`
   flex-direction: row;
   flex: 1;
-  padding: 10px
+  padding: 10px;
+  margin-left: 5px;
 `;
 
 
@@ -216,8 +321,3 @@ const LinearBackground = styled(LinearGradient).attrs({
   align-items: center;
   justify-content: center;
 `;
-
-
-
-
-

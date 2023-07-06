@@ -1,42 +1,131 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {View, ScrollView, TouchableOpacity, SafeAreaView, StyleSheet, Text, ImageBackground} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import PopularSongInArtist from '../../components/PopularSongInArtist';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import scale from '../../constants/responsive';
 import SongInAlbum from '../../components/SongInAlbum';
-import styled from 'styled-components';
 import PlayingSong from '../../components/PlayingSong';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
+export default Album;
 
 export const Album = () => {
+  const [album, setAlbum] = useState({});
+  const [artist, setArtist] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [isFavourite, setIsFavourite] = useState(false);
+  const [tracks, setTracks] = useState([]);
+  const [duration, setDuration] = useState();
+
+  const id = '0S4pP8MBY9p7ngFWIZQAJv';
+  //const id = route.params.id
+
+  const total = (value) => {
+    return new Date(value).toISOString().substr(11,8);
+  }
+
+  const loadAlbum = async () => {
+    if (Object.keys(album).length === 0) {
+      AsyncStorage.setItem('access_token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDc5YTYzMzdkNzcyMDdjZDhjNDBlMzEiLCJpYXQiOjE2ODg0NDU4NDV9.CIN73r3GXK1n1sgmspC2RcsEY5VsOoTN-gesos_NUuk');
+      const accessToken = await AsyncStorage.getItem('access_token')
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization",  'Bearer ' + accessToken);
+
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      fetch('https://flow-fbmj.onrender.com/albums/album/' + id, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        const obj = result.artists[0].name;
+        const ob = result.images[0].url;
+        setIsFavourite(result.isFavourite);
+        setArtist(obj.toString());
+        setDescription(ob.toString());
+        setTracks(result.track);
+        setDuration(result.total_duration);
+        setAlbum(result);})
+      .catch(error => console.log('error', error));
+    }
+  };
+
+  const handleFavourite = async () => {
+    AsyncStorage.setItem('access_token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDc5YTYzMzdkNzcyMDdjZDhjNDBlMzEiLCJpYXQiOjE2ODg0NDU4NDV9.CIN73r3GXK1n1sgmspC2RcsEY5VsOoTN-gesos_NUuk');
+    const accessToken = await AsyncStorage.getItem('access_token');
+
+    var headers = new Headers();
+    headers.append('accept', '*/*');
+    headers.append('Authorization', 'Bearer ' + accessToken);
+    headers.append('Content-Type', 'application/json');
+
+    var raw = JSON.stringify({
+      id: id,
+    });
+
+    if (!isFavourite) {
+      var requestOptions = {
+        method: 'POST',
+        headers: headers,
+        body: raw,
+        redirect: 'follow',
+      };
+    } else {
+      var requestOptions = {
+        method: 'DELETE',
+        headers: headers,
+        body: raw,
+        redirect: 'follow',
+      };
+    }
+
+    const response = await fetch(
+      'https://flow-fbmj.onrender.com/me/favourites',
+      requestOptions,
+    ).catch(error => console.log('error', error));
+
+    if (response.status >= 200) {
+      setIsFavourite(!isFavourite);
+    }
+  };
+
+useEffect(()=>{
+  loadAlbum();
+})
   return (
     <SafeAreaView style={styles.container}>
         <TouchableOpacity style={styles.backButton}>
-            <EntypoIcon name="chevron-thin-left" size={24} color="#fff" />
+            <EntypoIcon name="chevron-thin-left" size={scale(24)} color="#fff" />
         </TouchableOpacity>
         <ScrollView style={styles.albumContainer}>
             <View style={styles.imageContainer}>
-                <ImageBackground style={styles.record} source={require('../../assets/images/Artist.png')}>
+                <ImageBackground style={styles.record} source={{uri: description}}>
                     <View style={styles.inRecord}></View>
                 </ImageBackground>
-                <ImageBackground style={styles.image} source={require('../../assets/images/Artist.png')}></ImageBackground>
+                <ImageBackground style={styles.image} source={{uri: description}}></ImageBackground>
             </View>
 
 
             <View style={styles.box}>
-                <TouchableOpacity style={styles.icon}>
-                    <FeatherIcon name="heart" size={32} color="grey"/>
+                <TouchableOpacity style={styles.icon} onPress={handleFavourite}>
+                  {
+                    isFavourite === true ? (
+                      <EntypoIcon name="heart" size={scale(36)} color="#E70DFB" />
+                    ) : (
+                      <EntypoIcon name="heart-outlined" size={scale(36)} color="grey"  />
+                    )
+                  }
                 </TouchableOpacity>
                 <View style={styles.textContainer}>
-                    <Text style={styles.nameAlbum}>BORN PINK</Text>
-                    <Text style={styles.nameArtist}>BLACKPINK</Text>
-                    <Text style={styles.text}>Album • 2022</Text>
+                    <Text style={styles.nameAlbum}>{album.name}</Text>
+                    <Text style={styles.nameArtist}>{artist}</Text>
                 </View>
                 <TouchableOpacity style={styles.icon}>
-                    <FeatherIcon name="more-vertical" size={32} color="grey"/>
+                    <FeatherIcon name="more-vertical" size={scale(32)} color="grey"/>
                 </TouchableOpacity>
             </View>
 
@@ -51,20 +140,19 @@ export const Album = () => {
 
 
           <View style={[styles.playlist]}>
-            <Text style={styles.time}>00:00</Text>
-            <SongInAlbum nameSong="Tên bài hát" nameArtist="BLACKPINK"/>
-            <SongInAlbum nameSong="Tên bài hát" nameArtist="BLACKPINK"/>
-            <SongInAlbum nameSong="Tên bài hát" nameArtist="BLACKPINK"/>
-            <SongInAlbum nameSong="Tên bài hát" nameArtist="BLACKPINK"/>
+            <Text style={styles.time}>{total(duration)}</Text>
+            {
+              tracks.map((item, index) => {
+                return <SongInAlbum item={item} />
+              })
+            }
         </View>
         </ScrollView>
-        <PlayingSong nameSong="BORN PINK" artist="Amee"/>
       </SafeAreaView>
   );
 };
 
 
-export default Album;
 
 
 
@@ -181,11 +269,13 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: '#fff',
         fontWeight: 'bold',
+        fontFamily: 'Radio Canada'
     },
     nameArtist: {
         fontSize: 18,
         color: 'grey',
         fontWeight: 'bold',
+        fontFamily: 'Radio Canada'
     },
     text: {
         fontSize: 15,
@@ -211,4 +301,3 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     }
   });
-

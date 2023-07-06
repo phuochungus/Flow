@@ -1,21 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 
 const RecentSong = props => {
+  const id = props.id.toString();
+  const [track, setTrack] = useState([]);
+  const [artist, setArtist] = useState([]);
+
+  const loadTrack = async () => {
+      
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDc5YTYzMzdkNzcyMDdjZDhjNDBlMzEiLCJpYXQiOjE2ODg0NDU4NDV9.CIN73r3GXK1n1sgmspC2RcsEY5VsOoTN-gesos_NUuk");  
+
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      fetch('https://flow-fbmj.onrender.com/tracks/track/' + id, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        setTrack(result);
+        setArtist(result.artist);
+        console.log(result);
+      })
+      .catch(error => console.log('error', error));
+    
+  };
+
+  useEffect(()=>{
+    loadTrack();
+  },[]);
+
   return (
     <Container>
       <MainDetail>
         <ImageContainer>
-          <Image source={require('../assets/images/Artist.png')} />
+          <Image source={{uri: track.images[0].url.toString()}} />
           <StyleImage>
             <Round />
           </StyleImage>
         </ImageContainer>
         <TextContainer>
-          <Title>{props.nameSong}</Title>
-          <Streaming>{props.nameArtist}</Streaming>
+          <Title>{track.name}</Title>
+          <Streaming>{track.artists[0].name}</Streaming>
         </TextContainer>
       </MainDetail>
       <Detail>
