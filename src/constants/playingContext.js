@@ -8,6 +8,10 @@ export const PlayingContext = createContext();
 export const PlayingProvider = ({children}) => {
 
     //const [player2, setPlayer2] = useState(null);
+    const [ini, setIni] = useState(true);
+    const [ini2, setIni2] = useState(true);
+    const [index, setId] = useState();
+    const [time, setTime] = useState();
 
     var player2 = useAudioHelper(
         {
@@ -16,6 +20,7 @@ export const PlayingProvider = ({children}) => {
             isLogStatus: true,
         }
     );
+
 
     const changePlayer = async (id) => {
         await player2.resetPlayer(id);
@@ -26,7 +31,8 @@ export const PlayingProvider = ({children}) => {
     }
 
     const init = async () => {
-
+        // await player2.setListSounds(list);
+        // await player2.pause
     }
 
     const getlist = async () => {
@@ -35,10 +41,10 @@ export const PlayingProvider = ({children}) => {
         const list = JSON.parse(temp);
         temp = await AsyncStorage.getItem('index-playing');
         //console.log(temp);
-        const index = parseInt(temp);
+        setId(parseInt(temp));
         temp = await AsyncStorage.getItem('time-playing');
         //console.log(temp);
-        const time = parseFloat(temp);
+        setTime(parseFloat(temp));
 
         console.log('abc');
 
@@ -48,28 +54,26 @@ export const PlayingProvider = ({children}) => {
             .then(function() {
                 player2.setListSounds(list);
             })
-            .then(function() {
-                player2.setIndex(index);
-            })
-            .then(function() {
-                console.log(time);
-                player2.seekToTime(time);
-            }) 
-            // player2.setListSounds(list);
-            // console.log(index);
-            // console.log(time);
-            //player2.setIndex(index);
-            //player2.seekToTime(time);
         }
     }
 
     useEffect(()=>{
         const lst = getlist();
-        //console.log(lst[0])
-        // if (lst) {
-        //     player2.setListSounds(lst);
-        // }
     }, [])
+
+    useEffect(()=>{
+        if (player2.status === 'play' && ini) {
+            setIni(false);
+            player2.pause();
+            player2.setIndex(index);
+            // player2.seekToTime(time);
+        }
+        if (player2.status === 'play' && ini2 && !ini) {
+            setIni2(false);
+            player2.pause();
+            player2.seekToTime(time);
+        }
+    }, [player2.status])
 
     return (
         <PlayingContext.Provider value={{player2, changePlayer, setListSounds}}>

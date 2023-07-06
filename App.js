@@ -3,6 +3,8 @@
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { RootNavigation } from './src/routes';
+import { PlayingProvider } from './src/constants/playingContext'
+import SoundPlayer from 'react-native-sound';
 // create a component
 const config = {
   screens: {
@@ -16,10 +18,15 @@ const linking = {
 };
 
 const App = () => {
+
+  SoundPlayer.setCategory('Playback');
+  
   return (
-    <NavigationContainer linking={linking}>
-      <RootNavigation />
-    </NavigationContainer>
+    <PlayingProvider> 
+      <NavigationContainer linking={linking}>
+        <RootNavigation />
+      </NavigationContainer>
+    </PlayingProvider>
   );
 };
 

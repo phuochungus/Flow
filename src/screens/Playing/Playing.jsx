@@ -14,80 +14,22 @@ import { PlayingContext } from '../../constants/playingContext';
 // create a component
 export const Playing = ({navigation, route}) => {
     
-    const [songInfo, setSongInfo] = useState({});
-    const [lyrics, setLyrics] = useState({});
-    const [song, setSong] = useState();
     const [isUpLyrics, setIsUpLyrics] = useState(false);
     const [isFavorite, setIsFavorite] = useState(false);
 
-    const { player2, changePlayer, setListSounds } = useContext(PlayingContext);
+    const { player2 } = useContext(PlayingContext);
 
     SoundPlayer.setCategory('Playback');
 
 
-    //type === 'back' => navigate from miniPlaying
-    //type === 'single' => navigate from a Song
-    //type === 'list' => navigate from playlist
+    // type === 'back' => navigate from miniPlaying
+    // type === 'single' => navigate from a Song
+    // type === 'list' => navigate from playlist
 
-    // const list = route.params.list;
-    // const id = route.params.id;
+    const list = route.params.list;
+    const id = route.params.id;
     const type = route.params.type;
-    const id = '1cekjzdAUf8KDjyJROCRpn';
     //const type = 'back';
-
-    const getAPI = async () => {
-        var accessToken = await AsyncStorage.getItem('access_token');
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer " + accessToken);
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-        fetch("https://flow-backend.herokuapp.com/tracks/track/2nMeu6UenVvwUktBCpLMK9", requestOptions)
-            .then(response => response.json())
-            .then(result => {console.log(result); setSongInfo(result)})
-            .catch(error => console.log('error', error));
-
-        // getSong
-        // requestOptions = {
-        //     method: 'GET',
-        //     redirect: 'follow'
-        // };
-          
-        // fetch("https://flow-backend.herokuapp.com/tracks/v2/play/2nMeu6UenVvwUktBCpLMK9", requestOptions)
-        //     //.then(response => response.json())
-        //     .then(result => console.log(result))
-        //     .catch(error => console.log('error', error));
-
-        //getLyrics
-        requestOptions = {
-            method: 'GET',
-            redirect: 'follow'
-          };
-          
-          fetch("https://flow-fbmj.onrender.com/lyrics/2nMeu6UenVvwUktBCpLMK9", requestOptions)
-            .then(response => response.text())
-            .then(result => { console.log(result); setLyrics(result); })
-            .catch(error => console.log('error', error));
-    }
-
-    const setPlayer = async ()=>{
-        if (player2)
-            await changePlayer(id);
-    }
-
-    const getCurrTime = async () => {
-        const currTime = await AsyncStorage.getItem('current-time');
-        console.log('currTime');
-        console.log(currTime);
-        return parseInt(currTime);
-    }
-
-    const getCurrId = async () => {
-        const id = await AsyncStorage.getItem('id-playing');
-        return id;
-    }
 
     const setLstSound = async () => {
         const lst = [];
@@ -104,92 +46,15 @@ export const Playing = ({navigation, route}) => {
         else if (type === 'back') {
 
         }
-        // await player2.setListSounds([{'id': id}, {'id': '3zhbXKFjUDw40pTYyCgt1Y'}]);
-        // await AsyncStorage.setItem('list-sound', JSON.stringify([{'id': id}, {'id': '3zhbXKFjUDw40pTYyCgt1Y'}]));
     }
 
     useEffect(()=>{
-        console.log(player2);
-        getCurrTime();
-        //getSongInfo();
-        //getLyrics();
-        //getSong();
-        //setPlayer();
-        //changePlayer(id);
-        //console.log('currTime');
-        //console.log(getCurrTime());
-        //player2.setCurrentTime(getCurrTime());
-        console.log('hihi');
-        // async ()=>{
-        //     const id = 'abc';
-        //     id = await AsyncStorage.getItem('id-playing');
-        //     console.log(id);
-        // }
-        //console.log(AsyncStorage.getItem('id-playing'));
-        AsyncStorage.setItem('access_token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDc5YTYzMzdkNzcyMDdjZDhjNDBlMzEiLCJpYXQiOjE2ODg2MTY4Mjl9.XDfJ12aZ4M6hNj63np9eaXd7R7EsyskvWo7FduEP6do');
-    }, [player2.index])
-
-    const getlist = async () => {
-        const list = await AsyncStorage.getItem('list-sound');
-        console.log('abc');
-        const result = JSON.parse(list);
-        console.log(result);
-    }
-
-    useEffect(()=>{
-        // if (type !== 'back')
-        //     setLstSound();
-        //player2.setIndex(0);
         setLstSound();
-        getlist();
     }, [])
 
     useEffect(()=>{
-        console.log(player2.songInfo);
-    }, [player2.songInfo, player2.lyrics])
 
-    // const getSongInfo = async () => {
-    //     const accessToken = await AsyncStorage.getItem('access_token');
-    //     var myHeaders = new Headers();
-    //     myHeaders.append("Authorization", "Bearer " + accessToken);
-    //     var requestOptions = {
-    //         method: 'GET',
-    //         headers: myHeaders,
-    //         redirect: 'follow'
-    //     };
-    //     fetch("https://flow-fbmj.onrender.com/tracks/track/" + id, requestOptions)
-    //         .then(response => response.json())
-    //         .then(result => {console.log(result); setSongInfo(result)})
-    //         .catch(error => console.log('error', error));
-    // }
-
-    // const getLyrics = async () => {
-    //     const accessToken = await AsyncStorage.getItem('access_token');
-    //     var myHeaders = new Headers();
-    //     myHeaders.append("Authorization", "Bearer " + accessToken);
-    //     var requestOptions = {
-    //         method: 'GET',
-    //         redirect: 'follow'
-    //       };
-          
-    //     fetch("https://flow-fbmj.onrender.com/lyrics/" + id, requestOptions)
-    //         .then(response => response.json())
-    //         .then(result => {setLyrics(result)})
-    //         .catch(error => console.log('error', error));
-    // }
-
-    // const getSong = async () => {
-    //             // getSong
-    //     const Sound = await new SoundPlayer('https://flow-fbmj.onrender.com/tracks/v2/play/' + id, null, (error) => {
-    //         if (error) {
-    //             console.log('failed to load the sound', error);
-    //             return;
-    //         }
-    //         // if loaded successfully
-    //         setSong(Sound);
-    //         console.log('duration in seconds: ' + Sound.getDuration() + 'number of channels: ' + Sound.getNumberOfChannels());
-    //     })
-    // }
+    }, [player2.songInfo, player2.lyrics, player2.index])
 
     const handleSongName = (text) => {
         if (text == undefined)

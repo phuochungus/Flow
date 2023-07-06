@@ -1,5 +1,5 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import {Artist, Login, Playing, SignIn} from '../screens';
+import {Artist, Login, Playing, SearchDefault, SignIn} from '../screens';
 import FONTS from '../constants/fonts';
 import {SignUp} from '../screens/SignUp/SignUp';
 

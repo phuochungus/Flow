@@ -11,10 +11,7 @@ import SoundPlayer from 'react-native-sound';
 // create a component
 const MiniPlaying = (props) => {
 
-    const [isPlaying, setIsPlaying] = useState();
     const { player2 } = useContext(PlayingContext);
-
-    const id = '2nMeu6UenVvwUktBCpLMK9';
 
     const handleSongName = (text) => {
         if (text == undefined)
@@ -61,17 +58,11 @@ const MiniPlaying = (props) => {
 
     SoundPlayer.setCategory('Playback');
 
-    useEffect(()=>{
-        if (player2)
-            console.log('mini');
-        console.log(player2);
-        //player.resetPlayer(id);
-    }, [player2.songInfo])
-
     return (
-        <>
+        <TouchableOpacity onPress={() => { props.navigation.navigate('Playing', {type: 'back'})}}
+                            activeOpacity={0.9}>
             <View style={styles.container}>
-                <TouchableOpacity onPress={() => { props.navigation.navigate('Playing', {type: 'back'}) } }>
+                <View>
                     <View style={styles.leftContainer}>
                         <View style={styles.image}>
                             <ImageBackground style={styles.imgBackground}
@@ -85,21 +76,21 @@ const MiniPlaying = (props) => {
                             <Text style={styles.otherText}>{handleArtistsName(player2?.songInfo.artists)}</Text>
                         </View>
                     </View>
-                </TouchableOpacity>
+                </View>
                 <TouchableOpacity onPress={player2?.status === 'play' ? player2?.pause : player2?.status === 'pause' ? player2.play : () => { } }
                     disabled={player2?.status !== 'play' && player2.status !== 'pause' ? true : false}>
                     <Image style={styles.icon} source={player2?.status === 'play' ? IMG_MiniPause : IMG_MiniPlay} />
                 </TouchableOpacity>
             </View>
             <Progress.Bar 
-                style={{alignSelf: 'center'}}
+                style={{alignSelf: 'center', bottom: 5}}
                 progress={player2.duration !== 0 ? player2?.currentTime / player2.duration : 0} 
                 width={scale(354)} 
                 height={scale(3)}
                 color='#FFFBFB' 
                 unfilledColor='black' 
                 borderColor='black'/>
-        </>
+        </TouchableOpacity>
     );
 };
 
@@ -111,7 +102,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        bottom: 0,
+        bottom: 5,
         width: scale(388),
         height: scale(72),
         borderRadius: scale(20),
