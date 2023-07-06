@@ -9,16 +9,6 @@ export function RootNavigation() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name = "Home"
-        component={ Home }
-        options={{
-          presentation: 'transparentModal',
-          headerTransparent: true,
-          headerTintColor: 'white',
-          title: null,
-        }}
-        />
-      <Stack.Screen
         name="Splash"
         component={Splash}
         options={{
@@ -71,6 +61,26 @@ export function RootNavigation() {
           headerTitleAlign: 'center',
         }}
       />
+      <Stack.Screen
+        name = "Home"
+        component={ Home }
+        options={{
+          presentation: 'transparentModal',
+          headerTransparent: true,
+          headerTintColor: 'white',
+          title: null,
+        }}
+        />
+        <Stack.Screen
+          name = "Album"
+          component={ Album }
+          options={{
+            presentation: 'transparentModal',
+            headerTransparent: true,
+            headerTintColor: 'white',
+            title: null,
+          }}
+          />
       <Stack.Screen
         name="Artist"
         component={Artist}

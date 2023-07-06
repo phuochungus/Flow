@@ -11,7 +11,8 @@ import RecentSong from '../../components/RecentSong';
 import FamousArtist from '../../components/FamousArtist';
 
 
-export const Home = () => {
+export const Home = ({route, navigation}) => {
+  const [id, setId] = useState(route.params.id);
   const [song, setSong] = useState([]);
   const [album, setAlbum] = useState([]);
   const [artist, setArtist] = useState([]);
@@ -22,8 +23,10 @@ export const Home = () => {
 
   const loadUser = async () => {
     if (Object.keys(album).length === 0) {
-      var myHeaders = new Headers();
-      myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDc5YTYzMzdkNzcyMDdjZDhjNDBlMzEiLCJpYXQiOjE2ODg0NDU4NDV9.CIN73r3GXK1n1sgmspC2RcsEY5VsOoTN-gesos_NUuk");  
+      const accessToken = await AsyncStorage.getItem('access_token');
+
+      var headers = new Headers();
+      headers.append('Authorization', 'Bearer ' + accessToken);
 
       var requestOptions = {
         method: 'GET',
@@ -79,7 +82,7 @@ export const Home = () => {
 
   const loadSong = async () => {
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDc5YTYzMzdkNzcyMDdjZDhjNDBlMzEiLCJpYXQiOjE2ODg0NDU4NDV9.CIN73r3GXK1n1sgmspC2RcsEY5VsOoTN-gesos_NUuk");
+    myHeaders.append('Authorization', 'Bearer ' + accessToken);
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({

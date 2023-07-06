@@ -11,7 +11,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default Album;
 
-export const Album = () => {
+export const Album = ({route, navigation}) => {
+  const [id, setId] = useState(route.params.id);
   const [album, setAlbum] = useState({});
   const [artist, setArtist] = useState(null);
   const [description, setDescription] = useState(null);
@@ -19,7 +20,7 @@ export const Album = () => {
   const [tracks, setTracks] = useState([]);
   const [duration, setDuration] = useState();
 
-  const id = '0S4pP8MBY9p7ngFWIZQAJv';
+  //const id = '0S4pP8MBY9p7ngFWIZQAJv';
   //const id = route.params.id
 
   const total = (value) => {
@@ -28,8 +29,8 @@ export const Album = () => {
 
   const loadAlbum = async () => {
     if (Object.keys(album).length === 0) {
-      AsyncStorage.setItem('access_token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDc5YTYzMzdkNzcyMDdjZDhjNDBlMzEiLCJpYXQiOjE2ODg0NDU4NDV9.CIN73r3GXK1n1sgmspC2RcsEY5VsOoTN-gesos_NUuk');
-      const accessToken = await AsyncStorage.getItem('access_token')
+      const accessToken = await AsyncStorage.getItem('access_token');
+
       var myHeaders = new Headers();
       myHeaders.append("Authorization",  'Bearer ' + accessToken);
 
@@ -55,7 +56,6 @@ export const Album = () => {
   };
 
   const handleFavourite = async () => {
-    AsyncStorage.setItem('access_token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDc5YTYzMzdkNzcyMDdjZDhjNDBlMzEiLCJpYXQiOjE2ODg0NDU4NDV9.CIN73r3GXK1n1sgmspC2RcsEY5VsOoTN-gesos_NUuk');
     const accessToken = await AsyncStorage.getItem('access_token');
 
     var headers = new Headers();
