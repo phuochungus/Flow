@@ -1,5 +1,5 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import {Artist, Login, SignIn, AllAlbum, Splash} from '../screens';
+import {Artist, Login, SignIn, AllAlbum, Splash, Album, Home, Playing} from '../screens';
 import FONTS from '../constants/fonts';
 import {SignUp} from '../screens/SignUp/SignUp';
 import {Dimensions} from 'react-native';
@@ -61,6 +61,26 @@ export function RootNavigation() {
           headerTitleAlign: 'center',
         }}
       />
+      <Stack.Screen
+        name = "Home"
+        component={ Home }
+        options={{
+          presentation: 'transparentModal',
+          headerTransparent: true,
+          headerTintColor: 'white',
+          title: null,
+        }}
+        />
+        <Stack.Screen
+          name = "Album"
+          component={ Album }
+          options={{
+            presentation: 'transparentModal',
+            headerTransparent: true,
+            headerTintColor: 'white',
+            title: null,
+          }}
+          />
       <Stack.Screen
         name="Artist"
         component={Artist}
