@@ -67,7 +67,7 @@ export const useAudioHelper = (
   // }
 
   const getSongInfo = async () => {
-    if (listSounds.length === 0) return;
+    if (listSounds.length === 0 || index === null) return;
     const accessToken = await AsyncStorage.getItem('access_token');
     var myHeaders = new Headers();
     myHeaders.append('Authorization', 'Bearer ' + accessToken);
@@ -76,6 +76,9 @@ export const useAudioHelper = (
       headers: myHeaders,
       redirect: 'follow',
     };
+    console.log('*****');
+    console.log(index);
+    console.log('*****');
     fetch(
       'https://flow-fbmj.onrender.com/tracks/track/' + listSounds[index]?.id,
       requestOptions,
@@ -89,7 +92,7 @@ export const useAudioHelper = (
   };
 
   const getLyrics = async () => {
-    if (listSounds.length === 0) return;
+    if (listSounds.length === 0 || index === null) return;
     const accessToken = await AsyncStorage.getItem('access_token');
     var myHeaders = new Headers();
     myHeaders.append('Authorization', 'Bearer ' + accessToken);
@@ -141,7 +144,7 @@ export const useAudioHelper = (
   const initialize = async () => {
     setStatus('loading');
     console.log('lst: ' + listSounds.length);
-    if (listSounds.length > 0) {
+    if (listSounds.length > 0 && index !== null) {
       if (player) {
         player.release();
       }
@@ -211,15 +214,18 @@ export const useAudioHelper = (
   };
 
   useEffect(() => {
-    console.log('index: ', index);
-    if (index != -1) {
-      console.log(listSounds);
-      getSongInfo();
-      getLyrics();
-      initialize();
-      console.log('init');
+    if (listSounds && listSounds.length > 0) {
+      console.log('index: ', index);
+      if (index != -1) {
+        console.log(listSounds);
+        getSongInfo();
+        getLyrics();
+        initialize();
+        console.log('init');
+      }
     }
-  }, [index]);
+
+  }, [index, listSounds]);
 
   useEffect(() => {
     console.log('list sound');

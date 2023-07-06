@@ -97,7 +97,11 @@ export const SearchElement = (props) => {
             addToHistory(id, type);
         }
         if (type == 'track')
-            props.navigation.navigate("Playing", {id: id});
+            props.navigation.navigate("Playing", {type: 'single', id: id});
+        else if (type == 'artist')
+            props.navigation.navigate('Artist', {id: id});
+        else if (type == 'album')
+            props.navigation.navigate('Album', {id: id});
     }
 
     return (

@@ -66,9 +66,7 @@ export function RootNavigation() {
         component={ Home }
         options={{
           presentation: 'transparentModal',
-          headerTransparent: true,
-          headerTintColor: 'white',
-          title: null,
+          headerShown: false,
         }}
         />
         <Stack.Screen
@@ -76,9 +74,7 @@ export function RootNavigation() {
           component={ Album }
           options={{
             presentation: 'transparentModal',
-            headerTransparent: true,
-            headerTintColor: 'white',
-            title: null,
+            headerShown: false,
           }}
           />
       <Stack.Screen
