@@ -10,6 +10,7 @@ export const PlayingProvider = ({children}) => {
     //const [player2, setPlayer2] = useState(null);
     const [ini, setIni] = useState(true);
     const [ini2, setIni2] = useState(true);
+    const [isChangeIndex, setIsChangeIndex] = useState(true);
     const [index, setId] = useState();
     const [time, setTime] = useState();
 
@@ -65,6 +66,8 @@ export const PlayingProvider = ({children}) => {
         if (player2.status === 'play' && ini) {
             setIni(false);
             player2.pause();
+            if (index === 0)
+                setIsChangeIndex(false);
             player2.setIndex(index);
             // player2.seekToTime(time);
         }
@@ -73,7 +76,12 @@ export const PlayingProvider = ({children}) => {
             player2.pause();
             player2.seekToTime(time);
         }
-    }, [player2.status])
+        if (!isChangeIndex && ini2) {
+            setIni2(false);
+            player2.pause();
+            player2.seekToTime(time);
+        }
+    }, [player2.status, isChangeIndex])
 
     return (
         <PlayingContext.Provider value={{player2, changePlayer, setListSounds}}>

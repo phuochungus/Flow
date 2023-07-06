@@ -1,5 +1,5 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import {Artist, Login, SignIn, AllAlbum, Splash, Album, Home, Playing} from '../screens';
+import {Artist, Login, SignIn, AllAlbum, Splash, Album, Home, Playing, SearchDefault, SearchFocused, SearchResult} from '../screens';
 import FONTS from '../constants/fonts';
 import {SignUp} from '../screens/SignUp/SignUp';
 import {Dimensions} from 'react-native';
@@ -66,9 +66,7 @@ export function RootNavigation() {
         component={ Home }
         options={{
           presentation: 'transparentModal',
-          headerTransparent: true,
-          headerTintColor: 'white',
-          title: null,
+          headerShown: false,
         }}
         />
         <Stack.Screen
@@ -76,9 +74,7 @@ export function RootNavigation() {
           component={ Album }
           options={{
             presentation: 'transparentModal',
-            headerTransparent: true,
-            headerTintColor: 'white',
-            title: null,
+            headerShown: false,
           }}
           />
       <Stack.Screen
@@ -117,6 +113,30 @@ export function RootNavigation() {
       <Stack.Screen
         name="Playing"
         component={Playing}
+        options={{
+          presentation: 'transparentModal',
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="SearchDefault"
+        component={SearchDefault}
+        options={{
+          presentation: 'transparentModal',
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="SearchFocused"
+        component={SearchFocused}
+        options={{
+          presentation: 'transparentModal',
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="SearchResult"
+        component={SearchResult}
         options={{
           presentation: 'transparentModal',
           headerShown: false,

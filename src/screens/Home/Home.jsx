@@ -10,10 +10,11 @@ import PopularAlbumInHome from '../../components/PopularAlbumInHome';
 import RecentSong from '../../components/RecentSong';
 import FamousArtist from '../../components/FamousArtist';
 import MiniPlaying from '../../components/miniPlaying';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export const Home = ({route, navigation}) => {
-  const [id, setId] = useState(route.params.id);
+  //const [id, setId] = useState(route.params.id);
   const [song, setSong] = useState([]);
   const [album, setAlbum] = useState([]);
   const [artist, setArtist] = useState([]);
@@ -31,7 +32,7 @@ export const Home = ({route, navigation}) => {
 
       var requestOptions = {
         method: 'GET',
-        headers: myHeaders,
+        headers: headers,
         redirect: 'follow'
       };
 
@@ -82,6 +83,7 @@ export const Home = ({route, navigation}) => {
   }
 
   const loadSong = async () => {
+    const accessToken = await AsyncStorage.getItem('access_token');
     var myHeaders = new Headers();
     myHeaders.append('Authorization', 'Bearer ' + accessToken);
     myHeaders.append("Content-Type", "application/json");
@@ -106,7 +108,7 @@ export const Home = ({route, navigation}) => {
   useEffect(() => {
     loadTrack();
     loadArtist();
-    loadSong();
+    //loadSong();
     loadUser();
   },[]);
 

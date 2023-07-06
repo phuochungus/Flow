@@ -1,79 +1,136 @@
 //import liraries
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, Image, FlatList, TouchableOpacity } from 'react-native';
 import scale from '../../constants/responsive';
 import { useState } from 'react';
 import { IMG_Remove, IMG_Search } from '../../assets/images';
 import FONTS from '../../constants/fonts';
 import { SearchElement } from '../../components/index';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // create a component
-export const SearchFocused = () => {
+export const SearchFocused = ({navigation, route}) => {
 
-    const [searchText, setSearchText] = useState('');
-    const DATA = [
-        {
-          id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-          title: 'First Item',
-        },
-        {
-          id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-          title: 'Second Item',
-        },
-        {
-          id: '58694a0f-3da1-471f-bd96-145571e29d72',
-          title: 'Third Item',
-        },
-      ];
+    const [history, setHistory] = useState([]);
 
-    const removeText = () => {
-        setSearchText('');
+    const getHistory = async () => {
+        const accessToken = await AsyncStorage.getItem('access_token');
+
+        if (accessToken == null)
+            return;
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + accessToken);
+
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        fetch("https://flow-fbmj.onrender.com/me/search_history", requestOptions)
+        .then(response => response.json())
+        .then(result => {console.log('************'); console.log(result); setHistory(result)})
+        .catch(error => console.log('error', error));
     }
+
+    const removeHistory = async (id) => {
+        const accessToken = await AsyncStorage.getItem('access_token');
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + accessToken);
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "id": id
+        });
+
+        var requestOptions = {
+            method: 'DELETE',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        await fetch("https://flow-fbmj.onrender.com/me/search_history", requestOptions)
+            .then(response => response.text())
+            .then(result => {getHistory()})
+            .catch(error => console.log('error', error));
+    }
+
+    const removeAllHistory = ()=> {
+        removeHistory('all');
+    }
+
+    useEffect(()=>{
+        getHistory();
+    }, [history])
 
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.search}>
                     <Image style={styles.searchIcon} source={IMG_Search}/>
-                    <TextInput onChangeText={text => setSearchText(text)}
-                                value={searchText}
-                                placeholder={'Bài hát, nghệ sĩ hoặc podcast'}
-                                placeholderTextColor={'#DADADA'}
-                                style={styles.searchInput}></TextInput>
-                    {searchText == '' ? (
+                    <TouchableOpacity onPress={()=>navigation.navigate('SearchResult', {type: 'enterText'})}>
+                        <TextInput onChangeText={text => onChangeText(text)}
+                                    value={''}
+                                    editable={false}
+                                    placeholder={'Bài hát, nghệ sĩ hoặc album'}
+                                    placeholderTextColor={'#8A9A9D'}
+                                    style={styles.searchInput}></TextInput>
+                    </TouchableOpacity> 
+                    {/* {searchText == '' ? (
                         <></>
                     ) : ( 
                         <TouchableOpacity onPress={() => removeText()}>
                             <Image style={styles.removeIcon} source={IMG_Remove}/>
                         </TouchableOpacity>
-                    )}
+                    )} */}
                 </View>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigation.navigate("SearchDefault")}>
                     <Text style={styles.cancel}>Hủy</Text>
                 </TouchableOpacity>
             </View>
-            {DATA.length > 0 ? (
+            {(history.length > 0) ? (
                 <>
                     <Text style={styles.titleText}>Các tìm kiếm gần đây</Text>
                     <FlatList 
-                        data={DATA}
+                        data={history}
                         renderItem={({item}) => <SearchElement 
-                                                    img={require('../../assets/images/Artist.png')} 
-                                                    song={'Tên bài hát'} 
-                                                    other={'Album - RPT MCK'} 
-                                                    result={false}/>}
+                                                    id={item.id}
+                                                    img={item.images !== undefined ? item.images[0].url : 'https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg'} 
+                                                    song={item.name} 
+                                                    type={item.type} 
+                                                    artists={item.artists}
+                                                    result={false}
+                                                    navigation={navigation}
+                                                    onPress={()=>removeHistory(item.id)}/>}
                         keyExtractor={item => item.id}
                     />
-                    <TouchableOpacity style={styles.deleteButton}>
+                    <TouchableOpacity style={styles.deleteButton} onPress={()=>removeAllHistory()}>
                         <Text style={styles.deleteText}>Xóa các tìm kiếm gần đây</Text>
                     </TouchableOpacity>
                 </>
 
             ) : (
-                <View style={styles.textContainer}>
-                    <Text style={styles.text1}>Phát những gì bạn thích</Text>
-                    <Text style={styles.text2}>Tìm kiếm nghệ sĩ, bài hát, podcast, ...</Text>
-                </View>
+                (false) ? (
+                    <FlatList 
+                        data={searchResult.mostRelevant}
+                        renderItem={({item}) => <SearchElement 
+                                                    id={item.id}
+                                                    img={item.images?[0].url : 'https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg'} 
+                                                    song={item.name} 
+                                                    type={item.type} 
+                                                    artists={item.artists}
+                                                    result={true}
+                                                    navigation={navigation}
+                                                    onPress={()=>{ removeHistory(item.id) }}/>}
+                        keyExtractor={item => item.id}
+                />
+                ) : (
+                    <View style={styles.textContainer}>
+                        <Text style={styles.text1}>Phát những gì bạn thích</Text>
+                        <Text style={styles.text2}>Tìm kiếm nghệ sĩ, bài hát, album, ...</Text>
+                    </View>
+                )
             )}
         </View>
     );

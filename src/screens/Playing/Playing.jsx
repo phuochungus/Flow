@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Alert, Image, TouchableOpacity, ScrollView, FlatList, ImageBackground } from 'react-native';
 import BackHeader from '../../components/back-header';
-import { IMG_AddPlaylist, IMG_BackDown, IMG_Dots, IMG_Like, IMG_Liked, IMG_Next, IMG_Pause, IMG_PinkRepeat, IMG_Play, IMG_Previous, IMG_Random, IMG_Repeat, IMG_Up } from '../../assets/images';
+import { IMG_AddPlaylist, IMG_BackDown, IMG_Dots, IMG_Like, IMG_Liked, IMG_Next, IMG_Pause, IMG_PinkRandom, IMG_PinkRepeat, IMG_Play, IMG_Previous, IMG_Random, IMG_Repeat, IMG_Up } from '../../assets/images';
 import scale from '../../constants/responsive';
 import FONTS from '../../constants/fonts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -32,14 +32,14 @@ export const Playing = ({navigation, route}) => {
     //const type = 'back';
 
     const setLstSound = async () => {
-        const lst = [];
+        let lst = [];
         if (type === 'list') { 
             await player2.setListSounds(list);
             lst = list;
             await AsyncStorage.setItem('list-sound', JSON.stringify(lst));
         }
         else if (type === 'single') {
-            await player2.setListSounds([{'id': id}, {'id': '3zhbXKFjUDw40pTYyCgt1Y'}]);
+            await player2.setListSounds([{'id': id}]);
             lst = [{'id': id}]
             await AsyncStorage.setItem('list-sound', JSON.stringify(lst));
         }
@@ -172,7 +172,7 @@ export const Playing = ({navigation, route}) => {
                     <Image style={[styles.preNext, {opacity: player2?.isDisabledButtonNext === false ? 1 : 0.2}]} source={IMG_Next}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={player2 ? player2.shuffle : ()=>{}}>
-                    <Image style={styles.repeatRandom} source={IMG_Random}/>
+                    <Image style={styles.repeatRandom} source={player2?.isShuffle ? IMG_PinkRandom : IMG_Random}/>
                 </TouchableOpacity>
             </View>
             <ScrollView style={isUpLyrics !== false ? styles.largeLyricBox : styles.lyricBox}>
