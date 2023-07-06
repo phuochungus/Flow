@@ -96,15 +96,16 @@ export const SearchElement = (props) => {
         if (result) {
             addToHistory(id, type);
         }
-        // if (type == 'track')
-        //     props.navigation.navigate("Playing", {id: id});
+        if (type == 'track')
+            props.navigation.navigate("Playing", {id: id});
     }
 
     return (
         <View style={styles.container} >
             <TouchableOpacity onPress={()=>onItemPress(props.id, props.result, props.type)}>
                 <View style={styles.leftContainer}>
-                    <FastImage style={styles.image} source={{uri: props.img, cache: FastImage.cacheControl.cacheOnly}}/>
+                    {/* <FastImage style={styles.image} source={{uri: props.img, cache: FastImage.cacheControl.cacheOnly}}/> */}
+                    <Image style={styles.image} source={{uri: props.img}} />
                     <View style={{marginLeft: scale(12)}}>
                         <Text style={styles.song}>{handleSongName(props.song)}</Text>
                         <Text style={styles.otherText}>{handleType(props.type)}</Text>
