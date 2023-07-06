@@ -1,8 +1,8 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import {Artist, Login, SignIn, SearchDefault, SearchFocused, SearchResult, AllAlbum, Splash} from '../screens';
+import {Artist, Login, SignIn, AllAlbum, Splash, Album, Home, Playing, SearchDefault, SearchFocused, SearchResult} from '../screens';
 import FONTS from '../constants/fonts';
 import {SignUp} from '../screens/SignUp/SignUp';
-
+import {Dimensions} from 'react-native';
 const Stack = createStackNavigator();
 
 export function RootNavigation() {
@@ -62,6 +62,26 @@ export function RootNavigation() {
         }}
       />
       <Stack.Screen
+        name = "Home"
+        component={ Home }
+        options={{
+          presentation: 'transparentModal',
+          headerTransparent: true,
+          headerTintColor: 'white',
+          title: null,
+        }}
+        />
+        <Stack.Screen
+          name = "Album"
+          component={ Album }
+          options={{
+            presentation: 'transparentModal',
+            headerTransparent: true,
+            headerTintColor: 'white',
+            title: null,
+          }}
+          />
+      <Stack.Screen
         name="Artist"
         component={Artist}
         options={{
@@ -76,13 +96,15 @@ export function RootNavigation() {
         component={AllAlbum}
         options={{
           presentation: 'transparentModal',
-          headerTitleAlign: 'center',
           headerTintColor: 'white',
-          title: 'Danh sách Album',
+          headerTitle: 'Danh sách Album',
+          headerTitleAlign: 'center',
+          headerTitleContainerStyle: {width: Dimensions.get('window').width},
           headerTitleStyle: {
-            textTransform: 'uppercase',
             fontFamily: FONTS.RadioCanada.Medium,
             fontSize: 24,
+            textTransform: 'uppercase',
+            textAlign: 'center',
           },
           headerStyle: {
             backgroundColor: '#121212',
@@ -90,6 +112,14 @@ export function RootNavigation() {
             shadowOpacity: 0,
             borderBottomWidth: 0,
           },
+        }}
+      />
+      <Stack.Screen
+        name="Playing"
+        component={Playing}
+        options={{
+          presentation: 'transparentModal',
+          headerShown: false,
         }}
       />
       <Stack.Screen

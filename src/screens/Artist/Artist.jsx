@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, ScrollView, TouchableOpacity, Image} from 'react-native';
+import {View, ScrollView, TouchableOpacity, Pressable} from 'react-native';
 import {
   OtherArtist,
   PopularSongInArtist,
@@ -11,9 +11,10 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import scale from '../../constants/responsive';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import MiniPlaying from '../../components/miniPlaying';
 
 export const Artist = ({route, navigation}) => {
-  const [id, setId] = useState(route.params.id);
+  const id = route.params.id;
   const [artist, setArtist] = useState({});
   const [description, setDescription] = useState(null);
   const [isFavourite, setIsFavourite] = useState(null);
@@ -32,7 +33,7 @@ export const Artist = ({route, navigation}) => {
       };
 
       fetch(
-        'https://flow-fbmj.onrender.com/artists/artist/' + id,
+        'https://flow-fbmj.onrender.com/artists/v2/artist/' + id,
         requestOptions,
       )
         .then(response => response.json())
@@ -94,36 +95,35 @@ export const Artist = ({route, navigation}) => {
   };
 
   return (
-    <ScrollView
+    <><ScrollView
       showsVerticalScrollIndicator={false}
-      style={{backgroundColor: '#121212'}}>
+      style={{ backgroundColor: '#121212' }}>
       <ImageContainer height={scale(300)}>
         <ArtistImage
-          style={{backgroundColor: artist.images == undefined && '#383838'}}
-          source={
-            artist.images !== undefined ? {uri: artist.images[0].url} : null
-          }
-        />
-        {/* <BackButton>
-          <EntypoIcon name="chevron-thin-left" size={24} color="#fff" />
-        </BackButton> */}
-        <LinearBackground height={scale(120)} />
+          style={{ resizeMode: 'contain' }}
+          source={!artist.images
+            ? require('../../assets/images/Loading.png')
+            : { uri: artist.images[0]?.url }} />
 
+        {/* <BackButton>
+      <EntypoIcon name="chevron-thin-left" size={24} color="#fff" />
+    </BackButton> */}
+        <LinearBackground height={scale(120)} />
         <BottomOfImage>
           <TextContainer>
             <NameArtist>
               {artist.name == undefined ? 'Loading...' : artist.name}
             </NameArtist>
             {/* <Streaming>
-              <FeatherIcon name="headphones" size={16} color="#fff" />
-              <Number>{numberWithComma(100000)} lượt nghe hàng tháng</Number>
-            </Streaming> */}
+      <FeatherIcon name="headphones" size={16} color="#fff" />
+      <Number>{numberWithComma(100000)} lượt nghe hàng tháng</Number>
+    </Streaming> */}
           </TextContainer>
           {/* <DetailContainer>
-            <DetailButton height={scale(32)} width={scale(32)}>
-              <EntypoIcon name="dots-three-vertical" size={20} color="#fff" />
-            </DetailButton>
-          </DetailContainer> */}
+      <DetailButton height={scale(32)} width={scale(32)}>
+        <EntypoIcon name="dots-three-vertical" size={20} color="#fff" />
+      </DetailButton>
+    </DetailContainer> */}
         </BottomOfImage>
       </ImageContainer>
 
@@ -132,22 +132,6 @@ export const Artist = ({route, navigation}) => {
       </Description>
 
       <ButtonContainer>
-        {/* PlayRandomButton */}
-        <PlayRandomButton height={scale(60)} width={scale(62)}>
-          <PlayBackground height={scale(54)} width={scale(54)}>
-            <FontAwesomeIcon name="play" size={20} color="#000" />
-          </PlayBackground>
-          <RandomBorder>
-            <RandomBackground>
-              <FontAwesomeIcon
-                name="random"
-                size={10}
-                color="rgba(231, 13, 251, 1)"
-              />
-            </RandomBackground>
-          </RandomBorder>
-        </PlayRandomButton>
-
         {/* Follow */}
         <GradientBackground height={scale(48)} width={scale(160)}>
           {isFavourite ? (
@@ -161,14 +145,29 @@ export const Artist = ({route, navigation}) => {
           )}
         </GradientBackground>
 
+        {/* PlayRandomButton */}
+        <PlayRandomButton height={scale(60)} width={scale(62)}>
+          <PlayBackground height={scale(54)} width={scale(54)}>
+            <FontAwesomeIcon name="play" size={20} color="#000" />
+          </PlayBackground>
+          <RandomBorder>
+            <RandomBackground>
+              <FontAwesomeIcon
+                name="random"
+                size={10}
+                color="rgba(231, 13, 251, 1)" />
+            </RandomBackground>
+          </RandomBorder>
+        </PlayRandomButton>
+
         {/* Share */}
-        <ShareButton height={scale(54)} width={scale(54)}>
-          <ShareBorder>
-            <ShareBackground>
-              <FeatherIcon name="share-2" size={24} color="#E70DFB" />
-            </ShareBackground>
-          </ShareBorder>
-        </ShareButton>
+        {/* <ShareButton height={scale(54)} width={scale(54)}>
+      <ShareBorder>
+        <ShareBackground>
+          <FeatherIcon name="share-2" size={24} color="#E70DFB" />
+        </ShareBackground>
+      </ShareBorder>
+    </ShareButton> */}
       </ButtonContainer>
 
       <Section>
@@ -184,17 +183,20 @@ export const Artist = ({route, navigation}) => {
                 item={item}
                 key={index}
                 number={index + 1}
-                navigation={navigation}
-              />
+                navigation={navigation} />
             ))}
       </Section>
 
       <Section>
         <TitleContainer>
           <Title>Album phổ biến</Title>
-          <TouchableOpacity onPress={() => navigation.navigate('AllAlbum')}>
+          <Pressable
+            disabled={artist && false}
+            onPress={() => navigation.navigate('AllAlbum', {
+              item: artist.albums,
+            })}>
             <ViewAll>Xem tất cả</ViewAll>
-          </TouchableOpacity>
+          </Pressable>
         </TitleContainer>
         <HorizontalScroll horizontal showsHorizontalScrollIndicator={false}>
           {artist.albums !== undefined &&
@@ -217,7 +219,7 @@ export const Artist = ({route, navigation}) => {
             ))}
         </HorizontalScroll>
       </Section>
-    </ScrollView>
+    </ScrollView><MiniPlaying navigation={navigation} /></>
   );
 };
 
@@ -319,12 +321,16 @@ const ButtonContainer = styled.View`
   margin: 28px 20px;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
+  position: relative;
 `;
 
 const PlayRandomButton = styled(TouchableOpacity)`
   height: ${props => props.height}px;
+
   width: ${props => props.width}px;
-  position: relative;
+  position: absolute;
+  left: 0;
 `;
 
 const PlayBackground = styled(LinearGradient).attrs({

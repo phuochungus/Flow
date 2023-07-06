@@ -5,15 +5,6 @@ import scale from '../constants/responsive';
 
 export const OtherArtist = props => {
   const item = props.item;
-  const [imageUrl, setImageUrl] = useState(null);
-
-  const loadImage = async () => {
-    await setImageUrl(item.images[0].url);
-  };
-
-  useEffect(() => {
-    loadImage();
-  }, []);
 
   return (
     <Container
@@ -22,10 +13,11 @@ export const OtherArtist = props => {
       }}>
       <ImageContainer height={scale(120)} width={scale(120)}>
         <ArtistImage
-          style={{
-            backgroundColor: item.images == undefined && '#383838',
-          }}
-          source={item.images !== undefined && {uri: imageUrl}}
+          source={
+            !item.images
+              ? require('../assets/images/Loading.png')
+              : {uri: item.images[0]?.url}
+          }
         />
       </ImageContainer>
       <NameContainer>

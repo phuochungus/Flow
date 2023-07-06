@@ -97,7 +97,6 @@ export const SignUp = ({navigation}) => {
         let response = await fetch(REMOTE_BASE_URL + '/users', requestOptions);
         console.log(response);
         if (response.status == 409) {
-          console.log(await response.text());
           setIsEmailTaken(true);
         } else if (response.status == 201) {
           showSnackBar('Tạo tài khoản mới thành công', 'green');
