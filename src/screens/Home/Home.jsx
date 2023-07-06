@@ -9,6 +9,7 @@ import OtherArtist from '../../components/OtherArtist';
 import PopularAlbumInHome from '../../components/PopularAlbumInHome';
 import RecentSong from '../../components/RecentSong';
 import FamousArtist from '../../components/FamousArtist';
+import MiniPlaying from '../../components/miniPlaying';
 
 
 export const Home = ({route, navigation}) => {
@@ -110,66 +111,60 @@ export const Home = ({route, navigation}) => {
   },[]);
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <><ScrollView showsVerticalScrollIndicator={false}>
       <Container>
         <User>
-            <Avata>
-                <LinearBackground>
-                    <Image source={require('../../assets/images/Artist.png')} />
-                </LinearBackground>
-            </Avata>
-            <TextUser>
-                <Welcome>Welcome back !</Welcome>
-                <Name>{user.username}</Name>
-            </TextUser>
-            <Icon>
-                <FeatherIcon name="bar-chart-2" size={22} color="#fff"/>
-            </Icon>
-            <Icon>
-                <FeatherIcon name="bell" size={22} color="#fff"/>
-            </Icon>      
+          <Avata>
+            <LinearBackground>
+              <Image source={require('../../assets/images/Artist.png')} />
+            </LinearBackground>
+          </Avata>
+          <TextUser>
+            <Welcome>Welcome back !</Welcome>
+            <Name>{user.username}</Name>
+          </TextUser>
+          <Icon>
+            <FeatherIcon name="bar-chart-2" size={22} color="#fff" />
+          </Icon>
+          <Icon>
+            <FeatherIcon name="bell" size={22} color="#fff" />
+          </Icon>
         </User>
         <ListSong>
-            <TitleContainer>
-                <Title>Mới nghe gần đây</Title>
-                <History>Xem tất cả</History>
-            </TitleContainer>
-            <SongContainer>
-                {
-                  items.slice(0,5)
-                  .map((item, index)=>{
-                    return <RecentSong id={item}/>
-                  })
-                }
-            </SongContainer>
+          <TitleContainer>
+            <Title>Mới nghe gần đây</Title>
+            <History>Xem tất cả</History>
+          </TitleContainer>
+          <SongContainer>
+            {items.slice(0, 5)
+              .map((item, index) => {
+                return <RecentSong id={item} />;
+              })}
+          </SongContainer>
         </ListSong>
         <ListAlbum>
-            <TitleContainer>
-                <Title>Bài hát nổi bật</Title>
-            </TitleContainer>
-            <AlbumContainer horizontal={true} >
-              {
-                album.slice(0,10)
-                .map((item, index) =>  {
-                  //console.log(item);
-                  return <PopularAlbumInHome item={item}/>
-                })
-              }
-              </AlbumContainer>
+          <TitleContainer>
+            <Title>Bài hát nổi bật</Title>
+          </TitleContainer>
+          <AlbumContainer horizontal={true}>
+            {album.slice(0, 10)
+              .map((item, index) => {
+                //console.log(item);
+                return <PopularAlbumInHome item={item} />;
+              })}
+          </AlbumContainer>
         </ListAlbum>
         <TitleContainer>
           <Title>Nghệ sĩ nổi bật</Title>
         </TitleContainer>
         <ArtistContainer horizontal={true}>
-          {
-            artist.slice(0,10)
+          {artist.slice(0, 10)
             .map((item, index) => {
-              return <FamousArtist uri={item.images[0].url.toString()} title={item.name} />
-            })
-          }
+              return <FamousArtist uri={item.images[0].url.toString()} title={item.name} />;
+            })}
         </ArtistContainer>
       </Container>
-    </ScrollView>
+    </ScrollView><MiniPlaying navigation={navigation} /></>
   );
 };
 

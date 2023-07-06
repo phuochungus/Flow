@@ -114,6 +114,14 @@ export function RootNavigation() {
           },
         }}
       />
+      <Stack.Screen
+        name="Playing"
+        component={Playing}
+        options={{
+          presentation: 'transparentModal',
+          headerShown: false,
+        }}
+      />
     </Stack.Navigator>
   );
 }
