@@ -29,7 +29,7 @@ export const SearchFocused = ({navigation, route}) => {
 
         fetch("https://flow-fbmj.onrender.com/me/search_history", requestOptions)
         .then(response => response.json())
-        .then(result => { setHistory(result)})
+        .then(result => {console.log('************'); console.log(result); setHistory(result)})
         .catch(error => console.log('error', error));
     }
 
@@ -62,7 +62,7 @@ export const SearchFocused = ({navigation, route}) => {
 
     useEffect(()=>{
         getHistory();
-    }, [])
+    }, [history])
 
     return (
         <View style={styles.container}>
@@ -96,7 +96,7 @@ export const SearchFocused = ({navigation, route}) => {
                         data={history}
                         renderItem={({item}) => <SearchElement 
                                                     id={item.id}
-                                                    img={item.images[0].url} 
+                                                    img={item.images !== undefined ? item.images[0].url : 'https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg'} 
                                                     song={item.name} 
                                                     type={item.type} 
                                                     artists={item.artists}
@@ -116,7 +116,7 @@ export const SearchFocused = ({navigation, route}) => {
                         data={searchResult.mostRelevant}
                         renderItem={({item}) => <SearchElement 
                                                     id={item.id}
-                                                    img={item.images[0].url} 
+                                                    img={item.images?[0].url : 'https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg'} 
                                                     song={item.name} 
                                                     type={item.type} 
                                                     artists={item.artists}

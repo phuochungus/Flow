@@ -39,7 +39,7 @@ export const Playing = ({navigation, route}) => {
             await AsyncStorage.setItem('list-sound', JSON.stringify(lst));
         }
         else if (type === 'single') {
-            await player2.setListSounds([{'id': id}, {'id': '3zhbXKFjUDw40pTYyCgt1Y'}]);
+            await player2.setListSounds([{'id': id}]);
             lst = [{'id': id}]
             await AsyncStorage.setItem('list-sound', JSON.stringify(lst));
         }

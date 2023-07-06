@@ -476,10 +476,14 @@ export const useAudioHelper = (
   // }
 
   function isDisabledButtonNext() {
+    if (isShuffle)
+      return false;
     return status === 'loading' || index === listSounds.length - 1;
   }
 
   function isDisabledButtonPrevious() {
+    if (isShuffle)
+      return false;
     return status === 'loading' || index === 0;
   }
 

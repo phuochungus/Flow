@@ -93,9 +93,7 @@ export const SearchElement = (props) => {
     }
 
     const onItemPress = (id, result, type)=> {
-        if (result) {
-            addToHistory(id, type);
-        }
+        addToHistory(id, type);
         if (type == 'track')
             props.navigation.navigate("Playing", {type: 'single', id: id});
         else if (type == 'artist')
