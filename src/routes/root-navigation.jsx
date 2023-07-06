@@ -1,13 +1,21 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import {Artist, Login, Playing, SearchDefault, SignIn} from '../screens';
+import {Artist, Login, SignIn, AllAlbum, Splash, Album, Home, Playing} from '../screens';
 import FONTS from '../constants/fonts';
 import {SignUp} from '../screens/SignUp/SignUp';
-
+import {Dimensions} from 'react-native';
 const Stack = createStackNavigator();
 
 export function RootNavigation() {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="Splash"
+        component={Splash}
+        options={{
+          presentation: 'transparentModal',
+          headerShown: false,
+        }}
+      />
       <Stack.Screen
         name="SignIn"
         component={SignIn}
@@ -54,11 +62,56 @@ export function RootNavigation() {
         }}
       />
       <Stack.Screen
+        name = "Home"
+        component={ Home }
+        options={{
+          presentation: 'transparentModal',
+          headerTransparent: true,
+          headerTintColor: 'white',
+          title: null,
+        }}
+        />
+        <Stack.Screen
+          name = "Album"
+          component={ Album }
+          options={{
+            presentation: 'transparentModal',
+            headerTransparent: true,
+            headerTintColor: 'white',
+            title: null,
+          }}
+          />
+      <Stack.Screen
         name="Artist"
         component={Artist}
         options={{
           presentation: 'transparentModal',
-          headerShown: false,
+          headerTransparent: true,
+          headerTintColor: 'white',
+          title: null,
+        }}
+      />
+      <Stack.Screen
+        name="AllAlbum"
+        component={AllAlbum}
+        options={{
+          presentation: 'transparentModal',
+          headerTintColor: 'white',
+          headerTitle: 'Danh sách Album',
+          headerTitleAlign: 'center',
+          headerTitleContainerStyle: {width: Dimensions.get('window').width},
+          headerTitleStyle: {
+            fontFamily: FONTS.RadioCanada.Medium,
+            fontSize: 24,
+            textTransform: 'uppercase',
+            textAlign: 'center',
+          },
+          headerStyle: {
+            backgroundColor: '#121212',
+            elevation: 0,
+            shadowOpacity: 0,
+            borderBottomWidth: 0,
+          },
         }}
       />
       <Stack.Screen

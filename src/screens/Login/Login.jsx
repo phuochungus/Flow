@@ -7,6 +7,7 @@ import Snackbar from 'react-native-snackbar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ActivityIndicator} from 'react-native';
 import {CommonActions} from '@react-navigation/native';
+import {REMOTE_BASE_URL} from '../../helper/api';
 
 export const Login = ({navigation}) => {
   const [username, setUsername] = useState();
@@ -36,7 +37,7 @@ export const Login = ({navigation}) => {
       try {
         setIsLoading(true);
         const response = await fetch(
-          'https://flow-backend.herokuapp.com/auth/local',
+          REMOTE_BASE_URL + '/auth/local',
           requestOptions,
         );
         if (response.status == 201) {
@@ -46,7 +47,14 @@ export const Login = ({navigation}) => {
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
-              routes: [{name: 'Artist'}],
+              routes: [
+                {
+                  name: 'Artist',
+                  params: {
+                    id: '00FQb4jTyendYWaN8pK0wa',
+                  },
+                },
+              ],
             }),
           );
         } else if (response.status == 401) {

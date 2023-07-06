@@ -8,6 +8,7 @@ import {SecuredInputField} from '../../components/securedInputField';
 import moment from 'moment';
 import Snackbar from 'react-native-snackbar';
 import {isEmail} from 'class-validator';
+import { REMOTE_BASE_URL } from '../../helper/api';
 
 export const SignUp = ({navigation}) => {
   const [email, setEmail] = useState();
@@ -93,13 +94,9 @@ export const SignUp = ({navigation}) => {
       };
 
       try {
-        let response = await fetch(
-          'https://flow-backend.herokuapp.com/users',
-          requestOptions,
-        );
+        let response = await fetch(REMOTE_BASE_URL + '/users', requestOptions);
         console.log(response);
         if (response.status == 409) {
-          console.log(await response.text());
           setIsEmailTaken(true);
         } else if (response.status == 201) {
           showSnackBar('Tạo tài khoản mới thành công', 'green');
