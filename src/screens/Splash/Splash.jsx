@@ -28,7 +28,7 @@ export const Splash = ({navigation}) => {
             index: 0,
             routes: [
               {
-                name: 'Artist',
+                name: 'Home',
                 params: {
                   id: '00FQb4jTyendYWaN8pK0wa',
                 },

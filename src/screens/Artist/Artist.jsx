@@ -11,6 +11,7 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import scale from '../../constants/responsive';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import MiniPlaying from '../../components/miniPlaying';
 
 export const Artist = ({route, navigation}) => {
   const id = route.params.id;
@@ -94,22 +95,19 @@ export const Artist = ({route, navigation}) => {
   };
 
   return (
-    <ScrollView
+    <><ScrollView
       showsVerticalScrollIndicator={false}
-      style={{backgroundColor: '#121212'}}>
+      style={{ backgroundColor: '#121212' }}>
       <ImageContainer height={scale(300)}>
         <ArtistImage
-          style={{resizeMode: 'contain'}}
-          source={
-            !artist.images
-              ? require('../../assets/images/Loading.png')
-              : {uri: artist.images[0]?.url}
-          }
-        />
+          style={{ resizeMode: 'contain' }}
+          source={!artist.images
+            ? require('../../assets/images/Loading.png')
+            : { uri: artist.images[0]?.url }} />
 
         {/* <BackButton>
-          <EntypoIcon name="chevron-thin-left" size={24} color="#fff" />
-        </BackButton> */}
+      <EntypoIcon name="chevron-thin-left" size={24} color="#fff" />
+    </BackButton> */}
         <LinearBackground height={scale(120)} />
         <BottomOfImage>
           <TextContainer>
@@ -117,15 +115,15 @@ export const Artist = ({route, navigation}) => {
               {artist.name == undefined ? 'Loading...' : artist.name}
             </NameArtist>
             {/* <Streaming>
-              <FeatherIcon name="headphones" size={16} color="#fff" />
-              <Number>{numberWithComma(100000)} lượt nghe hàng tháng</Number>
-            </Streaming> */}
+      <FeatherIcon name="headphones" size={16} color="#fff" />
+      <Number>{numberWithComma(100000)} lượt nghe hàng tháng</Number>
+    </Streaming> */}
           </TextContainer>
           {/* <DetailContainer>
-            <DetailButton height={scale(32)} width={scale(32)}>
-              <EntypoIcon name="dots-three-vertical" size={20} color="#fff" />
-            </DetailButton>
-          </DetailContainer> */}
+      <DetailButton height={scale(32)} width={scale(32)}>
+        <EntypoIcon name="dots-three-vertical" size={20} color="#fff" />
+      </DetailButton>
+    </DetailContainer> */}
         </BottomOfImage>
       </ImageContainer>
 
@@ -157,20 +155,19 @@ export const Artist = ({route, navigation}) => {
               <FontAwesomeIcon
                 name="random"
                 size={10}
-                color="rgba(231, 13, 251, 1)"
-              />
+                color="rgba(231, 13, 251, 1)" />
             </RandomBackground>
           </RandomBorder>
         </PlayRandomButton>
 
         {/* Share */}
         {/* <ShareButton height={scale(54)} width={scale(54)}>
-          <ShareBorder>
-            <ShareBackground>
-              <FeatherIcon name="share-2" size={24} color="#E70DFB" />
-            </ShareBackground>
-          </ShareBorder>
-        </ShareButton> */}
+      <ShareBorder>
+        <ShareBackground>
+          <FeatherIcon name="share-2" size={24} color="#E70DFB" />
+        </ShareBackground>
+      </ShareBorder>
+    </ShareButton> */}
       </ButtonContainer>
 
       <Section>
@@ -186,8 +183,7 @@ export const Artist = ({route, navigation}) => {
                 item={item}
                 key={index}
                 number={index + 1}
-                navigation={navigation}
-              />
+                navigation={navigation} />
             ))}
       </Section>
 
@@ -196,11 +192,9 @@ export const Artist = ({route, navigation}) => {
           <Title>Album phổ biến</Title>
           <Pressable
             disabled={artist && false}
-            onPress={() =>
-              navigation.navigate('AllAlbum', {
-                item: artist.albums,
-              })
-            }>
+            onPress={() => navigation.navigate('AllAlbum', {
+              item: artist.albums,
+            })}>
             <ViewAll>Xem tất cả</ViewAll>
           </Pressable>
         </TitleContainer>
@@ -225,7 +219,7 @@ export const Artist = ({route, navigation}) => {
             ))}
         </HorizontalScroll>
       </Section>
-    </ScrollView>
+    </ScrollView><MiniPlaying navigation={navigation} /></>
   );
 };
 
