@@ -20,11 +20,16 @@ export const Album = ({route, navigation}) => {
   const [tracks, setTracks] = useState([]);
   const [duration, setDuration] = useState();
 
-  //const id = '0S4pP8MBY9p7ngFWIZQAJv';
+  //const id = '5bvGt5T1teIsfePF0eFX7k';
   //const id = route.params.id
 
   const total = (value) => {
-    return new Date(value).toISOString().substr(11,8);
+    var ss = Math.floor(value / 1000);
+    var mm = Math.floor(ss / 60);
+    var hh = Math.floor(mm / 60);
+    ss = ss % 60 + 100;
+    mm = mm % 60 + 100;
+    return hh + ':' + mm.toString().slice(-2) + ':' + ss.toString().slice(-2);
   }
 
   const loadAlbum = async () => {
@@ -98,15 +103,19 @@ useEffect(()=>{
 })
   return (
     <SafeAreaView style={styles.container}>
-        <TouchableOpacity style={styles.backButton}>
-            <EntypoIcon name="chevron-thin-left" size={scale(24)} color="#fff" />
-        </TouchableOpacity>
         <ScrollView style={styles.albumContainer}>
             <View style={styles.imageContainer}>
-                <ImageBackground style={styles.record} source={{uri: description}}>
+                <ImageBackground style={styles.record} 
+                source={(description === null)
+                  ? require('../../assets/images/Loading.png')
+                  :
+                  {uri: description}}>
                     <View style={styles.inRecord}></View>
                 </ImageBackground>
-                <ImageBackground style={styles.image} source={{uri: description}}></ImageBackground>
+                <ImageBackground style={styles.image} 
+                source={(description === null)
+                  ? require('../../assets/images/Loading.png')
+                  :{uri: description}}></ImageBackground>
             </View>
 
 
@@ -143,7 +152,7 @@ useEffect(()=>{
             <Text style={styles.time}>{total(duration)}</Text>
             {
               tracks.map((item, index) => {
-                return <SongInAlbum item={item} />
+                return <SongInAlbum key={index} item={item} />
               })
             }
         </View>
@@ -164,6 +173,7 @@ const styles = StyleSheet.create({
       alignItems: 'flex-start',
       justifyContent: 'flex-start',
       width: '100%',
+      paddingTop: 30,
     },
     backButton: {
         paddingTop: scale(20),
@@ -235,7 +245,7 @@ const styles = StyleSheet.create({
       fontWeight: '700'
     },
     playlist: {
-      width: '100%',
+      width: '95%',
       backgroundColor: '#121212',
       borderColor: 'grey',
       borderWidth: 1,
@@ -243,6 +253,7 @@ const styles = StyleSheet.create({
       marginTop: scale(24),
       paddingVertical: scale(10),
       marginBottom: 20,
+      alignSelf: 'center'
     },
     time: {
       fontSize: scale(15),
@@ -253,7 +264,7 @@ const styles = StyleSheet.create({
 
 
     box: {
-        width: '100%',
+        width: '90%',
         height: scale(95),
         borderRadius: 60,
         borderWidth: 1,
@@ -264,21 +275,22 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        alignSelf: 'center'
     },
     nameAlbum: {
-        fontSize: 24,
+        fontSize: scale(20),
         color: '#fff',
         fontWeight: 'bold',
         fontFamily: 'Radio Canada'
     },
     nameArtist: {
-        fontSize: 18,
+        fontSize: scale(16),
         color: 'grey',
         fontWeight: 'bold',
         fontFamily: 'Radio Canada'
     },
     text: {
-        fontSize: 15,
+        fontSize: scale(15),
         color: 'grey'
     },
     note: {
