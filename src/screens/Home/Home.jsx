@@ -103,12 +103,6 @@ export const Home = ({route, navigation}) => {
       .catch(error => console.log('error', error));
   };
 
-  const logOut = async () => {
-    player2.pause();
-    await AsyncStorage.clear();
-    navigation.navigate('Splash');
-  };
-
   useEffect(() => {
     loadTrack();
     loadArtist();
@@ -138,6 +132,7 @@ export const Home = ({route, navigation}) => {
               style={{flex: 1, justifyContents: 'flex-end'}}
               onPress={() => {
                 AsyncStorage.clear();
+                player2.pause();
                 navigation.navigate('SignIn');
               }}>
               <Icons name="login" size={24} color="#b1b5bb" />

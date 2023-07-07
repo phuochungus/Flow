@@ -58,7 +58,7 @@ export const PlayingProvider = ({children}) => {
             AsyncStorage.setItem('list-sound', JSON.stringify([{'id': '3zhbXKFjUDw40pTYyCgt1Y'}]));
             AsyncStorage.setItem('index-playing', '0');
             AsyncStorage.setItem('time-playing', '0');
-            player2.setListSounds([{'id': '3zhbXKFjUDw40pTYyCgt1Y'}]);
+            //player2.setListSounds([{'id': '3zhbXKFjUDw40pTYyCgt1Y'}]);
 
             console.log('success');
         }
