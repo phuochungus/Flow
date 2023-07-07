@@ -122,6 +122,29 @@ export const useAudioHelper = (
         .catch(error => console.log('error', error));
     }
 
+    const postHistorySong = async (id) => {
+      const accessToken = await AsyncStorage.getItem('access_token');
+      var myHeaders = new Headers();
+      myHeaders.append('Authorization', 'Bearer ' + accessToken);
+      myHeaders.append('Content-Type', 'application/json');
+  
+      var raw = JSON.stringify({
+        id: id,
+      });
+
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow',
+      };
+  
+      fetch('https://flow-fbmj.onrender.com/me/play_history', requestOptions)
+        .then(response => response.json())
+        // .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+    };
+
   const [duration, setDuration] = useState(0);
   const [player, setPlayer] = useState(null);
 
@@ -158,41 +181,9 @@ export const useAudioHelper = (
       );
       if (newPlayer) {
         setPlayer(newPlayer);
+        postHistorySong(currentAudio);
         await AsyncStorage.setItem('index-playing', JSON.stringify(index));
       }
-    }
-  };
-
-  const resetPlayer = id => {
-    //listSound=0
-    if (player) {
-      player.release();
-    }
-    setStatus('loading');
-    const callback = (error, player) => {
-      if (error) {
-        setStatus('error');
-        setErrorMessage(error.message);
-        console.log('error');
-      } else {
-        setStatus('success');
-        setErrorMessage('');
-        console.log('success');
-      }
-      //player.setSpeed(speed);
-      setDuration(player.getDuration());
-      pause(player);
-    };
-    const currentAudio = id;
-    console.log('curr ', id);
-    let newPlayer = null;
-    newPlayer = new SoundPlayer(
-      'https://flow-fbmj.onrender.com/tracks/v2/play/' + currentAudio,
-      null,
-      error => callback(error, newPlayer),
-    );
-    if (newPlayer) {
-      setPlayer(newPlayer);
     }
   };
 
@@ -474,7 +465,6 @@ export const useAudioHelper = (
     loop,
     mute,
     unmute,
-    resetPlayer: id => resetPlayer(id),
     setVolume: volume => changeVolume(player, volume),
     status,
     duration,

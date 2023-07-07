@@ -22,15 +22,6 @@ export const PlayingProvider = ({children}) => {
         }
     );
 
-
-    const changePlayer = async (id) => {
-        await player2.resetPlayer(id);
-    }
-
-    const setListSounds = async (listSounds) => {
-        await player2.setListSounds(listSounds);
-    }
-
     const init = async () => {
 
 
@@ -60,12 +51,15 @@ export const PlayingProvider = ({children}) => {
 
     const initial = async ()=>{
         let a = await AsyncStorage.getItem('list-sound');
-        if (a !== null) {
+        let b = await AsyncStorage.getItem('access_token');
+        if (a !== null && b !== null) {
 
         } else {
             AsyncStorage.setItem('list-sound', JSON.stringify([{'id': '3zhbXKFjUDw40pTYyCgt1Y'}]));
             AsyncStorage.setItem('index-playing', '0');
             AsyncStorage.setItem('time-playing', '0');
+            player2.setListSounds([{'id': '3zhbXKFjUDw40pTYyCgt1Y'}]);
+
             console.log('success');
         }
       }
@@ -92,7 +86,7 @@ export const PlayingProvider = ({children}) => {
     }, [player2.status, isChangeIndex])
 
     return (
-        <PlayingContext.Provider value={{player2, changePlayer, setListSounds}}>
+        <PlayingContext.Provider value={{player2}}>
             {children}
         </PlayingContext.Provider>
     )

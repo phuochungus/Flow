@@ -66,7 +66,7 @@ const MiniPlaying = (props) => {
                     <View style={styles.leftContainer}>
                         <View style={styles.image}>
                             <ImageBackground style={styles.imgBackground}
-                                source={{ uri: player2?.songInfo.images[0] !== undefined ? player2?.songInfo.images[0]?.url : "https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg" }}>
+                                source={{ uri: player2?.songInfo.images ? player2?.songInfo.images[0]?.url : "https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg" }}>
                                 <View style={styles.smallCircle} />
                             </ImageBackground>
                         </View>

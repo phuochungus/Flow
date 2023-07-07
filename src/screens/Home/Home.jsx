@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {View, ScrollView, TouchableHighlight, Text} from 'react-native';
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -11,15 +11,18 @@ import RecentSong from '../../components/RecentSong';
 import FamousArtist from '../../components/FamousArtist';
 import MiniPlaying from '../../components/miniPlaying';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { PlayingContext } from '../../constants/playingContext';
+import scale from '../../constants/responsive';
 
 export const Home = ({route, navigation}) => {
-  //const [id, setId] = useState(route.params.id);
   const [song, setSong] = useState([]);
   const [album, setAlbum] = useState([]);
   const [artist, setArtist] = useState([]);
-  const [selectedItem, setSelectedItem] = useState(false);
   const [items, setItems] = useState([]);
   const [user, setUser] = useState([]);
+
+  const {player2} = useContext(PlayingContext);
+
 
   const loadUser = async () => {
     if (Object.keys(album).length === 0) {
@@ -89,14 +92,9 @@ export const Home = ({route, navigation}) => {
     myHeaders.append('Authorization', 'Bearer ' + accessToken);
     myHeaders.append('Content-Type', 'application/json');
 
-    var raw = JSON.stringify({
-      id: '4W2poMwGzKQHtpNCthoGhC',
-    });
-
     var requestOptions = {
       method: 'GET',
       headers: myHeaders,
-      //body: raw,
       redirect: 'follow',
     };
 
@@ -106,12 +104,21 @@ export const Home = ({route, navigation}) => {
       .catch(error => console.log('error', error));
   };
 
+  const logOut = async ()=> {
+    player2.pause();
+    await AsyncStorage.clear();
+    navigation.navigate('Splash');
+  }
+
   useEffect(() => {
     loadTrack();
     loadArtist();
-    //loadSong();
     loadUser();
   }, []);
+
+  useEffect(()=>{
+    loadSong();
+  }, [player2.songInfo, player2.index, player2.listSounds])
 
   return (
     <>
@@ -127,12 +134,11 @@ export const Home = ({route, navigation}) => {
               <Welcome>Welcome back !</Welcome>
               <Name>{user.username}</Name>
             </TextUser>
-            {/* <Icon>
-              <FeatherIcon name="bar-chart-2" size={22} color="#fff" />
-            </Icon>
             <Icon>
-              <FeatherIcon name="bell" size={22} color="#fff" />
-            </Icon> */}
+            </Icon>
+            <Icon onPress={()=>logOut()}>
+              <FeatherIcon name="log-out" size={22} color="#fff" />
+            </Icon>
           </User>
           <ListSong>
             <TitleContainer>
@@ -172,6 +178,7 @@ export const Home = ({route, navigation}) => {
             })}
           </ArtistContainer>
         </Container>
+        <View style={{height: scale(72), backgroundColor: 'black'}}/>
       </ScrollView>
       <MiniPlaying navigation={navigation} />
     </>
@@ -181,7 +188,7 @@ export const Home = ({route, navigation}) => {
 export default Home;
 
 const Container = styled(View)`
-  background-color: black;
+  background-color: #121212;
   flex: 1;
   padding-top: 20px;
 `;
