@@ -75,7 +75,7 @@ export const Home = ({route, navigation}) => {
       .then(result => result.slice(0,10))
       .then(result => {
         setArtist(result);
-        //console.log(result);
+        console.log(result);
         //var obj = result.images[0].url; 
         //setItems(obj.toString()); 
       })
@@ -162,8 +162,9 @@ export const Home = ({route, navigation}) => {
         <ArtistContainer horizontal={true}>
           {artist.slice(0, 10)
             .map((item, index) => {
-              return <FamousArtist uri={item.images[0].url.toString()} title={item.name} />;
-            })}
+              return <FamousArtist navigation={navigation} item={item} uri={item.images[0].url.toString()} title={item.name} />
+            })
+          }
         </ArtistContainer>
       </Container>
     </ScrollView><MiniPlaying navigation={navigation} /></>
