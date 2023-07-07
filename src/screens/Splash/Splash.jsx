@@ -29,9 +29,6 @@ export const Splash = ({navigation}) => {
             routes: [
               {
                 name: 'Home',
-                params: {
-                  id: '00FQb4jTyendYWaN8pK0wa',
-                },
               },
             ],
           }),
