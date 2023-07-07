@@ -5,7 +5,9 @@ const FamousArtist = props => {
     //const item = props.item;
   
   return (
-    <Container>
+    <Container onPress={() => {
+      props.navigation.push('Artist', {id: props.id});
+    }} >
       <ImageContainer>
         <Image source={{uri: props.uri}} />
       </ImageContainer>
