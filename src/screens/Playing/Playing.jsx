@@ -109,7 +109,7 @@ export const Playing = ({navigation, route}) => {
             <View style={{opacity: isUpLyrics !== false ? 0 : 1}}>
                 <BackHeader onLeftButtonPressed={()=>Alert.alert("left button pressed")} img={IMG_BackDown} navigation={navigation}/>
                 <View style={styles.DVDContainer}>
-                    <ImageBackground style={[styles.imgBackground, {transform: [{rotate: '45deg'}],}]} source={{uri: player2?.songInfo.images !== undefined ? player2?.songInfo.images[0].url : "https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg"}}>
+                    <ImageBackground style={[styles.imgBackground, {transform: [{rotate: '0deg'}],}]} source={{uri: player2?.songInfo.images !== undefined ? player2?.songInfo.images[0].url : "https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg"}}>
                         <View style = {styles.smallCircle}/>
                     </ImageBackground>
                 </View>
@@ -119,6 +119,10 @@ export const Playing = ({navigation, route}) => {
                         <Text style={styles.artistText}>{player2?.songInfo.artists !== undefined ? handleArtistsName(player2?.songInfo.artists) : "Loading..."}</Text>
                     </View>
                     <View style={styles.iconBox}>
+                        <View style={{height: scale(32)}}/>
+                        <TouchableOpacity onPress={()=>navigation.navigate('Playlist')}>
+                            <FeatherIcon name='list' size={scale(32)} color='white'/>
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={!player2?.songInfo.isFavourite ? ()=>{player2?.handleFavorites('POST'); setIsFavorite(!isFavorite)} : ()=>{player2?.handleFavorites('DELETE'); setIsFavorite(!isFavorite)}}>
                             <Image style={styles.icon} source={player2?.songInfo.isFavourite ? IMG_Liked : IMG_Like}/>
                         </TouchableOpacity>
@@ -243,7 +247,7 @@ const styles = StyleSheet.create({
     iconBox: {
         width: scale(32),
         height: scale(116),
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
     },
     icon: {
         width: scale(32),

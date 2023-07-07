@@ -1,5 +1,5 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import {Artist, Login, SignIn, AllAlbum, Splash, Album, Home, Playing, SearchDefault, SearchFocused, SearchResult} from '../screens';
+import {Artist, Login, SignIn, AllAlbum, Splash, Album, Home, Playing, SearchDefault, SearchFocused, SearchResult, Playlist } from '../screens';
 import FONTS from '../constants/fonts';
 import {SignUp} from '../screens/SignUp/SignUp';
 import {Dimensions} from 'react-native';
@@ -140,6 +140,26 @@ export function RootNavigation() {
         options={{
           presentation: 'transparentModal',
           headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Playlist"
+        component={Playlist}
+        options={{
+          presentation: 'transparentModal',
+          headerStyle: {
+            backgroundColor: '#121212',
+            elevation: 0,
+            shadowOpacity: 0,
+            borderBottomWidth: 0,
+          },
+          headerTitleStyle: {
+            fontFamily: FONTS.RadioCanada.Medium,
+            fontSize: 24,
+          },
+          headerTintColor: 'white',
+          headerTitleAlign: 'center',
+          title: 'PLAYLIST',
         }}
       />
     </Stack.Navigator>
