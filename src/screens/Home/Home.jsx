@@ -140,7 +140,7 @@ export const Home = ({route, navigation}) => {
             </TitleContainer>
             <SongContainer>
               {items.slice(0, 3).map((item, index) => {
-                return <RecentSong key={index} id={item} />;
+                return <RecentSong key={index}  navigation={navigation}  id={item} />;
               })}
             </SongContainer>
           </ListSong>
@@ -151,7 +151,7 @@ export const Home = ({route, navigation}) => {
             <AlbumContainer horizontal={true}>
               {album.slice(0, 10).map((item, index) => {
                 //console.log(item);
-                return <PopularAlbumInHome key={index} item={item} />;
+                return <PopularAlbumInHome key={index} navigation={navigation} item={item} />;
               })}
             </AlbumContainer>
           </ListAlbum>
