@@ -28,7 +28,7 @@ const RecentSong = props => {
         setTrack(result);
         setArtist(result.artists);
         setImage(result.images[0]);
-        console.log(result);
+        //console.log(id);
       })
       .catch(error => console.log('error', error));
     
@@ -65,7 +65,9 @@ const RecentSong = props => {
           </Streaming>
         </TextContainer>
       </MainDetail>
-      <Detail>
+      <Detail onPress={()=>{
+        props.navigation.navigate("Playing", {type: 'single', id: id})
+      }}>
         <LinearBackground>
           <Triangle/>
         </LinearBackground>

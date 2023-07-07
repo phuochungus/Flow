@@ -4,14 +4,26 @@ import styled from 'styled-components/native';
 
 const PopularAlbumInHome = props => {
   const item = props.item;
+  const max = item.artists.length;
     return (
-      <Container>
+      <Container onPress={()=>{
+        props.navigation.navigate("Playing", {type: 'single', id: item.id})
+      }}>
         <ImageContainer>
           <Image source={{uri: item.images[0].url.toString()}} />
         </ImageContainer>
         <TextContainer>
           <Title>{item.name}</Title>
-          <Artist>{item.artists[0].name}</Artist>
+          <Artist>{
+              item.artists.length !== 1 ?
+              item.artists.map((item, index) => {
+                return (index + 1) === max ? item.name : item.name + ' && ';
+              })
+              : 
+              item.artists.map((item, index) => {
+                return item.name;
+              })
+            }</Artist>
         </TextContainer>
       </Container>
     );

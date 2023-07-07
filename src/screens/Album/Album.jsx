@@ -32,6 +32,18 @@ export const Album = ({route, navigation}) => {
     return hh + ':' + mm.toString().slice(-2) + ':' + ss.toString().slice(-2);
   }
 
+  const list = [];
+
+  const listTrack = () => {
+    tracks.map((item, index) => {
+      //console.log(item.id)
+      var newTrack = { id: item.id }
+      list.push(newTrack);
+      navigation.navigate("Playing", {type: 'list', list: list})
+    })
+    console.log(list);
+  }
+
   const loadAlbum = async () => {
     if (Object.keys(album).length === 0) {
       const accessToken = await AsyncStorage.getItem('access_token');
@@ -141,7 +153,7 @@ useEffect(()=>{
 
 
 
-          <TouchableOpacity  style={styles.button}>
+          <TouchableOpacity onPress={listTrack} style={styles.button}>
             <LinearGradient style={styles.play} colors={['#0085FF', '#E70DFB']} start={{ x: -0.3, y: 0}} end={{ x: 1, y: 0}}>
               <Text style={styles.textPlay}>Phát tất cả</Text>
             </LinearGradient>
@@ -152,7 +164,7 @@ useEffect(()=>{
             <Text style={styles.time}>{total(duration)}</Text>
             {
               tracks.map((item, index) => {
-                return <SongInAlbum key={index} item={item} />
+                return <SongInAlbum key={index} navigation={navigation} item={item} />
               })
             }
         </View>
@@ -173,7 +185,7 @@ const styles = StyleSheet.create({
       alignItems: 'flex-start',
       justifyContent: 'flex-start',
       width: '100%',
-      paddingTop: 30,
+      paddingTop: scale(30),
     },
     backButton: {
         paddingTop: scale(20),
