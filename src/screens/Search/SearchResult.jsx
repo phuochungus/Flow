@@ -7,6 +7,7 @@ import { IMG_Remove, IMG_Search } from '../../assets/images';
 import FONTS from '../../constants/fonts';
 import { GroupResult, SearchElement } from '../../components/index';
 import useDebounce from '../../hooks/useDebounce';
+import MiniPlaying from '../../components/miniPlaying';
 
 // create a component
 export const SearchResult = ({navigation, route}) => {
@@ -72,89 +73,86 @@ export const SearchResult = ({navigation, route}) => {
     }, [debounceSearch])
 
     return (
-        <View style={styles.container}>
+        <><View style={styles.container}>
             <View style={styles.header}>
                 <TouchableOpacity style={styles.search}>
-                    <Image style={styles.searchIcon} source={IMG_Search}/>
-                    <TextInput onChangeText={(text) => {handleSearch(text)}}
-                                value={searchText}
-                                editable={type == 'all' ? false : true}
-                                placeholder={'Bài hát, nghệ sĩ hoặc album'}
-                                placeholderTextColor={'#DADADA'}
-                                style={styles.searchInput}/>
+                    <Image style={styles.searchIcon} source={IMG_Search} />
+                    <TextInput onChangeText={(text) => { handleSearch(text); } }
+                        value={searchText}
+                        editable={type == 'all' ? false : true}
+                        placeholder={'Bài hát, nghệ sĩ hoặc album'}
+                        placeholderTextColor={'#DADADA'}
+                        style={styles.searchInput} />
                     {searchText == '' ? (
                         <></>
-                    ) : ( 
+                    ) : (
                         <TouchableOpacity onPress={() => removeText()}>
-                            <Image style={styles.removeIcon} source={IMG_Remove}/>
+                            <Image style={styles.removeIcon} source={IMG_Remove} />
                         </TouchableOpacity>
                     )}
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>navigation.navigate("SearchDefault")}>
+                <TouchableOpacity onPress={() => navigation.navigate("SearchDefault")}>
                     <Text style={styles.cancel}>Hủy</Text>
                 </TouchableOpacity>
             </View>
             {type !== 'all' ? (
                 <>
-                    <View style={{height: 30, marginTop: scale(20), marginLeft: scale(20)}}>
+                    <View style={{ height: 30, marginTop: scale(20), marginLeft: scale(20) }}>
                         <FlatList
                             data={DataType}
-                            renderItem={({item, index}) =>
-                                item.id !== selectedId
+                            renderItem={({ item, index }) => item.id !== selectedId
                                 ? GroupResult({
                                     type: item.title,
                                     onPress: () => setSelectedId(item.id),
                                     color: '#121212',
-                                    })
+                                })
                                 : GroupResult({
                                     type: item.title,
-                                    onPress: () => {},
+                                    onPress: () => { },
                                     color: '#0085FF',
-                                    })
-                            }
+                                })}
                             initialNumToRender={4}
                             showsHorizontalScrollIndicator={false}
                             horizontal={true}
                             keyExtractor={(item, index) => item.id}
-                            extraData={selectedId}
-                        />
+                            extraData={selectedId} />
                     </View>
-                    <View style={{marginTop: scale(30), marginBottom: scale(50)}}>
-                        <FlatList 
-                            data={selectedId == 'mostRelevant' ? searchResult.mostRelevant : 
-                            selectedId == 'albums' ? searchResult.albums : 
-                            selectedId == 'tracks' ? searchResult.tracks : searchResult.artists}
-                            renderItem={({item}) => <SearchElement 
-                                                        id={item.id}
-                                                        img={item.images[0].url} 
-                                                        song={item.name} 
-                                                        type={item.type} 
-                                                        artists={item.artists}
-                                                        result={true}
-                                                        navigation={navigation}
-                                                        onPress={()=>removeHistory(item.id)}/>}
-                            keyExtractor={item => item.id}
-                        />
+                    <View style={{ marginTop: scale(30), marginBottom: scale(50) }}>
+                        <FlatList
+                            data={selectedId == 'mostRelevant' ? searchResult.mostRelevant :
+                                selectedId == 'albums' ? searchResult.albums :
+                                    selectedId == 'tracks' ? searchResult.tracks : searchResult.artists}
+                            renderItem={({ item }) => <SearchElement
+                                id={item.id}
+                                img={item.images[0] !== undefined ? item.images[0]?.url : 'https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg'}
+                                song={item.name}
+                                type={item.type}
+                                artists={item.artists}
+                                result={true}
+                                navigation={navigation}
+                                onPress={() => removeHistory(item.id)} />}
+                            keyExtractor={item => item.id} />
                     </View>
-                    
                 </>
-                
+
             ) : (<></>)}
-            <View style={{marginTop: scale(30), marginBottom: scale(50)}}>
-                <FlatList 
+            <View style={{ marginTop: scale(30), marginBottom: scale(50) }}>
+                <FlatList
                     data={listSong}
-                    renderItem={({item}) => <SearchElement 
-                                                id={item.id}
-                                                img={item.images[0].url} 
-                                                song={item.name} 
-                                                type={item.type} 
-                                                artists={item.artists}
-                                                result={true}
-                                                navigation={navigation}/>}
-                    keyExtractor={(item, index) => index}
-                />
+                    renderItem={({ item }) => <SearchElement
+                        id={item.id}
+                        img={item.images[0].url}
+                        song={item.name}
+                        type={item.type}
+                        artists={item.artists}
+                        result={true}
+                        navigation={navigation} />}
+                    keyExtractor={(item, index) => index} />
             </View>
         </View>
+        <View style={{ height: scale(65) }} />
+        <MiniPlaying navigation={navigation} />
+        </>
     );
 };
 

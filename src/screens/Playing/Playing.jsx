@@ -1,6 +1,6 @@
 //import liraries
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Alert, Image, TouchableOpacity, ScrollView, FlatList, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, Alert, Image, TouchableOpacity, ScrollView, FlatList, ImageBackground, ToastAndroid } from 'react-native';
 import BackHeader from '../../components/back-header';
 import { IMG_AddPlaylist, IMG_BackDown, IMG_Dots, IMG_Like, IMG_Liked, IMG_Next, IMG_Pause, IMG_PinkRandom, IMG_PinkRepeat, IMG_Play, IMG_Previous, IMG_Random, IMG_Repeat, IMG_Up } from '../../assets/images';
 import scale from '../../constants/responsive';
@@ -8,12 +8,14 @@ import FONTS from '../../constants/fonts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SoundPlayer from 'react-native-sound';
 import Slider from '@react-native-community/slider';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 import { PlayingContext } from '../../constants/playingContext';
+import { addToPlaylist } from '../../constants/function';
 
 
 // create a component
 export const Playing = ({navigation, route}) => {
-    
+
     const [isUpLyrics, setIsUpLyrics] = useState(false);
     const [isFavorite, setIsFavorite] = useState(false);
 
@@ -107,7 +109,7 @@ export const Playing = ({navigation, route}) => {
             <View style={{opacity: isUpLyrics !== false ? 0 : 1}}>
                 <BackHeader onLeftButtonPressed={()=>Alert.alert("left button pressed")} img={IMG_BackDown} navigation={navigation}/>
                 <View style={styles.DVDContainer}>
-                    <ImageBackground style={[styles.imgBackground, {transform: [{rotate: '45deg'}],}]} source={{uri: player2?.songInfo.images !== undefined ? player2?.songInfo.images[0].url : "https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg"}}>
+                    <ImageBackground style={[styles.imgBackground, {transform: [{rotate: '0deg'}],}]} source={{uri: player2?.songInfo.images[0] !== undefined ? player2?.songInfo.images[0]?.url : "https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg"}}>
                         <View style = {styles.smallCircle}/>
                     </ImageBackground>
                 </View>
@@ -117,14 +119,14 @@ export const Playing = ({navigation, route}) => {
                         <Text style={styles.artistText}>{player2?.songInfo.artists !== undefined ? handleArtistsName(player2?.songInfo.artists) : "Loading..."}</Text>
                     </View>
                     <View style={styles.iconBox}>
-                        <TouchableOpacity onPress={!player2?.songInfo.isFavourite ? ()=>{player2?.handleFavorites('POST'); setIsFavorite(!isFavorite)} : ()=>{player2?.handleFavorites('DELETE'); setIsFavorite(!isFavorite)}}>
+                        <View style={{height: scale(32)}}/>
+                        <TouchableOpacity onPress={()=>navigation.navigate('Playlist')}>
+                            <FeatherIcon name='list' size={scale(32)} color='white'/>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={!player2?.songInfo.isFavourite ? 
+                                                    ()=>{player2?.handleFavorites('POST'); ToastAndroid.show('Đã thêm vào yêu thích', ToastAndroid.SHORT); setIsFavorite(!isFavorite)} : 
+                                                    ()=>{player2?.handleFavorites('DELETE'); ToastAndroid.show('Đã xóa khỏi yêu thích', ToastAndroid.SHORT);setIsFavorite(!isFavorite)}}>
                             <Image style={styles.icon} source={player2?.songInfo.isFavourite ? IMG_Liked : IMG_Like}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Image style={styles.icon} source={IMG_AddPlaylist}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Image style={styles.iconDots} source={IMG_Dots}/>
                         </TouchableOpacity>
                     </View>
                 </View>

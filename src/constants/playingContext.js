@@ -22,18 +22,9 @@ export const PlayingProvider = ({children}) => {
         }
     );
 
-
-    const changePlayer = async (id) => {
-        await player2.resetPlayer(id);
-    }
-
-    const setListSounds = async (listSounds) => {
-        await player2.setListSounds(listSounds);
-    }
-
     const init = async () => {
-        // await player2.setListSounds(list);
-        // await player2.pause
+
+
     }
 
     const getlist = async () => {
@@ -41,15 +32,10 @@ export const PlayingProvider = ({children}) => {
         temp = await AsyncStorage.getItem('list-sound');
         const list = JSON.parse(temp);
         temp = await AsyncStorage.getItem('index-playing');
-        //console.log(temp);
         setId(parseInt(temp));
         temp = await AsyncStorage.getItem('time-playing');
-        //console.log(temp);
         setTime(parseFloat(temp));
 
-        console.log('abc');
-
-        //console.log(result[0].id);
         if (list?.length > 0) {
             init()
             .then(function() {
@@ -59,8 +45,24 @@ export const PlayingProvider = ({children}) => {
     }
 
     useEffect(()=>{
+        initial();
         const lst = getlist();
-    }, [])
+    }, []);
+
+    const initial = async ()=>{
+        let a = await AsyncStorage.getItem('list-sound');
+        let b = await AsyncStorage.getItem('access_token');
+        if (a !== null && b !== null) {
+
+        } else {
+            AsyncStorage.setItem('list-sound', JSON.stringify([{'id': '3zhbXKFjUDw40pTYyCgt1Y'}]));
+            AsyncStorage.setItem('index-playing', '0');
+            AsyncStorage.setItem('time-playing', '0');
+            player2.setListSounds([{'id': '3zhbXKFjUDw40pTYyCgt1Y'}]);
+
+            console.log('success');
+        }
+      }
 
     useEffect(()=>{
         if (player2.status === 'play' && ini) {
@@ -84,7 +86,7 @@ export const PlayingProvider = ({children}) => {
     }, [player2.status, isChangeIndex])
 
     return (
-        <PlayingContext.Provider value={{player2, changePlayer, setListSounds}}>
+        <PlayingContext.Provider value={{player2}}>
             {children}
         </PlayingContext.Provider>
     )

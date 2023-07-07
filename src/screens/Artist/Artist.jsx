@@ -18,6 +18,7 @@ export const Artist = ({route, navigation}) => {
   const [artist, setArtist] = useState({});
   const [description, setDescription] = useState(null);
   const [isFavourite, setIsFavourite] = useState(null);
+  const [list, setList] = useState([]);
 
   const loadArtist = async () => {
     if (Object.keys(artist).length === 0) {
@@ -39,8 +40,11 @@ export const Artist = ({route, navigation}) => {
         .then(response => response.json())
         .then(result => {
           setArtist(result);
-          setDescription(result.bio.summary);
-          setIsFavourite(result.isFavourite);
+          setDescription(result?.bio ? result.bio.summary : '');
+          setIsFavourite(result?.isFavourite);
+          let l = [];
+          result.topTracks.map((item, index)=>{ let id = item.id; l.push({id: id}); })
+          setList(l);
         })
         .catch(error => console.log('error', error));
     }
@@ -128,45 +132,45 @@ export const Artist = ({route, navigation}) => {
         <EntypoIcon name="dots-three-vertical" size={20} color="#fff" />
       </DetailButton>
     </DetailContainer> */}
-          </BottomOfImage>
-        </ImageContainer>
+        </BottomOfImage>
+      </ImageContainer>
 
-        <Description>
-          {description == undefined ? 'Loading...' : longText(description)}
-        </Description>
+      <Description>
+        {description == undefined ? 'Loading...' : longText(description)}
+      </Description>
 
-        <ButtonContainer>
-          {/* Follow */}
-          <GradientBackground height={scale(48)} width={scale(160)}>
-            {isFavourite ? (
-              <FollowingButton onPress={handleFavourite}>
-                <FollowText>Đang theo dõi</FollowText>
-              </FollowingButton>
-            ) : (
-              <UnfollowingButton onPress={handleFavourite}>
-                <FollowText>Theo dõi</FollowText>
-              </UnfollowingButton>
-            )}
-          </GradientBackground>
+      <ButtonContainer>
+        {/* Follow */}
+        <GradientBackground height={scale(48)} width={scale(160)}>
+          {isFavourite ? (
+            <FollowingButton onPress={handleFavourite}>
+              <FollowText>Đang theo dõi</FollowText>
+            </FollowingButton>
+          ) : (
+            <UnfollowingButton onPress={handleFavourite}>
+              <FollowText>Theo dõi</FollowText>
+            </UnfollowingButton>
+          )}
+        </GradientBackground>
 
-          {/* PlayRandomButton */}
-          <PlayRandomButton height={scale(60)} width={scale(62)}>
-            <PlayBackground height={scale(54)} width={scale(54)}>
-              <FontAwesomeIcon name="play" size={20} color="#000" />
-            </PlayBackground>
-            <RandomBorder>
-              <RandomBackground>
-                <FontAwesomeIcon
-                  name="random"
-                  size={10}
-                  color="rgba(231, 13, 251, 1)"
-                />
-              </RandomBackground>
-            </RandomBorder>
-          </PlayRandomButton>
+        {/* PlayRandomButton */}
+        <PlayRandomButton height={scale(60)} width={scale(62)} onPress={list.length > 0 ? ()=>{navigation.navigate('Playing', {type: 'list', list: list})} : ()=>{console.log('fail')}}>
+          <PlayBackground height={scale(54)} width={scale(54)}>
+            <FontAwesomeIcon name="play" size={20} color="#000" />
+          </PlayBackground>
+          <RandomBorder>
+            <RandomBackground>
+              <FontAwesomeIcon
+                name="random"
+                size={10}
+                color="rgba(231, 13, 251, 1)" />
+            </RandomBackground>
+          </RandomBorder>
+        </PlayRandomButton>
 
-          {/* Share */}
-          {/* <ShareButton height={scale(54)} width={scale(54)}>
+        {/* Share */}
+        {/* <ShareButton height={scale(54)} width={scale(54)}>
+
       <ShareBorder>
         <ShareBackground>
           <FeatherIcon name="share-2" size={24} color="#E70DFB" />
@@ -191,49 +195,23 @@ export const Artist = ({route, navigation}) => {
                   navigation={navigation}
                 />
               ))}
-        </Section>
+        </HorizontalScroll>
+      </Section>
 
-        <Section>
-          <TitleContainer>
-            <Title>Album phổ biến</Title>
-            <Pressable
-              disabled={artist && false}
-              onPress={() =>
-                navigation.navigate('AllAlbum', {
-                  item: artist.albums,
-                })
-              }>
-              <ViewAll>Xem tất cả</ViewAll>
-            </Pressable>
-          </TitleContainer>
-          <HorizontalScroll horizontal showsHorizontalScrollIndicator={false}>
-            {artist.albums !== undefined &&
-              artist.albums
-                .filter((item, index) => index < 6)
-                .map((item, index) => (
-                  <PopularAlbum
-                    item={item}
-                    key={index}
-                    navigation={navigation}
-                  />
-                ))}
-          </HorizontalScroll>
-        </Section>
-
-        <Section>
-          <TitleContainer>
-            <Title>Nghệ sĩ bạn có thể theo dõi</Title>
-          </TitleContainer>
-          <HorizontalScroll horizontal showsHorizontalScrollIndicator={false}>
-            {artist.relatedArtists !== undefined &&
-              artist.relatedArtists.map((item, index) => (
-                <OtherArtist item={item} key={index} navigation={navigation} />
-              ))}
-          </HorizontalScroll>
-        </Section>
-      </ScrollView>
-      <MiniPlaying navigation={navigation} />
-    </>
+      <Section>
+        <TitleContainer>
+          <Title>Nghệ sĩ bạn có thể theo dõi</Title>
+        </TitleContainer>
+        <HorizontalScroll horizontal showsHorizontalScrollIndicator={false}>
+          {artist.relatedArtists !== undefined &&
+            artist.relatedArtists.map((item, index) => (
+              <OtherArtist item={item} key={index} navigation={navigation} />
+            ))}
+        </HorizontalScroll>
+      </Section>
+      <View style={{height: scale(10), backgroundColor: '#121212'}}/>
+    </ScrollView>
+    <MiniPlaying navigation={navigation} /></>
   );
 };
 

@@ -1,9 +1,13 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import scale from '../constants/responsive';
+import FeatherIcon from 'react-native-vector-icons/Feather';
+import { PlayingContext } from '../constants/playingContext';
+import { addToPlaylist } from '../constants/function';
 
 export const PopularSongInArtist = props => {
+  const {player2} = useContext(PlayingContext);
   const item = props.item;
 
   const numberWithComma = x => {
@@ -13,7 +17,7 @@ export const PopularSongInArtist = props => {
   return (
     <Container>
       <Number>{props.number}</Number>
-      <MainContent>
+      <MainContent onPress={()=>props.navigation.navigate('Playing', {type: 'single', id: item.id})}>
         <ImageContainer height={scale(52)} width={scale(52)}>
           <SongImage
             source={
@@ -36,8 +40,8 @@ export const PopularSongInArtist = props => {
           </Streaming>
         </TextContainer>
       </MainContent>
-      <Detail>
-        <Icon name="dots-horizontal" size={28} color="#fff" />
+      <Detail onPress={()=>addToPlaylist(item.id, player2)}>
+        <FeatherIcon style={{alignSelf: 'center'}} name='plus-square' size={scale(32)} color={'white'}/>
       </Detail>
     </Container>
   );

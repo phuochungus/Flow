@@ -14,9 +14,9 @@ export const AllAlbum = ({route, navigation}) => {
         return (
           <ItemContainer
             key={item.id}
-            // onPress={() => {
-            //   navigation.push('Album', {id: item.id});
-            // }}
+            onPress={() => {
+              navigation.push('Album', {id: item.id});
+            }}
           >
             <ImageContainer width={scale(112)} height={scale(72)}>
               <CircleContainer width={scale(72)} height={scale(72)}>

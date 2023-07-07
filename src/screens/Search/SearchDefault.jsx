@@ -5,6 +5,7 @@ import scale from '../../constants/responsive';
 import FONTS from '../../constants/fonts';
 import { IMG_Search } from '../../assets/images';
 import { GenreGroup } from '../../components/index';
+import MiniPlaying from '../../components/miniPlaying';
 
 export const SearchDefault = ({navigation, route}) => {
 
@@ -190,6 +191,8 @@ export const SearchDefault = ({navigation, route}) => {
             ) : (
                 <></>
             )}
+            <View style={{height: scale(72)}}/>
+            <MiniPlaying navigation={navigation}/>
         </View>
     );
 };

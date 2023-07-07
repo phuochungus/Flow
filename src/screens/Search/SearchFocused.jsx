@@ -7,6 +7,7 @@ import { IMG_Remove, IMG_Search } from '../../assets/images';
 import FONTS from '../../constants/fonts';
 import { SearchElement } from '../../components/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import MiniPlaying from '../../components/miniPlaying';
 
 // create a component
 export const SearchFocused = ({navigation, route}) => {
@@ -29,7 +30,7 @@ export const SearchFocused = ({navigation, route}) => {
 
         fetch("https://flow-fbmj.onrender.com/me/search_history", requestOptions)
         .then(response => response.json())
-        .then(result => {console.log('************'); console.log(result); setHistory(result)})
+        .then(result => {setHistory(result)})
         .catch(error => console.log('error', error));
     }
 
@@ -77,13 +78,6 @@ export const SearchFocused = ({navigation, route}) => {
                                     placeholderTextColor={'#8A9A9D'}
                                     style={styles.searchInput}></TextInput>
                     </TouchableOpacity> 
-                    {/* {searchText == '' ? (
-                        <></>
-                    ) : ( 
-                        <TouchableOpacity onPress={() => removeText()}>
-                            <Image style={styles.removeIcon} source={IMG_Remove}/>
-                        </TouchableOpacity>
-                    )} */}
                 </View>
                 <TouchableOpacity onPress={()=>navigation.navigate("SearchDefault")}>
                     <Text style={styles.cancel}>Hủy</Text>
@@ -96,7 +90,7 @@ export const SearchFocused = ({navigation, route}) => {
                         data={history}
                         renderItem={({item}) => <SearchElement 
                                                     id={item.id}
-                                                    img={item.images !== undefined ? item.images[0].url : 'https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg'} 
+                                                    img={item.images[0] !== undefined ? item.images[0]?.url : 'https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg'} 
                                                     song={item.name} 
                                                     type={item.type} 
                                                     artists={item.artists}
@@ -132,6 +126,8 @@ export const SearchFocused = ({navigation, route}) => {
                     </View>
                 )
             )}
+            <View style={{height: scale(72)}}/>
+            <MiniPlaying navigation={navigation}/>
         </View>
     );
 };
@@ -211,7 +207,7 @@ const styles = StyleSheet.create({
     textContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100%',
+        height: '80%',
         width: '100%'
     },
     text1: {

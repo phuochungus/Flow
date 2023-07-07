@@ -13,7 +13,9 @@ const SongInAlbum = props => {
           <Artist>{item.artists[0].name}</Artist>
         </TextContainer>
       </MainDetail>
-      <Detail>
+      <Detail onPress={()=>{
+        props.navigation.navigate("Playing", {type: 'single', id: item.id})
+      }}>
         <Icon name="play" size={32} color="#fff" />
       </Detail>
     </Container>

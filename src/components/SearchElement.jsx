@@ -1,14 +1,18 @@
 //import liraries
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import FastImage from 'react-native-fast-image'
 import scale from '../constants/responsive';
 import { IMG_HorizontalDots, IMG_Remove } from '../assets/images';
 import FONTS from '../constants/fonts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import FeatherIcon from 'react-native-vector-icons/Feather';
+import { addToPlaylist } from '../constants/function';
+import { PlayingContext } from '../constants/playingContext';
 
 export const SearchElement = (props) => {
 
+    const { player2 } = useContext(PlayingContext);
 
     const handleSongName = (text) => {
         if (text == undefined)
@@ -88,7 +92,6 @@ export const SearchElement = (props) => {
         
         fetch("https://flow-fbmj.onrender.com/me/search_history", requestOptions)
           .then(response => response.text())
-          //.then(result => console.log(result))
           .catch(error => console.log('error', error));
     }
 
@@ -114,8 +117,12 @@ export const SearchElement = (props) => {
                     </View>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={props.result ? ()=>{} : props.onPress}>
-                <Image style={styles.icon} source={props.result ? IMG_HorizontalDots : IMG_Remove}/>
+            <TouchableOpacity onPress={props.result ? ()=>{props.type === 'track' ? addToPlaylist(props.id, player2) : {}} : props.onPress}>
+                {props.type !== 'track' || !props.result? (
+                    <FeatherIcon style={{alignSelf: 'center'}} name={props.result ? 'more-horizontal' : 'x'} size={scale(32)} color={'white'}/>
+                ) : (
+                    <FeatherIcon style={{alignSelf: 'center'}} name='plus-square' size={scale(32)} color={'white'}/>
+                )}
             </TouchableOpacity>
         </View>
     );
