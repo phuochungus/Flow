@@ -13,19 +13,101 @@ import {
   SearchFocused,
   SearchResult,
   Favourite,
+  SignUp,
 } from '../screens';
 import FONTS from '../constants/fonts';
-import {SignUp} from '../screens/SignUp/SignUp';
-import {Dimensions} from 'react-native';
-const Stack = createStackNavigator();
+import {Dimensions, View} from 'react-native';
 import Icons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import MaskedView from '@react-native-masked-view/masked-view';
+const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-import {View, TouchableOpacity, TouchableHighlight, Text} from 'react-native';
-import scale from '../constants/responsive';
 
-const StackNavigation = () => {
+const TabNavigation = () => {
+  return (
+    <Tab.Navigator
+      initialRouteName={Splash}
+      sceneContainerStyle={{
+        backgroundColor: 'transparent',
+      }}
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => {
+          let iconName;
+
+          if (route.name === 'Home') {
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'Search') {
+            iconName = focused ? 'search-sharp' : 'search-outline';
+          } else if (route.name === 'Favourite') {
+            iconName = focused ? 'heart' : 'heart-outline';
+          } else if (route.name === 'Account') {
+            iconName = focused ? 'person' : 'person-outline';
+          }
+
+          return (
+            <MaskedView
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                paddingBottom: 0,
+                marginBottom: 0,
+              }}
+              maskElement={
+                <View
+                  style={{
+                    backgroundColor: 'transparent',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flex: 1,
+                  }}>
+                  <Icons name={iconName} size={28} color="white" />
+                </View>
+              }>
+              <LinearGradient
+                colors={
+                  focused ? ['#0085FF', '#E70DFB'] : ['#B1B5BB', '#B1B5BB']
+                }
+                locations={[0, 1]}
+                angleCenter={{x: 0.5, y: 0.5}}
+                useAngle={true}
+                angle={55.82}
+                style={{flex: 1}}
+              />
+            </MaskedView>
+          );
+        },
+        tabBarStyle: {
+          backgroundColor: 'transparent',
+          elevation: 0,
+          shadowOpacity: 0,
+          borderBottomWidth: 0,
+          borderTopWidth: 0,
+          backgroundColor: '#121212',
+        },
+        headerTitleAlign: 'center',
+        tabBarShowLabel: false,
+        tabBarItemStyle: {
+          marginHorizontal: 5,
+        },
+      })}>
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{presentation: 'transparentModal', headerShown: false}}
+      />
+      <Tab.Screen
+        name="Search"
+        component={SearchDefault}
+        options={{presentation: 'transparentModal', headerShown: false}}
+      />
+      <Tab.Screen name="Favourite" component={Favourite} />
+      <Tab.Screen name="Account" component={Artist} />
+    </Tab.Navigator>
+  );
+};
+
+export function RootNavigation() {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -83,7 +165,7 @@ const StackNavigation = () => {
       />
       <Stack.Screen
         name="Home"
-        component={Home}
+        component={TabNavigation}
         options={{
           presentation: 'transparentModal',
           headerShown: false,
@@ -163,99 +245,5 @@ const StackNavigation = () => {
         }}
       />
     </Stack.Navigator>
-  );
-};
-
-export function RootNavigation() {
-  return (
-    <Tab.Navigator
-      initialRouteName={Splash}
-      sceneContainerStyle={{
-        backgroundColor: 'transparent',
-      }}
-      screenOptions={({route}) => ({
-        tabBarBackground: () => (
-          <LinearGradient
-            colors={['rgba(0, 0, 0, 0)', 'rgba(25, 25, 32, 1)']}
-            locations={[0, 0.5714]}
-            angleCenter={{x: 0.5, y: 0.5}}
-            useAngle={true}
-            angle={180}
-            style={{flex: 1}}
-          />
-        ),
-        tabBarIcon: ({focused, color, size}) => {
-          let iconName;
-
-          if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Search') {
-            iconName = focused ? 'search-sharp' : 'search-outline';
-          } else if (route.name === 'Favourite') {
-            iconName = focused ? 'heart' : 'heart-outline';
-          } else if (route.name === 'Account') {
-            iconName = focused ? 'person' : 'person-outline';
-          }
-
-          return (
-            <MaskedView
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                paddingBottom: 0,
-                marginBottom: 0,
-              }}
-              maskElement={
-                <View
-                  style={{
-                    backgroundColor: 'transparent',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    flex: 1,
-                  }}>
-                  <Icons name={iconName} size={28} color="white" />
-                </View>
-              }>
-              <LinearGradient
-                colors={
-                  focused ? ['#0085FF', '#E70DFB'] : ['#B1B5BB', '#B1B5BB']
-                }
-                locations={[0, 1]}
-                angleCenter={{x: 0.5, y: 0.5}}
-                useAngle={true}
-                angle={55.82}
-                style={{flex: 1}}
-              />
-            </MaskedView>
-          );
-        },
-        tabBarStyle: {
-          backgroundColor: 'transparent',
-          elevation: 0,
-          shadowOpacity: 0,
-          borderBottomWidth: 0,
-          borderTopWidth: 0,
-          position: 'absolute',
-        },
-        headerTitleAlign: 'center',
-        tabBarShowLabel: false,
-        tabBarItemStyle: {
-          marginHorizontal: 5,
-        },
-      })}>
-      <Tab.Screen
-        name="Home"
-        component={StackNavigation}
-        options={{presentation: 'transparentModal', headerShown: false}}
-      />
-      <Tab.Screen
-        name="Search"
-        component={SearchDefault}
-        options={{presentation: 'transparentModal', headerShown: false}}
-      />
-      <Tab.Screen name="Favourite" component={Favourite} />
-      <Tab.Screen name="Account" component={Artist} />
-    </Tab.Navigator>
   );
 }

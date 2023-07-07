@@ -233,7 +233,7 @@ const ListSong = styled.View`
   border-color: grey;
   padding: 5px;
   border-radius: 20px;
-  margin-vertical: 20px;
+  margin: 20px 0px;
   background-color: #1e1e1e;
 `;
 
