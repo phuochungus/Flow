@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const RecentSong = props => {
   const id = props.id.toString();
   const [track, setTrack] = useState([]);
   const [artist, setArtist] = useState([]);
+  const [image, setImage] = useState([]);
 
   const loadTrack = async () => {
-      
-      var myHeaders = new Headers();
-      myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDc5YTYzMzdkNzcyMDdjZDhjNDBlMzEiLCJpYXQiOjE2ODg0NDU4NDV9.CIN73r3GXK1n1sgmspC2RcsEY5VsOoTN-gesos_NUuk");  
+    const accessToken = await AsyncStorage.getItem('access_token');
+
+    var headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + accessToken);
 
       var requestOptions = {
         method: 'GET',
@@ -23,7 +26,8 @@ const RecentSong = props => {
       .then(response => response.json())
       .then(result => {
         setTrack(result);
-        setArtist(result.artist);
+        setArtist(result.artists);
+        setImage(result.images[0]);
         console.log(result);
       })
       .catch(error => console.log('error', error));
@@ -38,14 +42,25 @@ const RecentSong = props => {
     <Container>
       <MainDetail>
         <ImageContainer>
-          <Image source={{uri: track.images[0].url.toString()}} />
+          <Image source={{uri: image.url}} />
           <StyleImage>
             <Round />
           </StyleImage>
         </ImageContainer>
         <TextContainer>
           <Title>{track.name}</Title>
-          <Streaming>{track.artists[0].name}</Streaming>
+          <Streaming>
+            {
+              artist.length !== 1 ?
+              artist.map((item, index) => {
+                return (index + 1) === artist.length ? item.name : item.name + ' && ';
+              })
+              : 
+              artist.map((item, index) => {
+                return item.name;
+              })
+            }
+          </Streaming>
         </TextContainer>
       </MainDetail>
       <Detail>
@@ -56,6 +71,7 @@ const RecentSong = props => {
     </Container>
   );
 };
+
 
 
 const Container = styled.View`
@@ -115,6 +131,7 @@ const TextContainer = styled.View`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  width: 80%;
 `;
 
 

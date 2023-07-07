@@ -11,7 +11,7 @@ const PopularAlbumInHome = props => {
         </ImageContainer>
         <TextContainer>
           <Title>{item.name}</Title>
-          <Artist>Album • {item.artists[0].name}</Artist>
+          <Artist>{item.artists[0].name}</Artist>
         </TextContainer>
       </Container>
     );

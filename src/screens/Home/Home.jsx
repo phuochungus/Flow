@@ -75,7 +75,7 @@ export const Home = ({route, navigation}) => {
       .then(result => result.slice(0,10))
       .then(result => {
         setArtist(result);
-        console.log(result);
+        //console.log(result);
         //var obj = result.images[0].url; 
         //setItems(obj.toString()); 
       })
@@ -118,7 +118,7 @@ export const Home = ({route, navigation}) => {
         <User>
           <Avata>
             <LinearBackground>
-              <Image source={require('../../assets/images/Artist.png')} />
+              <FeatherIcon name="user" size={26} color="#fff" />
             </LinearBackground>
           </Avata>
           <TextUser>
@@ -138,7 +138,7 @@ export const Home = ({route, navigation}) => {
             <History>Xem tất cả</History>
           </TitleContainer>
           <SongContainer>
-            {items.slice(0, 5)
+            {items.slice(0, 3)
               .map((item, index) => {
                 return <RecentSong id={item} />;
               })}

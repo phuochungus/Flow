@@ -140,7 +140,7 @@ useEffect(()=>{
 
 
           <View style={[styles.playlist]}>
-            <Text style={styles.time}>{total(duration)}</Text>
+            <Text style={styles.time}>{duration}</Text>
             {
               tracks.map((item, index) => {
                 return <SongInAlbum item={item} />
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
       fontWeight: '700'
     },
     playlist: {
-      width: '100%',
+      width: '95%',
       backgroundColor: '#121212',
       borderColor: 'grey',
       borderWidth: 1,
@@ -243,6 +243,7 @@ const styles = StyleSheet.create({
       marginTop: scale(24),
       paddingVertical: scale(10),
       marginBottom: 20,
+      alignSelf: 'center'
     },
     time: {
       fontSize: scale(15),
@@ -253,7 +254,7 @@ const styles = StyleSheet.create({
 
 
     box: {
-        width: '100%',
+        width: '90%',
         height: scale(95),
         borderRadius: 60,
         borderWidth: 1,
@@ -264,21 +265,22 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        alignSelf: 'center'
     },
     nameAlbum: {
-        fontSize: 24,
+        fontSize: scale(20),
         color: '#fff',
         fontWeight: 'bold',
         fontFamily: 'Radio Canada'
     },
     nameArtist: {
-        fontSize: 18,
+        fontSize: scale(16),
         color: 'grey',
         fontWeight: 'bold',
         fontFamily: 'Radio Canada'
     },
     text: {
-        fontSize: 15,
+        fontSize: scale(15),
         color: 'grey'
     },
     note: {
