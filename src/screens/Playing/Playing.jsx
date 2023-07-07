@@ -109,7 +109,7 @@ export const Playing = ({navigation, route}) => {
             <View style={{opacity: isUpLyrics !== false ? 0 : 1}}>
                 <BackHeader onLeftButtonPressed={()=>Alert.alert("left button pressed")} img={IMG_BackDown} navigation={navigation}/>
                 <View style={styles.DVDContainer}>
-                    <ImageBackground style={[styles.imgBackground, {transform: [{rotate: '0deg'}],}]} source={{uri: player2?.songInfo.images !== undefined ? player2?.songInfo.images[0].url : "https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg"}}>
+                    <ImageBackground style={[styles.imgBackground, {transform: [{rotate: '0deg'}],}]} source={{uri: player2?.songInfo.images[0] !== undefined ? player2?.songInfo.images[0]?.url : "https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg"}}>
                         <View style = {styles.smallCircle}/>
                     </ImageBackground>
                 </View>
