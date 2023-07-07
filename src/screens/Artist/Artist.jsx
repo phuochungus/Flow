@@ -14,8 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import MiniPlaying from '../../components/miniPlaying';
 
 export const Artist = ({route, navigation}) => {
-  // const id = route.params.id;
-  const id = '4TL2YxMevy1F5NBfllZJuA';
+  const id = route.params.id;
   const [artist, setArtist] = useState({});
   const [description, setDescription] = useState(null);
   const [isFavourite, setIsFavourite] = useState(null);
@@ -40,7 +39,6 @@ export const Artist = ({route, navigation}) => {
       )
         .then(response => response.json())
         .then(result => {
-          console.log(result.topTracks);
           setArtist(result);
           setDescription(result.bio.summary);
           setIsFavourite(result.isFavourite);
