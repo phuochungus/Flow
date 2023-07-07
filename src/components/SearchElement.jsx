@@ -92,7 +92,6 @@ export const SearchElement = (props) => {
         
         fetch("https://flow-fbmj.onrender.com/me/search_history", requestOptions)
           .then(response => response.text())
-          //.then(result => console.log(result))
           .catch(error => console.log('error', error));
     }
 

@@ -31,7 +31,7 @@ export const Home = ({route, navigation}) => {
       var requestOptions = {
         method: 'GET',
         headers: headers,
-        redirect: 'follow'
+        redirect: 'follow',
       };
 
       fetch('https://flow-fbmj.onrender.com/me/profile', requestOptions)
@@ -119,9 +119,9 @@ export const Home = ({route, navigation}) => {
         <Container>
           <User>
             <Avata>
-                <LinearBackground>
-                  <FeatherIcon name="user" size={28} color="#fff"/>
-                </LinearBackground>
+              <LinearBackground>
+                <FeatherIcon name="user" size={26} color="#fff" />
+              </LinearBackground>
             </Avata>
             <TextUser>
               <Welcome>Welcome back !</Welcome>
