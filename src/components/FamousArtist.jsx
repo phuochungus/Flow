@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components/native';
 
 const FamousArtist = props => {
-    //const item = props.item;
-  
+  const item = props.item;
+
   return (
     <Container>
-      <ImageContainer>
+      <ImageContainer
+        onPress={() => {
+          props.navigation.push('Artist', {id: item.id});
+        }}>
         <Image source={{uri: props.uri}} />
       </ImageContainer>
       <Title>{props.title}</Title>
