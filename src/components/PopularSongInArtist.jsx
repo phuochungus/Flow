@@ -17,7 +17,7 @@ export const PopularSongInArtist = props => {
   return (
     <Container>
       <Number>{props.number}</Number>
-      <MainContent>
+      <MainContent onPress={()=>props.navigation.navigate('Playing', {type: 'single', id: item.id})}>
         <ImageContainer height={scale(52)} width={scale(52)}>
           <SongImage
             source={

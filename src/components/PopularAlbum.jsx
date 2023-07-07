@@ -8,10 +8,9 @@ export const PopularAlbum = props => {
 
   return (
     <Container
-    // onPress={() => {
-    //   console.log(item.id);
-    //   props.navigation.navigate('Album', {id: item.id});
-    // }}
+    onPress={() => {
+      props.navigation.navigate('Album', {id: item.id});
+    }}
     >
       <ImageContainer height={scale(120)} width={scale(120)}>
         <AlbumImage

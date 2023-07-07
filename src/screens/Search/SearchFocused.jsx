@@ -78,13 +78,6 @@ export const SearchFocused = ({navigation, route}) => {
                                     placeholderTextColor={'#8A9A9D'}
                                     style={styles.searchInput}></TextInput>
                     </TouchableOpacity> 
-                    {/* {searchText == '' ? (
-                        <></>
-                    ) : ( 
-                        <TouchableOpacity onPress={() => removeText()}>
-                            <Image style={styles.removeIcon} source={IMG_Remove}/>
-                        </TouchableOpacity>
-                    )} */}
                 </View>
                 <TouchableOpacity onPress={()=>navigation.navigate("SearchDefault")}>
                     <Text style={styles.cancel}>Hủy</Text>

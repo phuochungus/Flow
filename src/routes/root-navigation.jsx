@@ -244,6 +244,26 @@ export function RootNavigation() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="Playlist"
+        component={Playlist}
+        options={{
+          presentation: 'transparentModal',
+          headerStyle: {
+            backgroundColor: '#121212',
+            elevation: 0,
+            shadowOpacity: 0,
+            borderBottomWidth: 0,
+          },
+          headerTitleStyle: {
+            fontFamily: FONTS.RadioCanada.Medium,
+            fontSize: 24,
+          },
+          headerTintColor: 'white',
+          headerTitleAlign: 'center',
+          title: 'PLAYLIST',
+        }}
+      />
     </Stack.Navigator>
   );
 }
