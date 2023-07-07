@@ -3,7 +3,7 @@ import {View, ScrollView, TouchableHighlight, Text} from 'react-native';
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import EntypoIcon from 'react-native-vector-icons/Entypo';
+import Icons from 'react-native-vector-icons/SimpleLineIcons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import OtherArtist from '../../components/OtherArtist';
 import PopularAlbumInHome from '../../components/PopularAlbumInHome';
@@ -11,7 +11,7 @@ import RecentSong from '../../components/RecentSong';
 import FamousArtist from '../../components/FamousArtist';
 import MiniPlaying from '../../components/miniPlaying';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { PlayingContext } from '../../constants/playingContext';
+import {PlayingContext} from '../../constants/playingContext';
 import scale from '../../constants/responsive';
 
 export const Home = ({route, navigation}) => {
@@ -22,7 +22,6 @@ export const Home = ({route, navigation}) => {
   const [user, setUser] = useState([]);
 
   const {player2} = useContext(PlayingContext);
-
 
   const loadUser = async () => {
     if (Object.keys(album).length === 0) {
@@ -38,13 +37,13 @@ export const Home = ({route, navigation}) => {
       };
 
       fetch('https://flow-fbmj.onrender.com/me/profile', requestOptions)
-      .then(response => response.json())
-      .then(result => {
-        setUser(result);
-        setItems(result.recentlyPlayed);
-        //console.log(result.recentlyPlayed);
-      })
-      .catch(error => console.log('error', error));
+        .then(response => response.json())
+        .then(result => {
+          setUser(result);
+          setItems(result.recentlyPlayed);
+          //console.log(result.recentlyPlayed);
+        })
+        .catch(error => console.log('error', error));
     }
   };
 
@@ -104,11 +103,11 @@ export const Home = ({route, navigation}) => {
       .catch(error => console.log('error', error));
   };
 
-  const logOut = async ()=> {
+  const logOut = async () => {
     player2.pause();
     await AsyncStorage.clear();
     navigation.navigate('Splash');
-  }
+  };
 
   useEffect(() => {
     loadTrack();
@@ -116,9 +115,9 @@ export const Home = ({route, navigation}) => {
     loadUser();
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     loadSong();
-  }, [player2.songInfo, player2.index, player2.listSounds])
+  }, [player2.songInfo, player2.index, player2.listSounds]);
 
   return (
     <>
@@ -134,19 +133,34 @@ export const Home = ({route, navigation}) => {
               <Welcome>Welcome back !</Welcome>
               <Name>{user.username}</Name>
             </TextUser>
+
+            <Icon
+              style={{flex: 1, justifyContents: 'flex-end'}}
+              onPress={() => {
+                AsyncStorage.clear();
+                navigation.navigate('SignIn');
+              }}>
+              <Icons name="login" size={24} color="#b1b5bb" />
+            </Icon>
+            {/* <Icon>
+              <FeatherIcon name="bar-chart-2" size={22} color="#fff" />
+            </Icon>
+
             <Icon>
             </Icon>
             <Icon onPress={()=>logOut()}>
               <FeatherIcon name="log-out" size={22} color="#fff" />
-            </Icon>
+            </Icon> */}
           </User>
           <ListSong>
             <TitleContainer>
-                <Title>Mới nghe gần đây</Title>
+              <Title>Mới nghe gần đây</Title>
             </TitleContainer>
             <SongContainer>
               {items.slice(0, 3).map((item, index) => {
-                return <RecentSong key={index}  navigation={navigation}  id={item} />;
+                return (
+                  <RecentSong key={index} navigation={navigation} id={item} />
+                );
               })}
             </SongContainer>
           </ListSong>
@@ -157,7 +171,13 @@ export const Home = ({route, navigation}) => {
             <AlbumContainer horizontal={true}>
               {album.slice(0, 10).map((item, index) => {
                 //console.log(item);
-                return <PopularAlbumInHome key={index} navigation={navigation} item={item} />;
+                return (
+                  <PopularAlbumInHome
+                    key={index}
+                    navigation={navigation}
+                    item={item}
+                  />
+                );
               })}
             </AlbumContainer>
           </ListAlbum>
@@ -178,7 +198,7 @@ export const Home = ({route, navigation}) => {
             })}
           </ArtistContainer>
         </Container>
-        <View style={{height: scale(72), backgroundColor: 'black'}}/>
+        <View style={{height: scale(72), backgroundColor: 'black'}} />
       </ScrollView>
       <MiniPlaying navigation={navigation} />
     </>
