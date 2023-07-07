@@ -14,10 +14,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import MiniPlaying from '../../components/miniPlaying';
 
 export const Artist = ({route, navigation}) => {
-  const id = route.params.id;
+  // const id = route.params.id;
+  const id = '4TL2YxMevy1F5NBfllZJuA';
   const [artist, setArtist] = useState({});
   const [description, setDescription] = useState(null);
   const [isFavourite, setIsFavourite] = useState(null);
+  const [list, setList] = useState([]);
 
   const loadArtist = async () => {
     if (Object.keys(artist).length === 0) {
@@ -38,9 +40,13 @@ export const Artist = ({route, navigation}) => {
       )
         .then(response => response.json())
         .then(result => {
+          console.log(result.topTracks);
           setArtist(result);
           setDescription(result.bio.summary);
           setIsFavourite(result.isFavourite);
+          let l = [];
+          result.topTracks.map((item, index)=>{ let id = item.id; l.push({id: id}); })
+          setList(l);
         })
         .catch(error => console.log('error', error));
     }
@@ -146,7 +152,7 @@ export const Artist = ({route, navigation}) => {
         </GradientBackground>
 
         {/* PlayRandomButton */}
-        <PlayRandomButton height={scale(60)} width={scale(62)}>
+        <PlayRandomButton height={scale(60)} width={scale(62)} onPress={list.length > 0 ? ()=>{navigation.navigate('Playing', {type: 'list', list: list})} : ()=>{console.log('fail')}}>
           <PlayBackground height={scale(54)} width={scale(54)}>
             <FontAwesomeIcon name="play" size={20} color="#000" />
           </PlayBackground>
