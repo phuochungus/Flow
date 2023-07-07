@@ -119,7 +119,7 @@ export const PlaylistElement = (props) => {
         <View style={[styles.container, id !== null ? (id === props.index ? {backgroundColor: '#0085FF'} : {backgroundColor: '#121212'}) : {}]}>
             <TouchableOpacity onPress={()=>{player2.setIndex(props.index); props.navigation.navigate('Playing', {type: 'list', list: props.list})}}>
                 <View style={styles.leftContainer}>
-                    <Image style={styles.image} source={{uri: item?.images[0] ? item.images[0]?.url : 'https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg'}} />
+                    <Image style={styles.image} source={{uri: item?.images ? item.images[0]?.url : 'https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg'}} />
                     <View style={{marginLeft: scale(12)}}>
                         <Text style={styles.song}>{handleSongName(item?.name)}</Text>
                         <Text style={styles.otherText}>{handleArtistsName(item?.artists)}</Text>
