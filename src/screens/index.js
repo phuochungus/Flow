@@ -11,4 +11,3 @@ export { Playlist } from './Playlist/PLaylist'
 export {Splash} from "./Splash/Splash"
 export {AllAlbum} from "./Artist/AllAlbum"
 export { SearchDefault } from './Search/SearchDefault'
-export { Favourite } from './Favourite/Favourite'
