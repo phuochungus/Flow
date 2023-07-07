@@ -30,18 +30,8 @@ export const useAudioHelper = (
   const [lyrics, setLyrics] = useState({});
   const [index, setIndex] = useState(null);
 
-  useEffect(() => {
-    console.log('---------------------');
-    console.log(listSounds);
-    console.log(timeRate);
-    console.log(status);
-    console.log(errorMessage);
-    console.log(songInfo);
-    console.log(lyrics);
-    console.log(index);
-    console.log(currentTime);
-    console.log('-----------------------');
-  }, [listSounds, timeRate, status, errorMessage, songInfo, lyrics, index, currentTime]);
+  const [isAdding, setIsAdding] = useState(false);
+
 
   const [currentTime, setCurrentTime] = useState(0);
 
@@ -76,16 +66,12 @@ export const useAudioHelper = (
       headers: myHeaders,
       redirect: 'follow',
     };
-    console.log('*****');
-    console.log(index);
-    console.log('*****');
     fetch(
       'https://flow-fbmj.onrender.com/tracks/track/' + listSounds[index]?.id,
       requestOptions,
     )
       .then(response => response.json())
       .then(result => {
-        console.log(result);
         setSongInfo(result);
       })
       .catch(error => console.log('error', error));
@@ -107,7 +93,6 @@ export const useAudioHelper = (
     )
       .then(response => response.json())
       .then(result => {
-        console.log(result);
         setLyrics(result);
       })
       .catch(error => console.log('error', error));
@@ -115,7 +100,6 @@ export const useAudioHelper = (
 
     const handleFavorites = async (method) => {
         const accessToken = await AsyncStorage.getItem('access_token');
-        console.log(accessToken);
         var myHeaders = new Headers();
         myHeaders.append("accept", "*/*");
         myHeaders.append("Authorization", "Bearer " + accessToken);
@@ -134,7 +118,7 @@ export const useAudioHelper = (
 
         fetch("https://flow-fbmj.onrender.com/me/favourites", requestOptions)
         // .then(response => response.text())
-        .then(result => {console.log("liked"); getSongInfo();})
+        .then(result => { getSongInfo();})
         .catch(error => console.log('error', error));
     }
 
@@ -143,7 +127,6 @@ export const useAudioHelper = (
 
   const initialize = async () => {
     setStatus('loading');
-    console.log('lst: ' + listSounds.length);
     if (listSounds.length > 0 && index !== null) {
       if (player) {
         player.release();
@@ -214,24 +197,20 @@ export const useAudioHelper = (
   };
 
   useEffect(() => {
-    if (listSounds && listSounds.length > 0) {
-      console.log('index: ', index);
+    if (listSounds.length != 0 && !isAdding) setIndex(0);
+    setIsAdding(false);
+  }, [listSounds]);
+
+  useEffect(() => {
+    if (listSounds && listSounds.length > 0 && !isAdding) {
       if (index != -1) {
-        console.log(listSounds);
         getSongInfo();
         getLyrics();
         initialize();
-        console.log('init');
       }
     }
 
   }, [index, listSounds]);
-
-  useEffect(() => {
-    console.log('list sound');
-    if (listSounds.length != 0) setIndex(0);
-    console.log('index');
-  }, [listSounds]);
 
   // const changeIndex = async (value) => {
   //     await setIndex(value);
@@ -311,10 +290,6 @@ export const useAudioHelper = (
     if (player) {
       player.pause();
       setStatus('pause');
-      AsyncStorage.setItem('is-playing', 'false');
-      console.log('set currTime');
-      console.log(currentTime);
-      AsyncStorage.setItem('current-time', JSON.stringify(currentTime));
     }
   };
 
@@ -329,7 +304,6 @@ export const useAudioHelper = (
     [...Array(listSounds.length).keys()].filter(value => value !== index),
   );
   useEffect(() => {
-    console.log('index2: ', index);
     setRemainingIndices(remainingIndices.filter(value => value !== index));
   }, [index]);
 
@@ -364,7 +338,6 @@ export const useAudioHelper = (
       setIndex(index - 1);
 
       if (isShuffle === true) {
-        console.log(listSounds);
         let newRemainingIndices = shuffleArray(
           remainingIndices.length === 0
             ? [...Array(listSounds.length).keys()].filter(
@@ -513,6 +486,7 @@ export const useAudioHelper = (
     setPlayerCurrentTime: time => setCurrentTime(time),
     setListSounds: listSounds => setListSounds(listSounds),
     setIndex: index => setIndex(index),
+    setIsAdding: value => setIsAdding(value),
     handleFavorites: method => handleFavorites(method),
     durationString: getDurationString(),
     currentTimeString: getCurrentTimeString(),
@@ -525,6 +499,7 @@ export const useAudioHelper = (
     //timeRate,
     //speed,
     isShuffle,
+    isAdding,
     errorMessage,
     isLoop,
     isMuted,

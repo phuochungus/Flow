@@ -49,10 +49,7 @@ export const Login = ({navigation}) => {
               index: 0,
               routes: [
                 {
-                  name: 'Artist',
-                  params: {
-                    id: '00FQb4jTyendYWaN8pK0wa',
-                  },
+                  name: 'Home',
                 },
               ],
             }),

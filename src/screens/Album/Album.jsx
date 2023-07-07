@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
       alignItems: 'flex-start',
       justifyContent: 'flex-start',
       width: '100%',
-      paddingTop: 30,
+      paddingTop: scale(30),
     },
     backButton: {
         paddingTop: scale(20),
