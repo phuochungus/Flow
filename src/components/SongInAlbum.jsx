@@ -47,7 +47,7 @@ const TextContainer = styled.View`
 const Title = styled.Text`
   color: white;
   font-family: 'Radio Canada';
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
 `;
 
@@ -55,7 +55,7 @@ const Title = styled.Text`
 const Artist = styled.Text`
   color: grey;
   font-family: 'Noto Sans';
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
 `;
 

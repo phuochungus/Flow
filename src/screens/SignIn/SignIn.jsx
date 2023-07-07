@@ -18,7 +18,7 @@ import {
 import {GradientButton, GradientButtonOutline} from '../../components';
 import {ScrollView} from 'react-native-gesture-handler';
 import {CommonActions} from '@react-navigation/native';
-import { REMOTE_BASE_URL } from '../../helper/api';
+import {REMOTE_BASE_URL} from '../../helper/api';
 
 export const SignIn = ({navigation, route}) => {
   useEffect(() => {
@@ -28,7 +28,7 @@ export const SignIn = ({navigation, route}) => {
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
-              routes: [{name: 'Artist'}],
+              routes: [{name: 'Home'}],
             }),
           );
         })
