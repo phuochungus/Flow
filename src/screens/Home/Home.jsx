@@ -140,7 +140,7 @@ export const Home = ({route, navigation}) => {
           <SongContainer>
             {items.slice(0, 3)
               .map((item, index) => {
-                return <RecentSong id={item} />;
+                return <RecentSong key={index} id={item} />;
               })}
           </SongContainer>
         </ListSong>
@@ -152,7 +152,7 @@ export const Home = ({route, navigation}) => {
             {album.slice(0, 10)
               .map((item, index) => {
                 //console.log(item);
-                return <PopularAlbumInHome item={item} />;
+                return <PopularAlbumInHome key={index} item={item} />;
               })}
           </AlbumContainer>
         </ListAlbum>
@@ -162,7 +162,7 @@ export const Home = ({route, navigation}) => {
         <ArtistContainer horizontal={true}>
           {artist.slice(0, 10)
             .map((item, index) => {
-              return <FamousArtist navigation={navigation} item={item} uri={item.images[0].url.toString()} title={item.name} />
+              return <FamousArtist key={index} navigation={navigation} item={item} uri={item.images[0].url.toString()} title={item.name} />
             })
           }
         </ArtistContainer>
@@ -203,13 +203,6 @@ const Icon = styled.TouchableOpacity`
 const Avata = styled.View`
     width: 40px;
     height: 40px;
-`;
-
-
-const Image = styled.Image`
-  width: 90%;
-  height: 90%;
-  border-radius: 50px;
 `;
 
 

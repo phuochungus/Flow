@@ -18,7 +18,7 @@ const RecentSong = props => {
 
       var requestOptions = {
         method: 'GET',
-        headers: myHeaders,
+        headers: headers,
         redirect: 'follow'
       };
 
@@ -42,7 +42,9 @@ const RecentSong = props => {
     <Container>
       <MainDetail>
         <ImageContainer>
-          <Image source={{uri: image.url}} />
+          <Image source={(!image || image.url == null)
+              ? require('../assets/images/Loading.png')
+              :{uri: image.url}} />
           <StyleImage>
             <Round />
           </StyleImage>
