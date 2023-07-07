@@ -32,18 +32,6 @@ export const useAudioHelper = (
 
   const [isAdding, setIsAdding] = useState(false);
 
-  // useEffect(() => {
-  //   console.log('---------------------');
-  //   console.log(listSounds);
-  //   console.log(timeRate);
-  //   console.log(status);
-  //   console.log(errorMessage);
-  //   console.log(songInfo);
-  //   console.log(lyrics);
-  //   console.log(index);
-  //   console.log(currentTime);
-  //   console.log('-----------------------');
-  // }, [listSounds, timeRate, status, errorMessage, songInfo, lyrics, index, currentTime]);
 
   const [currentTime, setCurrentTime] = useState(0);
 
@@ -84,7 +72,6 @@ export const useAudioHelper = (
     )
       .then(response => response.json())
       .then(result => {
-        console.log(result);
         setSongInfo(result);
       })
       .catch(error => console.log('error', error));
@@ -106,7 +93,6 @@ export const useAudioHelper = (
     )
       .then(response => response.json())
       .then(result => {
-        console.log(result);
         setLyrics(result);
       })
       .catch(error => console.log('error', error));
@@ -114,7 +100,6 @@ export const useAudioHelper = (
 
     const handleFavorites = async (method) => {
         const accessToken = await AsyncStorage.getItem('access_token');
-        console.log(accessToken);
         var myHeaders = new Headers();
         myHeaders.append("accept", "*/*");
         myHeaders.append("Authorization", "Bearer " + accessToken);
@@ -133,7 +118,7 @@ export const useAudioHelper = (
 
         fetch("https://flow-fbmj.onrender.com/me/favourites", requestOptions)
         // .then(response => response.text())
-        .then(result => {console.log("liked"); getSongInfo();})
+        .then(result => { getSongInfo();})
         .catch(error => console.log('error', error));
     }
 
@@ -142,7 +127,6 @@ export const useAudioHelper = (
 
   const initialize = async () => {
     setStatus('loading');
-    console.log('lst: ' + listSounds.length);
     if (listSounds.length > 0 && index !== null) {
       if (player) {
         player.release();
@@ -213,22 +197,16 @@ export const useAudioHelper = (
   };
 
   useEffect(() => {
-    console.log(isAdding);
-    console.log('list sound');
     if (listSounds.length != 0 && !isAdding) setIndex(0);
     setIsAdding(false);
-    console.log('index');
   }, [listSounds]);
 
   useEffect(() => {
     if (listSounds && listSounds.length > 0 && !isAdding) {
-      console.log('index: ', index);
       if (index != -1) {
-        console.log(listSounds);
         getSongInfo();
         getLyrics();
         initialize();
-        console.log('init');
       }
     }
 
@@ -312,10 +290,6 @@ export const useAudioHelper = (
     if (player) {
       player.pause();
       setStatus('pause');
-      AsyncStorage.setItem('is-playing', 'false');
-      console.log('set currTime');
-      console.log(currentTime);
-      AsyncStorage.setItem('current-time', JSON.stringify(currentTime));
     }
   };
 
@@ -330,7 +304,6 @@ export const useAudioHelper = (
     [...Array(listSounds.length).keys()].filter(value => value !== index),
   );
   useEffect(() => {
-    console.log('index2: ', index);
     setRemainingIndices(remainingIndices.filter(value => value !== index));
   }, [index]);
 
@@ -352,7 +325,6 @@ export const useAudioHelper = (
         setRemainingIndices(newRemainingIndices);
         setIndex(newRemainingIndices[0]);
       } else {
-        console.log('lst-length: ', listSounds.length);
         setIndex((index + 1) % listSounds.length);
       }
     }
@@ -366,7 +338,6 @@ export const useAudioHelper = (
       setIndex(index - 1);
 
       if (isShuffle === true) {
-        console.log(listSounds);
         let newRemainingIndices = shuffleArray(
           remainingIndices.length === 0
             ? [...Array(listSounds.length).keys()].filter(

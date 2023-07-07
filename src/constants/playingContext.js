@@ -32,8 +32,7 @@ export const PlayingProvider = ({children}) => {
     }
 
     const init = async () => {
-        // await player2.setListSounds(list);
-        // await player2.pause
+
     }
 
     const getlist = async () => {
@@ -41,15 +40,10 @@ export const PlayingProvider = ({children}) => {
         temp = await AsyncStorage.getItem('list-sound');
         const list = JSON.parse(temp);
         temp = await AsyncStorage.getItem('index-playing');
-        //console.log(temp);
         setId(parseInt(temp));
         temp = await AsyncStorage.getItem('time-playing');
-        //console.log(temp);
         setTime(parseFloat(temp));
 
-        console.log('abc');
-
-        //console.log(result[0].id);
         if (list?.length > 0) {
             init()
             .then(function() {
