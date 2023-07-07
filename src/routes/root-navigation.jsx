@@ -14,6 +14,7 @@ import {
   SearchResult,
   Favourite,
   SignUp,
+  Playlist
 } from '../screens';
 import FONTS from '../constants/fonts';
 import {Dimensions, View} from 'react-native';
