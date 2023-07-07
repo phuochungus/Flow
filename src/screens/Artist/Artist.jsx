@@ -95,131 +95,145 @@ export const Artist = ({route, navigation}) => {
   };
 
   return (
-    <><ScrollView
-      showsVerticalScrollIndicator={false}
-      style={{ backgroundColor: '#121212' }}>
-      <ImageContainer height={scale(300)}>
-        <ArtistImage
-          style={{ resizeMode: 'contain' }}
-          source={!artist.images
-            ? require('../../assets/images/Loading.png')
-            : { uri: artist.images[0]?.url }} />
+    <>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{backgroundColor: '#121212'}}>
+        <ImageContainer height={scale(300)}>
+          <ArtistImage
+            style={{resizeMode: 'contain'}}
+            source={
+              !artist.images
+                ? require('../../assets/images/Loading.png')
+                : {uri: artist.images[0]?.url}
+            }
+          />
 
-        {/* <BackButton>
+          {/* <BackButton>
       <EntypoIcon name="chevron-thin-left" size={24} color="#fff" />
     </BackButton> */}
-        <LinearBackground height={scale(120)} />
-        <BottomOfImage>
-          <TextContainer>
-            <NameArtist>
-              {artist.name == undefined ? 'Loading...' : artist.name}
-            </NameArtist>
-            {/* <Streaming>
+          <LinearBackground height={scale(120)} />
+          <BottomOfImage>
+            <TextContainer>
+              <NameArtist>
+                {artist.name == undefined ? 'Loading...' : artist.name}
+              </NameArtist>
+              {/* <Streaming>
       <FeatherIcon name="headphones" size={16} color="#fff" />
       <Number>{numberWithComma(100000)} lượt nghe hàng tháng</Number>
     </Streaming> */}
-          </TextContainer>
-          {/* <DetailContainer>
+            </TextContainer>
+            {/* <DetailContainer>
       <DetailButton height={scale(32)} width={scale(32)}>
         <EntypoIcon name="dots-three-vertical" size={20} color="#fff" />
       </DetailButton>
     </DetailContainer> */}
-        </BottomOfImage>
-      </ImageContainer>
+          </BottomOfImage>
+        </ImageContainer>
 
-      <Description>
-        {description == undefined ? 'Loading...' : longText(description)}
-      </Description>
+        <Description>
+          {description == undefined ? 'Loading...' : longText(description)}
+        </Description>
 
-      <ButtonContainer>
-        {/* Follow */}
-        <GradientBackground height={scale(48)} width={scale(160)}>
-          {isFavourite ? (
-            <FollowingButton onPress={handleFavourite}>
-              <FollowText>Đang theo dõi</FollowText>
-            </FollowingButton>
-          ) : (
-            <UnfollowingButton onPress={handleFavourite}>
-              <FollowText>Theo dõi</FollowText>
-            </UnfollowingButton>
-          )}
-        </GradientBackground>
+        <ButtonContainer>
+          {/* Follow */}
+          <GradientBackground height={scale(48)} width={scale(160)}>
+            {isFavourite ? (
+              <FollowingButton onPress={handleFavourite}>
+                <FollowText>Đang theo dõi</FollowText>
+              </FollowingButton>
+            ) : (
+              <UnfollowingButton onPress={handleFavourite}>
+                <FollowText>Theo dõi</FollowText>
+              </UnfollowingButton>
+            )}
+          </GradientBackground>
 
-        {/* PlayRandomButton */}
-        <PlayRandomButton height={scale(60)} width={scale(62)}>
-          <PlayBackground height={scale(54)} width={scale(54)}>
-            <FontAwesomeIcon name="play" size={20} color="#000" />
-          </PlayBackground>
-          <RandomBorder>
-            <RandomBackground>
-              <FontAwesomeIcon
-                name="random"
-                size={10}
-                color="rgba(231, 13, 251, 1)" />
-            </RandomBackground>
-          </RandomBorder>
-        </PlayRandomButton>
+          {/* PlayRandomButton */}
+          <PlayRandomButton height={scale(60)} width={scale(62)}>
+            <PlayBackground height={scale(54)} width={scale(54)}>
+              <FontAwesomeIcon name="play" size={20} color="#000" />
+            </PlayBackground>
+            <RandomBorder>
+              <RandomBackground>
+                <FontAwesomeIcon
+                  name="random"
+                  size={10}
+                  color="rgba(231, 13, 251, 1)"
+                />
+              </RandomBackground>
+            </RandomBorder>
+          </PlayRandomButton>
 
-        {/* Share */}
-        {/* <ShareButton height={scale(54)} width={scale(54)}>
+          {/* Share */}
+          {/* <ShareButton height={scale(54)} width={scale(54)}>
       <ShareBorder>
         <ShareBackground>
           <FeatherIcon name="share-2" size={24} color="#E70DFB" />
         </ShareBackground>
       </ShareBorder>
     </ShareButton> */}
-      </ButtonContainer>
+        </ButtonContainer>
 
-      <Section>
-        <TitleContainer>
-          <Title>Bài hát nổi bật</Title>
-        </TitleContainer>
-        {artist.topTracks !== undefined &&
-          artist.topTracks
-            .sort((a, b) => (a.viewCount < b.viewCount ? 1 : -1))
-            .filter((item, index) => index < 5)
-            .map((item, index) => (
-              <PopularSongInArtist
-                item={item}
-                key={index}
-                number={index + 1}
-                navigation={navigation} />
-            ))}
-      </Section>
-
-      <Section>
-        <TitleContainer>
-          <Title>Album phổ biến</Title>
-          <Pressable
-            disabled={artist && false}
-            onPress={() => navigation.navigate('AllAlbum', {
-              item: artist.albums,
-            })}>
-            <ViewAll>Xem tất cả</ViewAll>
-          </Pressable>
-        </TitleContainer>
-        <HorizontalScroll horizontal showsHorizontalScrollIndicator={false}>
-          {artist.albums !== undefined &&
-            artist.albums
-              .filter((item, index) => index < 6)
+        <Section>
+          <TitleContainer>
+            <Title>Bài hát nổi bật</Title>
+          </TitleContainer>
+          {artist.topTracks !== undefined &&
+            artist.topTracks
+              .sort((a, b) => (a.viewCount < b.viewCount ? 1 : -1))
+              .filter((item, index) => index < 5)
               .map((item, index) => (
-                <PopularAlbum item={item} key={index} navigation={navigation} />
+                <PopularSongInArtist
+                  item={item}
+                  key={index}
+                  number={index + 1}
+                  navigation={navigation}
+                />
               ))}
-        </HorizontalScroll>
-      </Section>
+        </Section>
 
-      <Section>
-        <TitleContainer>
-          <Title>Nghệ sĩ bạn có thể theo dõi</Title>
-        </TitleContainer>
-        <HorizontalScroll horizontal showsHorizontalScrollIndicator={false}>
-          {artist.relatedArtists !== undefined &&
-            artist.relatedArtists.map((item, index) => (
-              <OtherArtist item={item} key={index} navigation={navigation} />
-            ))}
-        </HorizontalScroll>
-      </Section>
-    </ScrollView><MiniPlaying navigation={navigation} /></>
+        <Section>
+          <TitleContainer>
+            <Title>Album phổ biến</Title>
+            <Pressable
+              disabled={artist && false}
+              onPress={() =>
+                navigation.navigate('AllAlbum', {
+                  item: artist.albums,
+                })
+              }>
+              <ViewAll>Xem tất cả</ViewAll>
+            </Pressable>
+          </TitleContainer>
+          <HorizontalScroll horizontal showsHorizontalScrollIndicator={false}>
+            {artist.albums !== undefined &&
+              artist.albums
+                .filter((item, index) => index < 6)
+                .map((item, index) => (
+                  <PopularAlbum
+                    item={item}
+                    key={index}
+                    navigation={navigation}
+                  />
+                ))}
+          </HorizontalScroll>
+        </Section>
+
+        <Section>
+          <TitleContainer>
+            <Title>Nghệ sĩ bạn có thể theo dõi</Title>
+          </TitleContainer>
+          <HorizontalScroll horizontal showsHorizontalScrollIndicator={false}>
+            {artist.relatedArtists !== undefined &&
+              artist.relatedArtists.map((item, index) => (
+                <OtherArtist item={item} key={index} navigation={navigation} />
+              ))}
+          </HorizontalScroll>
+        </Section>
+      </ScrollView>
+      <MiniPlaying navigation={navigation} />
+    </>
   );
 };
 
@@ -480,199 +494,3 @@ const ViewAll = styled.Text`
 const HorizontalScroll = styled.ScrollView`
   flex-direction: row;
 `;
-
-// const data = {
-//   albums: [
-//     {
-//       id: '5HOHne1wzItQlIYmLXLYfZ',
-//       images: [Array],
-//       name: "Did you know that there's a tunnel under Ocean Blvd",
-//     },
-//     {
-//       id: '2wwCc6fcyhp1tfY3J6Javr',
-//       images: [Array],
-//       name: 'Blue Banisters',
-//     },
-//     {
-//       id: '6QeosPQpJckkW0Obir5RT8',
-//       images: [Array],
-//       name: 'Chemtrails Over The Country Club',
-//     },
-//     {
-//       id: '5XpEKORZ4y6OrCZSKsi46A',
-//       images: [Array],
-//       name: 'Norman Fucking Rockwell!',
-//     },
-//     {
-//       id: '7xYiTrbTL57QO0bb4hXIKo',
-//       images: [Array],
-//       name: 'Lust For Life',
-//     },
-//     {
-//       id: '2DpEBrjCur1ythIZ10gJWw',
-//       images: [Array],
-//       name: 'Honeymoon',
-//     },
-//     {
-//       id: '1ORxRsK3MrSLvh7VQTF01F',
-//       images: [Array],
-//       name: 'Ultraviolence (Deluxe)',
-//     },
-//     {
-//       id: '5PW8nAtvf2HV8RYZFd4IrX',
-//       images: [Array],
-//       name: 'Born To Die - The Paradise Edition',
-//     },
-//     {id: '1JnjcAIKQ9TSJFVFierTB8', images: [Array], name: 'Paradise'},
-//     {
-//       id: '3TtsWmvFbChKTWIRfa85lS',
-//       images: [Array],
-//       name: 'Born To Die (Bonus Track Version)',
-//     },
-//     {id: '4X8hAqIWpQyQks2yRhyqs4', images: [Array], name: 'Born To Die'},
-//     {
-//       id: '0Dt3FbpMQwjoT5KNAw0IXR',
-//       images: [Array],
-//       name: 'Born To Die – Paradise Edition (Special Version)',
-//     },
-//     {id: '7plBFX9EbmkHZnBbRtzKkA', images: [Array], name: 'Hollywood Bowl'},
-//     {id: '5z82RVDMCeczopEXA5JghQ', images: [Array], name: 'Lost At Sea'},
-//     {id: '6jVg0POvGYH1Pt6lISl3ok', images: [Array], name: 'Say Yes To Heaven'},
-//     {
-//       id: '7xIg7rC6R80DJqV0001u2J',
-//       images: [Array],
-//       name: 'Say Yes To Heaven (sim0ne & Melo Nada Remix)',
-//     },
-//     {
-//       id: '29PibmV31F3q6DRVq7gzZc',
-//       images: [Array],
-//       name: 'Summertime Sadness (Sped Up)',
-//     },
-//     {id: '3hL6ZIcwV6zUfqRiPLPBLJ', images: [Array], name: "Buddy's Rendezvous"},
-//     {
-//       id: '5RavdrN0me6xkp4okXQWNI',
-//       images: [Array],
-//       name: 'Dayglo Reflection (Orchestral Version)',
-//     },
-//     {
-//       id: '12fNudihprFoc3Jj5nGFkF',
-//       images: [Array],
-//       name: 'Watercolor Eyes (From “Euphoria” An HBO Original Series)',
-//     },
-//   ],
-//   bio: {
-//     content:
-//       'Elizabeth Woolridge Grant, known professionally as Lana Del Rey, is an American singer-songwriter and producer. Her music is noted for its cinematic quality and exploration of tragic romance, glamour, and melancholia, with frequent references to contemporary pop culture and 1950s–1960s Americana. Raised in upstate New York, Del Rey moved to New York City in 2005 to pursue a music career. After numerous projects, including her self-titled debut studio album, Del Rey\'s breakthrough came in 2011 with the viral success of her single "Video Games"; she subsequently signed a recording contract with Polydor and Interscope. She achieved critical and commercial success with her second album, Born to Die (2012), which contained the sleeper hit "Summertime Sadness". Del Rey\'s third album, Ultraviolence (2014), featured greater use of guitar-driven instrumentation and debuted atop the U.S. Billboard 200. Her fourth and fifth albums, Honeymoon (2015) and Lust for Life (2017), saw a return to the stylistic traditions of her earlier releases, while her critically acclaimed sixth album, Norman Fucking Rockwell! (2019), explored soft rock. Her next studio albums, Chemtrails Over the Country Club and Blue Banisters, followed in 2021. Her ninth studio album, “Did you know that there\'s a tunnel under Ocean Blvd” was released on all platforms March 24th 2023. It includes singles like the title track - "Did you know that there\'s a tunnel under Ocean Blvd", "A&W", and "The Grants".Del Rey has collaborated on soundtracks for visual media; in 2013, she wrote and starred in the critically acclaimed musical short Tropico and released "Young and Beautiful" for the romantic drama The Great Gatsby. In 2014, she recorded "Once Upon a Dream" for the dark fantasy adventure film Maleficent and the self-titled theme song for the biopic Big Eyes. Del Rey collaborated with Ariana Grande and Miley Cyrus on "Don\'t Call Me Angel" for the action comedy Charlie\'s Angels (2019), which peaked at number 13 on the U.S. Billboard Hot 100. Additionally, Del Rey published the poetry and photography collection Violet Bent Backwards Over the Grass (2020).She is the recipient of various accolades, including two Brit Awards, two MTV Europe Music Awards, and a Satellite Award, in addition to nominations for six Grammy Awards and a Golden Globe Award. Variety honored her at their Hitmakers Awards for being "one of the most influential singer-songwriters of the 21st century". <a href="https://www.last.fm/music/Lana+Del+Rey">Read more on Last.fm</a>. User-contributed text is available under the Creative Commons By-SA License; additional terms may apply.',
-//     summary:
-//       'Elizabeth Woolridge Grant, known professionally as Lana Del Rey, is an American singer-songwriter and producer. Her music is noted for its cinematic quality and exploration of tragic romance, glamour, and melancholia, with frequent references to contemporary pop culture and 1950s–1960s Americana.Raised in upstate New York, Del Rey moved to New York City in 2005 to pursue a music career. After numerous projects, including her self-titled debut studio album <a href="https://www.last.fm/music/Lana+Del+Rey">Read more on Last.fm</a>',
-//   },
-//   id: '00FQb4jTyendYWaN8pK0wa',
-//   images: [
-//     {
-//       height: 640,
-//       url: 'https://i.scdn.co/image/ab6761610000e5ebb99cacf8acd5378206767261',
-//       width: 640,
-//     },
-//     {
-//       height: 320,
-//       url: 'https://i.scdn.co/image/ab67616100005174b99cacf8acd5378206767261',
-//       width: 320,
-//     },
-//     {
-//       height: 160,
-//       url: 'https://i.scdn.co/image/ab6761610000f178b99cacf8acd5378206767261',
-//       width: 160,
-//     },
-//   ],
-//   isFavourite: false,
-//   name: 'Lana Del Rey',
-//   relatedArtists: [
-//     {id: '6CwfuxIqcltXDGjfZsMd9A', images: [Array], name: 'MARINA'},
-//     {id: '3Oim8XBPbznAa8Jj8QzNc8', images: [Array], name: 'Cults'},
-//     {id: '6oBm8HB0yfrIc9IHbxs6in', images: [Array], name: 'Lykke Li'},
-//     {id: '0Y6dVaC9DZtPNH4591M42W', images: [Array], name: 'TV Girl'},
-//     {id: '77SW9BnxLY8rJ0RciFqkHh', images: [Array], name: 'The Neighbourhood'},
-//     {id: '053q0ukIDRgzwTr4vNSwab', images: [Array], name: 'Grimes'},
-//     {id: '2uYWxilOVlUdk4oV9DvwqK', images: [Array], name: 'Mitski'},
-//     {id: '5GGJosGMs08YEmKTZJe1fL', images: [Array], name: 'Suki Waterhouse'},
-//     {id: '7gRhy3MIPHQo5CXYfWaw9I', images: [Array], name: 'Azealia Banks'},
-//     {id: '3uwAm6vQy7kWPS2bciKWx9', images: [Array], name: 'girl in red'},
-//     {id: '5szilpXHcwOqnyKLqGco5j', images: [Array], name: 'Faye Webster'},
-//     {id: '163tK9Wjr9P9DmM0AVK7lm', images: [Array], name: 'Lorde'},
-//     {id: '1r1uxoy19fzMxunt3ONAkG', images: [Array], name: 'Phoebe Bridgers'},
-//     {id: '3l0CmX0FuQjFxr8SK7Vqag', images: [Array], name: 'Clairo'},
-//     {id: '0avMDS4HyoCEP6RqZJWpY2', images: [Array], name: 'Ethel Cain'},
-//     {
-//       id: '1QAJqy2dA3ihHBFIHRphZj',
-//       images: [Array],
-//       name: 'Cigarettes After Sex',
-//     },
-//     {id: '5arKwJZEvT5uKq4o0JfqR4', images: [Array], name: 'Isabel LaRosa'},
-//     {id: '3g2kUQ6tHLLbmkV7T4GPtL', images: [Array], name: 'Fiona Apple'},
-//     {id: '5nvWOyAkfNgVLKESq4fOj2', images: [Array], name: 'Montell Fish'},
-//     {id: '37w38cCSGgKLdayTRjna4W', images: [Array], name: 'Mazzy Star'},
-//   ],
-//   topTracks: [
-//     {
-//       id: '6GGtHZgBycCgGBUhZo81xe',
-//       images: [Array],
-//       name: 'Say Yes To Heaven',
-//       viewCount: 3189955,
-//     },
-//     {
-//       id: '3BJe4B8zGnqEdQPMvfVjuS',
-//       images: [Array],
-//       name: 'Summertime Sadness',
-//       viewCount: 107342105,
-//     },
-//     {
-//       id: '4zmKGsrXjLmljb5fTaBTot',
-//       images: [Array],
-//       name: 'Snow On The Beach (feat. More Lana Del Rey)',
-//       viewCount: 266629,
-//     },
-//     {
-//       id: '2nMeu6UenVvwUktBCpLMK9',
-//       images: [Array],
-//       name: 'Young And Beautiful',
-//       viewCount: 43039743,
-//     },
-//     {
-//       id: '5Y6nVaayzitvsD5F7nr3DV',
-//       images: [Array],
-//       name: 'West Coast',
-//       viewCount: 31673929,
-//     },
-//     {
-//       id: '1wtOxkiel43cVs0Yux5Q4h',
-//       images: [Array],
-//       name: 'Snow On The Beach (feat. Lana Del Rey)',
-//       viewCount: 6260240,
-//     },
-//     {
-//       id: '0Oqc0kKFsQ6MhFOLBNZIGX',
-//       images: [Array],
-//       name: "Doin' Time",
-//       viewCount: 28482122,
-//     },
-//     {
-//       id: '2mdEsXPu8ZmkHRRtAdC09e',
-//       images: [Array],
-//       name: 'Cinnamon Girl',
-//       viewCount: 41670800,
-//     },
-//     {
-//       id: '0fBSs3fRoh1yJcne77fdu9',
-//       images: [Array],
-//       name: 'Video Games',
-//       viewCount: 26454256,
-//     },
-//     {
-//       id: '1NZs6n6hl8UuMaX0UC0YTz',
-//       images: [Array],
-//       name: 'Brooklyn Baby',
-//       viewCount: 27749046,
-//     },
-//   ],
-//   type: 'artist',
-// };
