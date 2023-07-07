@@ -98,14 +98,13 @@ export const PlaylistElement = (props) => {
 
         fetch("https://flow-fbmj.onrender.com/me/favourites", requestOptions)
         // .then(response => response.text())
-        .then(result => { console.log(result.images); getSongInfo(props.id); })
+        .then(result => { getSongInfo(props.id); })
         .catch(error => console.log('error', error));
     }
 
     const getIndex = async () => {
         let temp = await AsyncStorage.getItem('index-playing'); 
         setId(parseInt(temp));
-        //console.log(id);
     }
 
     useEffect(()=>{
