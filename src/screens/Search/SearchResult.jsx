@@ -7,6 +7,7 @@ import { IMG_Remove, IMG_Search } from '../../assets/images';
 import FONTS from '../../constants/fonts';
 import { GroupResult, SearchElement } from '../../components/index';
 import useDebounce from '../../hooks/useDebounce';
+import MiniPlaying from '../../components/miniPlaying';
 
 // create a component
 export const SearchResult = ({navigation, route}) => {
@@ -154,6 +155,8 @@ export const SearchResult = ({navigation, route}) => {
                     keyExtractor={(item, index) => index}
                 />
             </View>
+            <View style={{height: scale(72)}}/>
+            <MiniPlaying navigation={navigation}/>
         </View>
     );
 };

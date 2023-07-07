@@ -30,18 +30,20 @@ export const useAudioHelper = (
   const [lyrics, setLyrics] = useState({});
   const [index, setIndex] = useState(null);
 
-  useEffect(() => {
-    console.log('---------------------');
-    console.log(listSounds);
-    console.log(timeRate);
-    console.log(status);
-    console.log(errorMessage);
-    console.log(songInfo);
-    console.log(lyrics);
-    console.log(index);
-    console.log(currentTime);
-    console.log('-----------------------');
-  }, [listSounds, timeRate, status, errorMessage, songInfo, lyrics, index, currentTime]);
+  const [isAdding, setIsAdding] = useState(false);
+
+  // useEffect(() => {
+  //   console.log('---------------------');
+  //   console.log(listSounds);
+  //   console.log(timeRate);
+  //   console.log(status);
+  //   console.log(errorMessage);
+  //   console.log(songInfo);
+  //   console.log(lyrics);
+  //   console.log(index);
+  //   console.log(currentTime);
+  //   console.log('-----------------------');
+  // }, [listSounds, timeRate, status, errorMessage, songInfo, lyrics, index, currentTime]);
 
   const [currentTime, setCurrentTime] = useState(0);
 
@@ -76,9 +78,6 @@ export const useAudioHelper = (
       headers: myHeaders,
       redirect: 'follow',
     };
-    console.log('*****');
-    console.log(index);
-    console.log('*****');
     fetch(
       'https://flow-fbmj.onrender.com/tracks/track/' + listSounds[index]?.id,
       requestOptions,
@@ -214,7 +213,15 @@ export const useAudioHelper = (
   };
 
   useEffect(() => {
-    if (listSounds && listSounds.length > 0) {
+    console.log(isAdding);
+    console.log('list sound');
+    if (listSounds.length != 0 && !isAdding) setIndex(0);
+    setIsAdding(false);
+    console.log('index');
+  }, [listSounds]);
+
+  useEffect(() => {
+    if (listSounds && listSounds.length > 0 && !isAdding) {
       console.log('index: ', index);
       if (index != -1) {
         console.log(listSounds);
@@ -226,12 +233,6 @@ export const useAudioHelper = (
     }
 
   }, [index, listSounds]);
-
-  useEffect(() => {
-    console.log('list sound');
-    if (listSounds.length != 0) setIndex(0);
-    console.log('index');
-  }, [listSounds]);
 
   // const changeIndex = async (value) => {
   //     await setIndex(value);
@@ -351,6 +352,7 @@ export const useAudioHelper = (
         setRemainingIndices(newRemainingIndices);
         setIndex(newRemainingIndices[0]);
       } else {
+        console.log('lst-length: ', listSounds.length);
         setIndex((index + 1) % listSounds.length);
       }
     }
@@ -513,6 +515,7 @@ export const useAudioHelper = (
     setPlayerCurrentTime: time => setCurrentTime(time),
     setListSounds: listSounds => setListSounds(listSounds),
     setIndex: index => setIndex(index),
+    setIsAdding: value => setIsAdding(value),
     handleFavorites: method => handleFavorites(method),
     durationString: getDurationString(),
     currentTimeString: getCurrentTimeString(),
@@ -525,6 +528,7 @@ export const useAudioHelper = (
     //timeRate,
     //speed,
     isShuffle,
+    isAdding,
     errorMessage,
     isLoop,
     isMuted,

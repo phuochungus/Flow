@@ -7,6 +7,7 @@ import { IMG_Remove, IMG_Search } from '../../assets/images';
 import FONTS from '../../constants/fonts';
 import { SearchElement } from '../../components/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import MiniPlaying from '../../components/miniPlaying';
 
 // create a component
 export const SearchFocused = ({navigation, route}) => {
@@ -29,7 +30,7 @@ export const SearchFocused = ({navigation, route}) => {
 
         fetch("https://flow-fbmj.onrender.com/me/search_history", requestOptions)
         .then(response => response.json())
-        .then(result => {console.log('************'); console.log(result); setHistory(result)})
+        .then(result => {setHistory(result)})
         .catch(error => console.log('error', error));
     }
 
@@ -132,6 +133,8 @@ export const SearchFocused = ({navigation, route}) => {
                     </View>
                 )
             )}
+            <View style={{height: scale(72)}}/>
+            <MiniPlaying navigation={navigation}/>
         </View>
     );
 };

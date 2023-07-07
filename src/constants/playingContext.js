@@ -59,8 +59,21 @@ export const PlayingProvider = ({children}) => {
     }
 
     useEffect(()=>{
+        initial();
         const lst = getlist();
-    }, [])
+    }, []);
+
+    const initial = async ()=>{
+        let a = await AsyncStorage.getItem('list-sound');
+        if (a !== null) {
+
+        } else {
+            AsyncStorage.setItem('list-sound', JSON.stringify([{'id': '3zhbXKFjUDw40pTYyCgt1Y'}]));
+            AsyncStorage.setItem('index-playing', '0');
+            AsyncStorage.setItem('time-playing', '0');
+            console.log('success');
+        }
+      }
 
     useEffect(()=>{
         if (player2.status === 'play' && ini) {
