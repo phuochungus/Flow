@@ -40,8 +40,8 @@ export const Artist = ({route, navigation}) => {
         .then(response => response.json())
         .then(result => {
           setArtist(result);
-          setDescription(result.bio.summary);
-          setIsFavourite(result.isFavourite);
+          setDescription(result?.bio ? result.bio.summary : '');
+          setIsFavourite(result?.isFavourite);
           let l = [];
           result.topTracks.map((item, index)=>{ let id = item.id; l.push({id: id}); })
           setList(l);
