@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component, useContext, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ToastAndroid } from 'react-native';
 import scale from '../constants/responsive';
 import { IMG_Like, IMG_Liked } from '../assets/images';
 import FONTS from '../constants/fonts';
@@ -127,7 +127,9 @@ export const PlaylistElement = (props) => {
                     </View>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.icon} onPress={!item?.isFavourite ? ()=>{handleFavorites('POST')} : ()=>{handleFavorites('DELETE')}}>
+            <TouchableOpacity style={styles.icon} onPress={!item?.isFavourite ? 
+                                                        ()=>{handleFavorites('POST'); ToastAndroid.show('Đã thêm vào yêu thích', ToastAndroid.SHORT);} : 
+                                                        ()=>{handleFavorites('DELETE'); ToastAndroid.show('Đã xóa khỏi yêu thích', ToastAndroid.SHORT);}}>
                 <Image style={{alignSelf: 'center'}} source={item?.isFavourite ? IMG_Liked : IMG_Like}/>
             </TouchableOpacity>
         </View>
