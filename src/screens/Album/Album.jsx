@@ -20,11 +20,16 @@ export const Album = ({route, navigation}) => {
   const [tracks, setTracks] = useState([]);
   const [duration, setDuration] = useState();
 
-  //const id = '0S4pP8MBY9p7ngFWIZQAJv';
+  //const id = '5bvGt5T1teIsfePF0eFX7k';
   //const id = route.params.id
 
   const total = (value) => {
-    return new Date(value).toISOString().substr(11,8);
+    var ss = Math.floor(value / 1000);
+    var mm = Math.floor(ss / 60);
+    var hh = Math.floor(mm / 60);
+    ss = ss % 60 + 100;
+    mm = mm % 60 + 100;
+    return hh + ':' + mm.toString().slice(-2) + ':' + ss.toString().slice(-2);
   }
 
   const loadAlbum = async () => {
@@ -98,15 +103,19 @@ useEffect(()=>{
 })
   return (
     <SafeAreaView style={styles.container}>
-        <TouchableOpacity style={styles.backButton}>
-            <EntypoIcon name="chevron-thin-left" size={scale(24)} color="#fff" />
-        </TouchableOpacity>
         <ScrollView style={styles.albumContainer}>
             <View style={styles.imageContainer}>
-                <ImageBackground style={styles.record} source={{uri: description}}>
+                <ImageBackground style={styles.record} 
+                source={(description === null)
+                  ? require('../../assets/images/Loading.png')
+                  :
+                  {uri: description}}>
                     <View style={styles.inRecord}></View>
                 </ImageBackground>
-                <ImageBackground style={styles.image} source={{uri: description}}></ImageBackground>
+                <ImageBackground style={styles.image} 
+                source={(description === null)
+                  ? require('../../assets/images/Loading.png')
+                  :{uri: description}}></ImageBackground>
             </View>
 
 
@@ -140,10 +149,10 @@ useEffect(()=>{
 
 
           <View style={[styles.playlist]}>
-            <Text style={styles.time}>{duration}</Text>
+            <Text style={styles.time}>{total(duration)}</Text>
             {
               tracks.map((item, index) => {
-                return <SongInAlbum item={item} />
+                return <SongInAlbum key={index} item={item} />
               })
             }
         </View>
@@ -164,6 +173,7 @@ const styles = StyleSheet.create({
       alignItems: 'flex-start',
       justifyContent: 'flex-start',
       width: '100%',
+      paddingTop: 30,
     },
     backButton: {
         paddingTop: scale(20),

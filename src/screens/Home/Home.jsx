@@ -135,7 +135,6 @@ export const Home = ({route, navigation}) => {
         <ListSong>
           <TitleContainer>
             <Title>Mới nghe gần đây</Title>
-            <History>Xem tất cả</History>
           </TitleContainer>
           <SongContainer>
             {items.slice(0, 3)
