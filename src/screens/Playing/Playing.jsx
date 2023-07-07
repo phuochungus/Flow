@@ -8,7 +8,9 @@ import FONTS from '../../constants/fonts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SoundPlayer from 'react-native-sound';
 import Slider from '@react-native-community/slider';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 import { PlayingContext } from '../../constants/playingContext';
+import { addToPlaylist } from '../../constants/function';
 
 
 // create a component
@@ -119,12 +121,6 @@ export const Playing = ({navigation, route}) => {
                     <View style={styles.iconBox}>
                         <TouchableOpacity onPress={!player2?.songInfo.isFavourite ? ()=>{player2?.handleFavorites('POST'); setIsFavorite(!isFavorite)} : ()=>{player2?.handleFavorites('DELETE'); setIsFavorite(!isFavorite)}}>
                             <Image style={styles.icon} source={player2?.songInfo.isFavourite ? IMG_Liked : IMG_Like}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Image style={styles.icon} source={IMG_AddPlaylist}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Image style={styles.iconDots} source={IMG_Dots}/>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -247,7 +243,7 @@ const styles = StyleSheet.create({
     iconBox: {
         width: scale(32),
         height: scale(116),
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
     },
     icon: {
         width: scale(32),

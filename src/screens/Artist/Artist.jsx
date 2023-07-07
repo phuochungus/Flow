@@ -219,7 +219,9 @@ export const Artist = ({route, navigation}) => {
             ))}
         </HorizontalScroll>
       </Section>
-    </ScrollView><MiniPlaying navigation={navigation} /></>
+      <View style={{height: scale(10), backgroundColor: '#121212'}}/>
+    </ScrollView>
+    <MiniPlaying navigation={navigation} /></>
   );
 };
 
