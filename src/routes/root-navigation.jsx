@@ -35,10 +35,10 @@ const TabNavigation = () => {
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
 
-          if (route.name === 'Home') {
+          if (route.name === 'home') {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Search') {
-            iconName = focused ? 'search-sharp' : 'search-outline';
+            iconName = focused ? 'search' : 'search-outline';
           } else if (route.name === 'Favourite') {
             iconName = focused ? 'heart' : 'heart-outline';
           } else if (route.name === 'Account') {
@@ -93,7 +93,7 @@ const TabNavigation = () => {
         },
       })}>
       <Tab.Screen
-        name="Home"
+        name="home"
         component={Home}
         options={{presentation: 'transparentModal', headerShown: false}}
       />
@@ -102,8 +102,14 @@ const TabNavigation = () => {
         component={SearchDefault}
         options={{presentation: 'transparentModal', headerShown: false}}
       />
-      <Tab.Screen name="Favourite" component={Favourite} />
-      <Tab.Screen name="Account" component={Artist} />
+      <Tab.Screen
+        name="Favourite"
+        component={Favourite}
+        options={{
+          presentation: 'transparentModal',
+          headerShown: false,
+        }}
+      />
     </Tab.Navigator>
   );
 };
@@ -223,7 +229,7 @@ export function RootNavigation() {
       />
       <Stack.Screen
         name="SearchDefault"
-        component={SearchDefault}
+        component={TabNavigation}
         options={{
           presentation: 'transparentModal',
           headerShown: false,

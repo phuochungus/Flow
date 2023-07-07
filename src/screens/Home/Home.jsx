@@ -3,7 +3,7 @@ import {View, ScrollView, TouchableHighlight, Text} from 'react-native';
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import EntypoIcon from 'react-native-vector-icons/Entypo';
+import Icons from 'react-native-vector-icons/SimpleLineIcons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import OtherArtist from '../../components/OtherArtist';
 import PopularAlbumInHome from '../../components/PopularAlbumInHome';
@@ -38,6 +38,7 @@ export const Home = ({route, navigation}) => {
       };
 
       fetch('https://flow-fbmj.onrender.com/me/profile', requestOptions)
+
       .then(response => response.json())
       .then(result => {
         setUser(result);
@@ -45,6 +46,7 @@ export const Home = ({route, navigation}) => {
         //console.log(result.recentlyPlayed);
       })
       .catch(error => console.log('error', error));
+
     }
   };
 
@@ -134,6 +136,19 @@ export const Home = ({route, navigation}) => {
               <Welcome>Welcome back !</Welcome>
               <Name>{user.username}</Name>
             </TextUser>
+
+            <Icon
+              style={{flex: 1, justifyContents: 'flex-end'}}
+              onPress={() => {
+                AsyncStorage.clear();
+                navigation.navigate('SignIn');
+              }}>
+              <Icons name="login" size={24} color="#b1b5bb" />
+            </Icon>
+            {/* <Icon>
+              <FeatherIcon name="bar-chart-2" size={22} color="#fff" />
+            </Icon>
+
             <Icon>
             </Icon>
             <Icon onPress={()=>logOut()}>
