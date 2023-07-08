@@ -11,6 +11,7 @@ export const InputField = forwardRef((props, ref) => {
       </Container>
       <Container flexDirection={'row'}>
         <TextInput
+          secureTextEntry={props.isPassword || false}
           color
           value={props.value}
           onChangeText={props.onChangeText}
