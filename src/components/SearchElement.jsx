@@ -119,7 +119,11 @@ export const SearchElement = (props) => {
             </TouchableOpacity>
             <TouchableOpacity onPress={props.result ? ()=>{props.type === 'track' ? addToPlaylist(props.id, player2) : {}} : props.onPress}>
                 {props.type !== 'track' || !props.result? (
-                    <FeatherIcon style={{alignSelf: 'center'}} name={!props.result && 'x'} size={scale(32)} color={'white'}/>
+                    (!props.result ? (
+                        <FeatherIcon style={{alignSelf: 'center'}} name={!props.result && 'x'} size={scale(32)} color={'white'}/>
+                    ) : (
+                        <></>
+                    ))
                 ) : (
                     <FeatherIcon style={{alignSelf: 'center'}} name='plus-square' size={scale(32)} color={'white'}/>
                 )}
