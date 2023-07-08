@@ -32,7 +32,6 @@ export const useAudioHelper = (
 
   const [isAdding, setIsAdding] = useState(false);
 
-
   const [currentTime, setCurrentTime] = useState(0);
 
   useEffect(() => {
@@ -98,52 +97,54 @@ export const useAudioHelper = (
       .catch(error => console.log('error', error));
   };
 
-    const handleFavorites = async (method) => {
-        const accessToken = await AsyncStorage.getItem('access_token');
-        var myHeaders = new Headers();
-        myHeaders.append("accept", "*/*");
-        myHeaders.append("Authorization", "Bearer " + accessToken);
-        myHeaders.append("Content-Type", "application/json");
+  const handleFavorites = async method => {
+    const accessToken = await AsyncStorage.getItem('access_token');
+    var myHeaders = new Headers();
+    myHeaders.append('accept', '*/*');
+    myHeaders.append('Authorization', 'Bearer ' + accessToken);
+    myHeaders.append('Content-Type', 'application/json');
 
-        var raw = JSON.stringify({
-            "id": listSounds[index]?.id,
-        });
+    var raw = JSON.stringify({
+      id: listSounds[index]?.id,
+    });
 
-        var requestOptions = {
-            method: method,
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
-
-        fetch("https://flow-fbmj.onrender.com/me/favourites", requestOptions)
-        // .then(response => response.text())
-        .then(result => { getSongInfo();})
-        .catch(error => console.log('error', error));
-    }
-
-    const postHistorySong = async (id) => {
-      const accessToken = await AsyncStorage.getItem('access_token');
-      var myHeaders = new Headers();
-      myHeaders.append('Authorization', 'Bearer ' + accessToken);
-      myHeaders.append('Content-Type', 'application/json');
-  
-      var raw = JSON.stringify({
-        id: id,
-      });
-
-      var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow',
-      };
-  
-      fetch('https://flow-fbmj.onrender.com/me/play_history', requestOptions)
-        .then(response => response.json())
-        // .then(result => console.log(result))
-        .catch(error => console.log('error', error));
+    var requestOptions = {
+      method: method,
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
     };
+
+    fetch('https://flow-fbmj.onrender.com/me/favourites', requestOptions)
+      // .then(response => response.text())
+      .then(result => {
+        getSongInfo();
+      })
+      .catch(error => console.log('error', error));
+  };
+
+  const postHistorySong = async id => {
+    const accessToken = await AsyncStorage.getItem('access_token');
+    var myHeaders = new Headers();
+    myHeaders.append('Authorization', 'Bearer ' + accessToken);
+    myHeaders.append('Content-Type', 'application/json');
+
+    var raw = JSON.stringify({
+      id: id,
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    };
+
+    fetch('https://flow-fbmj.onrender.com/me/play_history', requestOptions)
+      .then(response => response.json())
+      // .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  };
 
   const [duration, setDuration] = useState(0);
   const [player, setPlayer] = useState(null);
@@ -194,13 +195,12 @@ export const useAudioHelper = (
 
   useEffect(() => {
     if (listSounds && listSounds.length > 0 && !isAdding) {
-      if (index != -1) {
-        getSongInfo();
-        getLyrics();
-        initialize();
+      if (index !== -1) {
+        getSongInfo().catch();
+        getLyrics().catch();
+        initialize().catch();
       }
     }
-
   }, [index, listSounds]);
 
   // const changeIndex = async (value) => {
@@ -440,14 +440,12 @@ export const useAudioHelper = (
   // }
 
   function isDisabledButtonNext() {
-    if (isShuffle)
-      return false;
+    if (isShuffle) return false;
     return status === 'loading' || index === listSounds.length - 1;
   }
 
   function isDisabledButtonPrevious() {
-    if (isShuffle)
-      return false;
+    if (isShuffle) return false;
     return status === 'loading' || index === 0;
   }
 
