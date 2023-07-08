@@ -62,7 +62,7 @@ export const SignIn = ({navigation, route}) => {
           <Img source={IMG_LOGO} height={scale(81)} width={scale(232)} />
         </Container>
         <Container m={`60px 0px 0px 0px`}>
-          <SloganText>SLOGAN HAY CÁI GÌ ĐÓ SLOGAN HAY CÁI GÌ ĐÓ </SloganText>
+          <SloganText>Enjoy your life</SloganText>
         </Container>
         <Container m={`60px 0px 0px 0px`}>
           <GradientButton
