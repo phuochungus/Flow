@@ -141,7 +141,7 @@ export const SearchResult = ({navigation, route}) => {
                     data={listSong}
                     renderItem={({ item }) => <SearchElement
                         id={item.id}
-                        img={item.images?[0].url : 'https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg'}
+                        img={item.images[0].url || 'https://png.pngtree.com/png-clipart/20190918/ourmid/pngtree-load-the-3273350-png-image_1733730.jpg'}
                         song={item.name}
                         type={item.type}
                         artists={item.artists}
