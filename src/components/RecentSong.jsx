@@ -53,14 +53,14 @@ const RecentSong = props => {
           <Title>{track.name}</Title>
           <Streaming>
             {
-              artist.length !== 1 ?
+              artist ? artist.length !== 1 ?
               artist.map((item, index) => {
                 return (index + 1) === artist.length ? item.name : item.name + ' && ';
               })
               : 
               artist.map((item, index) => {
                 return item.name;
-              })
+              }) : 'fail to load song'
             }
           </Streaming>
         </TextContainer>
