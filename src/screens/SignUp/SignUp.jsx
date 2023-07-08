@@ -100,8 +100,12 @@ export const SignUp = ({navigation}) => {
           setIsEmailTaken(true);
         } else if (response.status == 201) {
           showSnackBar('Tạo tài khoản mới thành công', 'green');
-          navigation.popToTop();
-        }
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{name: 'SignIn'}],
+            }),
+          );        }
       } catch (error) {
       } finally {
         setIsLoading(false);
