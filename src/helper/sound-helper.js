@@ -56,7 +56,7 @@ export const useAudioHelper = (
   // }
 
   const getSongInfo = async () => {
-    if (listSounds.length === 0 || index === null) return;
+    if (listSounds.length === 0 || index === null || !listSounds) return;
     const accessToken = await AsyncStorage.getItem('access_token');
     var myHeaders = new Headers();
     myHeaders.append('Authorization', 'Bearer ' + accessToken);
@@ -189,13 +189,13 @@ export const useAudioHelper = (
   };
 
   useEffect(() => {
-    if (listSounds.length != 0 && !isAdding) setIndex(0);
+    if (listSounds && listSounds.length != 0 && !isAdding) setIndex(0);
     setIsAdding(false);
   }, [listSounds]);
 
   useEffect(() => {
     if (listSounds && listSounds.length > 0 && !isAdding) {
-      if (index !== -1) {
+      if (index !== null && index < listSounds.length) {
         getSongInfo().catch();
         getLyrics().catch();
         initialize().catch();
