@@ -161,7 +161,7 @@ export const Favourite = ({route, navigation}) => {
               <ItemContainer
                 key={index}
                 onPress={() => {
-                  navigation.navigate('Playing', {type: 'signle', id: item.id});
+                  navigation.navigate('Playing', {type: 'single', id: item.id});
                 }}>
                 <ArtistImage
                   width={scale(72)}
