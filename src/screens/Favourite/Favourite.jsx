@@ -5,12 +5,14 @@ import scale from '../../constants/responsive';
 import FONTS from '../../constants/fonts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
+import {useIsFocused} from '@react-navigation/core';
 
 export const Favourite = ({route, navigation}) => {
   const [favourites, setFavourites] = useState([]);
   const [artists, setArtists] = useState([]);
   const [albums, setAlbums] = useState([]);
   const [tracks, setTracks] = useState([]);
+  const isFocused = useIsFocused();
 
   const loadFavourite = async () => {
     const accessToken = await AsyncStorage.getItem('access_token');
@@ -141,9 +143,21 @@ export const Favourite = ({route, navigation}) => {
       }
     }
   };
+  useEffect(() => {
+    // loadFavourite();
+    // console.log('focused')
+    setAlbums([]);
+    setArtists([]);
+    setTracks([]);
+    setFavourites([]);
+    loadFavourite();
+    // loadTrack();
+    // loadArtist();
+    // loadAlbum();
+  }, [isFocused]);
 
   useEffect(() => {
-    loadFavourite();
+    //loadFavourite();
     loadTrack();
     loadArtist();
     loadAlbum();
